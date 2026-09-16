@@ -1,5 +1,7 @@
 # Rover
 
+[![CI](https://github.com/GrayCodeAI/rover/actions/workflows/ci.yml/badge.svg)](https://github.com/GrayCodeAI/rover/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Version](https://img.shields.io/badge/version-0.0.1-blue.svg)](https://github.com/GrayCodeAI/rover/releases/tag/v0.0.1) [![Go](https://img.shields.io/badge/Go-1.23+-00ADD8?logo=go)](go.mod)
+
 **Terminal-first agent workspaces, persistent sessions, parallel workflows,
 verification, review, and evidence.**
 
