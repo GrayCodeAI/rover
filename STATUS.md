@@ -197,9 +197,9 @@ The acceptance counts below reflect Increments C+D+E+F+G.
 
 ## Acceptance counts (from `docs/acceptance/implementation-map.json`, 40 scenarios)
 
-- Tested in local scope (`tested_local` 30, `tested_linux` 1,
-  `tested_admission` 1): **32**.
-- `partial`: **8** — external-infra-dependent subsets with documented limits.
+- Tested in local scope (`tested_local` 31, `tested_linux` 1,
+  `tested_admission` 1): **33**.
+- `partial`: **7** — external-infra-dependent subsets with documented limits.
 - `not_implemented`: **0** — all 40 now have at least local honest code.
 - `not_validated`: **0**.
 

@@ -220,7 +220,7 @@
     {
       "id": "A26",
       "scope_and_limits": "Formal scope is capped: an interpretive PASS under a formal claim is labeled INCONCLUSIVE/advisory (never PASS) because it is not a machine-checkable proof. No native Lean/Kani/TLA+ replay; live proof replay remains out of scope.",
-      "status": "partial",
+      "status": "tested_local",
       "test_references": [
         "internal/assurance/parse_test.go:TestFormalScopeHeuristic"
       ],
