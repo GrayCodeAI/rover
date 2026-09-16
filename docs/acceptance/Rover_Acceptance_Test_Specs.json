@@ -1,0 +1,396 @@
+{
+  "schema_version": "rover.acceptance-inventory/v1alpha1",
+  "status": "proposed_test_specifications_not_executed",
+  "project": "Rover",
+  "prepared_on": "2026-09-15",
+  "layers": [
+    {
+      "id": "L1",
+      "name": "Developer experience and distribution"
+    },
+    {
+      "id": "L2",
+      "name": "Agent and tool interoperability"
+    },
+    {
+      "id": "L3",
+      "name": "Persistent execution runtime"
+    },
+    {
+      "id": "L4",
+      "name": "Workspaces, snapshots, and environments"
+    },
+    {
+      "id": "L5",
+      "name": "Task orchestration and automation"
+    },
+    {
+      "id": "L6",
+      "name": "Context, knowledge, and memory"
+    },
+    {
+      "id": "L7",
+      "name": "Identity, permissions, and security"
+    },
+    {
+      "id": "L8",
+      "name": "Verification and interrogation"
+    },
+    {
+      "id": "L9",
+      "name": "Evidence, review, and delivery"
+    },
+    {
+      "id": "L10",
+      "name": "Evaluation, learning, and controlled improvement"
+    }
+  ],
+  "tests": [
+    {
+      "id": "A01",
+      "layers": [
+        "L1",
+        "L2"
+      ],
+      "scenario": "Setup preview",
+      "expected": "Existing agent/configuration files are preserved until explicitly approved; no repository code executes during discovery."
+    },
+    {
+      "id": "A02",
+      "layers": [
+        "L1",
+        "L7"
+      ],
+      "scenario": "Installer trust",
+      "expected": "Wrong signature/identity, expired trusted metadata when required, or artifact digest mismatch fails installation without privilege escalation."
+    },
+    {
+      "id": "A03",
+      "layers": [
+        "L2",
+        "L7"
+      ],
+      "scenario": "Capability mismatch",
+      "expected": "An adapter missing required permission or cancellation semantics cannot silently enter a mode promising those capabilities."
+    },
+    {
+      "id": "A04",
+      "layers": [
+        "L2"
+      ],
+      "scenario": "Protocol robustness",
+      "expected": "Malformed, duplicated, and reordered events produce bounded errors or deduplicated updates, not duplicated runs or fabricated state."
+    },
+    {
+      "id": "A05",
+      "layers": [
+        "L3"
+      ],
+      "scenario": "Detach",
+      "expected": "Closing the supported client leaves supervisor-owned sessions running and attachable."
+    },
+    {
+      "id": "A06",
+      "layers": [
+        "L3",
+        "L5"
+      ],
+      "scenario": "Supervisor/host loss",
+      "expected": "Reconciliation marks lost execution accurately; no unsupported promise of process restoration."
+    },
+    {
+      "id": "A07",
+      "layers": [
+        "L3",
+        "L7"
+      ],
+      "scenario": "Cancellation",
+      "expected": "Cancellation reports pending/failed termination accurately and distinguishes it from external-action reversal."
+    },
+    {
+      "id": "A08",
+      "layers": [
+        "L3",
+        "L5"
+      ],
+      "scenario": "Task-wide budgets",
+      "expected": "Retries, new sessions, and provider swaps do not reset the approved task budget; usage remains observed/estimated/unknown."
+    },
+    {
+      "id": "A09",
+      "layers": [
+        "L3",
+        "L9"
+      ],
+      "scenario": "Output/disk pressure",
+      "expected": "Bounded buffers and quotas prevent controller memory exhaustion; required lost/truncated evidence prevents unsupported acceptance."
+    },
+    {
+      "id": "A10",
+      "layers": [
+        "L4",
+        "L9"
+      ],
+      "scenario": "Moving workspace",
+      "expected": "Concurrent edits cannot contaminate a fixed verification snapshot or receive its acceptance automatically."
+    },
+    {
+      "id": "A11",
+      "layers": [
+        "L4"
+      ],
+      "scenario": "Snapshot completeness",
+      "expected": "Untracked files, symlinks, submodules, missing LFS content, and unsupported source states are explicitly handled or rejected."
+    },
+    {
+      "id": "A12",
+      "layers": [
+        "L4",
+        "L5"
+      ],
+      "scenario": "Resource isolation",
+      "expected": "Parallel tasks do not accidentally share allocated ports, writable database namespaces, or browser profiles."
+    },
+    {
+      "id": "A13",
+      "layers": [
+        "L5"
+      ],
+      "scenario": "Dependency integrity",
+      "expected": "Cycles are rejected; dependent work cannot consume an unspecified or unapproved predecessor artifact."
+    },
+    {
+      "id": "A14",
+      "layers": [
+        "L5",
+        "L7"
+      ],
+      "scenario": "Contract changes",
+      "expected": "Agent edits to requirements, permissions, or required checks cannot silently alter the approved TaskContract."
+    },
+    {
+      "id": "A15",
+      "layers": [
+        "L5",
+        "L9"
+      ],
+      "scenario": "Duplicate trigger",
+      "expected": "A duplicated webhook or schedule occurrence does not create duplicate admitted work for the same trigger identity."
+    },
+    {
+      "id": "A16",
+      "layers": [
+        "L6",
+        "L7"
+      ],
+      "scenario": "Cross-project context",
+      "expected": "Unauthorized project content cannot leak through search, summaries, context caches, memory, or evidence views."
+    },
+    {
+      "id": "A17",
+      "layers": [
+        "L6",
+        "L7"
+      ],
+      "scenario": "Prompt injection",
+      "expected": "Untrusted issue/tool/browser content cannot authorize a tool, credential, policy change, or external transfer."
+    },
+    {
+      "id": "A18",
+      "layers": [
+        "L7"
+      ],
+      "scenario": "Worker credentials",
+      "expected": "A restricted candidate cannot read controller keys, publish authoritative evidence, or use merge/deploy credentials."
+    },
+    {
+      "id": "A19",
+      "layers": [
+        "L7"
+      ],
+      "scenario": "Sandbox fallback",
+      "expected": "If the required isolation backend is unavailable, execution is refused rather than downgraded to unrestricted local commands."
+    },
+    {
+      "id": "A20",
+      "layers": [
+        "L7",
+        "L9"
+      ],
+      "scenario": "Approval binding",
+      "expected": "Changing candidate, action parameters, contract, or relevant policy invalidates the corresponding approval as specified."
+    },
+    {
+      "id": "A21",
+      "layers": [
+        "L8"
+      ],
+      "scenario": "Missing tests",
+      "expected": "Zero expected tests, missing required tools, malformed reports, and required checks not run never count as successful verification."
+    },
+    {
+      "id": "A22",
+      "layers": [
+        "L8"
+      ],
+      "scenario": "False command success",
+      "expected": "A generic zero exit code is not labeled as tests/security/compatibility passed without the applicable structured interpretation."
+    },
+    {
+      "id": "A23",
+      "layers": [
+        "L8",
+        "L9"
+      ],
+      "scenario": "Wrong-candidate report",
+      "expected": "A cached or imported report for another snapshot/environment is not accepted for the current investigation."
+    },
+    {
+      "id": "A24",
+      "layers": [
+        "L8"
+      ],
+      "scenario": "Counterfactual validity",
+      "expected": "Import/build/setup failure on base does not count as reproducing the target defect."
+    },
+    {
+      "id": "A25",
+      "layers": [
+        "L8"
+      ],
+      "scenario": "Flaky retries",
+      "expected": "Failed attempts remain visible; acceptance follows an explicit approved retry/flakiness rule rather than cherry-picking a pass."
+    },
+    {
+      "id": "A26",
+      "layers": [
+        "L8",
+        "L9"
+      ],
+      "scenario": "Formal scope",
+      "expected": "A passed formal tool cannot label excluded code, unsupported concurrency, unchecked axioms, or unbound requirements as proved."
+    },
+    {
+      "id": "A27",
+      "layers": [
+        "L8",
+        "L9"
+      ],
+      "scenario": "No-op verification",
+      "expected": "An accidentally empty plan is inconclusive; explicit no-runtime-check profiles require their own approved acceptance conditions."
+    },
+    {
+      "id": "A28",
+      "layers": [
+        "L9"
+      ],
+      "scenario": "External uncertainty",
+      "expected": "A lost response after PR creation/push triggers reconciliation, not an automatic duplicate side effect."
+    },
+    {
+      "id": "A29",
+      "layers": [
+        "L3",
+        "L7",
+        "L9"
+      ],
+      "scenario": "Stale remote worker",
+      "expected": "An obsolete ownership generation cannot publish authoritative completion or perform controller-mediated writes."
+    },
+    {
+      "id": "A30",
+      "layers": [
+        "L9"
+      ],
+      "scenario": "Integration drift",
+      "expected": "Passing individual branches does not waive verification of the actual integration/merge candidate."
+    },
+    {
+      "id": "A31",
+      "layers": [
+        "L7",
+        "L9"
+      ],
+      "scenario": "CI publisher",
+      "expected": "An untrusted actor or skipped/neutral path cannot masquerade as the required successful Rover acceptance result."
+    },
+    {
+      "id": "A32",
+      "layers": [
+        "L9"
+      ],
+      "scenario": "Artifact retention",
+      "expected": "Expired/deleted evidence remains identified as unavailable; the UI does not claim reproducibility from absent inputs."
+    },
+    {
+      "id": "A33",
+      "layers": [
+        "L1",
+        "L9"
+      ],
+      "scenario": "Upgrade recovery",
+      "expected": "Interrupted migration/update has a tested recovery path; restoring an old executable alone is not assumed sufficient."
+    },
+    {
+      "id": "A34",
+      "layers": [
+        "L10"
+      ],
+      "scenario": "Learning authority",
+      "expected": "A proposed strategy cannot remove mandatory checks, alter truth semantics, access evaluator secrets, or promote itself."
+    },
+    {
+      "id": "A35",
+      "layers": [
+        "L10"
+      ],
+      "scenario": "Outcome validity",
+      "expected": "Merge/no-report/temporal-proximity signals are not silently converted into correctness or confirmed causal defect labels."
+    },
+    {
+      "id": "A36",
+      "layers": [
+        "L7",
+        "L10"
+      ],
+      "scenario": "Evaluation leakage",
+      "expected": "Training, tuning, and holdout access are tracked; private repository data does not enter shared learning without authorization."
+    },
+    {
+      "id": "A37",
+      "layers": [
+        "L7",
+        "L9"
+      ],
+      "scenario": "Untrusted artifacts",
+      "expected": "Path traversal, symlink escape, oversized reports, and malicious terminal escape sequences cannot compromise extraction/rendering."
+    },
+    {
+      "id": "A38",
+      "layers": [
+        "L4",
+        "L9"
+      ],
+      "scenario": "Cache trust",
+      "expected": "Candidate-controlled cache outputs cannot certify another build; reuse is denied when relevant mutable inputs are unaccounted for."
+    },
+    {
+      "id": "A39",
+      "layers": [
+        "L7",
+        "L9"
+      ],
+      "scenario": "Destructive delivery",
+      "expected": "Database, infrastructure, and deployment operations require scoped approval and explicit recovery/compensation behavior."
+    },
+    {
+      "id": "A40",
+      "layers": [
+        "L1",
+        "L9"
+      ],
+      "scenario": "Export and uninstall",
+      "expected": "User-owned code and Git history remain usable; export marks unsupported session portability and evidence omissions."
+    }
+  ]
+}

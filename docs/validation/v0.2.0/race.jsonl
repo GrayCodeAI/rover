@@ -1,0 +1,746 @@
+{"Time":"2026-09-15T23:02:20.526881063Z","Action":"start","Package":"github.com/GrayCodeAI/rover/cmd/rover"}
+{"Time":"2026-09-15T23:02:20.531408725Z","Action":"output","Package":"github.com/GrayCodeAI/rover/cmd/rover","Output":"\tgithub.com/GrayCodeAI/rover/cmd/rover\t\tcoverage: 0.0% of statements\n"}
+{"Time":"2026-09-15T23:02:20.536615867Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/cmd/rover","Elapsed":0.01}
+{"Time":"2026-09-15T23:02:20.844867347Z","Action":"start","Package":"github.com/GrayCodeAI/rover/internal/access"}
+{"Time":"2026-09-15T23:02:20.845066837Z","Action":"start","Package":"github.com/GrayCodeAI/rover/internal/agents"}
+{"Time":"2026-09-15T23:02:20.857563496Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/agents","Test":"TestProfiles"}
+{"Time":"2026-09-15T23:02:20.857586006Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/agents","Test":"TestProfiles","Output":"=== RUN   TestProfiles\n"}
+{"Time":"2026-09-15T23:02:20.860328816Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/agents","Test":"TestProfiles","Output":"--- PASS: TestProfiles (0.00s)\n"}
+{"Time":"2026-09-15T23:02:20.860336566Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/agents","Test":"TestProfiles","Elapsed":0}
+{"Time":"2026-09-15T23:02:20.860342502Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/agents","Test":"TestCodexTranscript"}
+{"Time":"2026-09-15T23:02:20.860345406Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/agents","Test":"TestCodexTranscript","Output":"=== RUN   TestCodexTranscript\n"}
+{"Time":"2026-09-15T23:02:20.860349587Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/agents","Test":"TestCodexTranscript","Output":"--- PASS: TestCodexTranscript (0.00s)\n"}
+{"Time":"2026-09-15T23:02:20.860355683Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/agents","Test":"TestCodexTranscript","Elapsed":0}
+{"Time":"2026-09-15T23:02:20.860358392Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/agents","Test":"TestClaudeTranscript"}
+{"Time":"2026-09-15T23:02:20.860360957Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/agents","Test":"TestClaudeTranscript","Output":"=== RUN   TestClaudeTranscript\n"}
+{"Time":"2026-09-15T23:02:20.860364908Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/agents","Test":"TestClaudeTranscript","Output":"--- PASS: TestClaudeTranscript (0.00s)\n"}
+{"Time":"2026-09-15T23:02:20.860369132Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/agents","Test":"TestClaudeTranscript","Elapsed":0}
+{"Time":"2026-09-15T23:02:20.860371899Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/agents","Test":"FuzzTranscript"}
+{"Time":"2026-09-15T23:02:20.86037428Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/agents","Test":"FuzzTranscript","Output":"=== RUN   FuzzTranscript\n"}
+{"Time":"2026-09-15T23:02:20.8603787Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/agents","Test":"FuzzTranscript/seed#0"}
+{"Time":"2026-09-15T23:02:20.860381319Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/agents","Test":"FuzzTranscript/seed#0","Output":"=== RUN   FuzzTranscript/seed#0\n"}
+{"Time":"2026-09-15T23:02:20.860390579Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/agents","Test":"FuzzTranscript/seed#0","Output":"--- PASS: FuzzTranscript/seed#0 (0.00s)\n"}
+{"Time":"2026-09-15T23:02:20.860393647Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/agents","Test":"FuzzTranscript/seed#0","Elapsed":0}
+{"Time":"2026-09-15T23:02:20.860396743Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/agents","Test":"FuzzTranscript/seed#1"}
+{"Time":"2026-09-15T23:02:20.86039911Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/agents","Test":"FuzzTranscript/seed#1","Output":"=== RUN   FuzzTranscript/seed#1\n"}
+{"Time":"2026-09-15T23:02:20.860402835Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/agents","Test":"FuzzTranscript/seed#1","Output":"--- PASS: FuzzTranscript/seed#1 (0.00s)\n"}
+{"Time":"2026-09-15T23:02:20.860411298Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/agents","Test":"FuzzTranscript/seed#1","Elapsed":0}
+{"Time":"2026-09-15T23:02:20.860414791Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/agents","Test":"FuzzTranscript","Output":"--- PASS: FuzzTranscript (0.00s)\n"}
+{"Time":"2026-09-15T23:02:20.860417817Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/agents","Test":"FuzzTranscript","Elapsed":0}
+{"Time":"2026-09-15T23:02:20.860423366Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/agents","Output":"PASS\n"}
+{"Time":"2026-09-15T23:02:20.860868242Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/agents","Output":"coverage: 66.7% of statements\n"}
+{"Time":"2026-09-15T23:02:20.865302196Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/access","Test":"TestGrantScopesAndRevocation"}
+{"Time":"2026-09-15T23:02:20.865322983Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/access","Test":"TestGrantScopesAndRevocation","Output":"=== RUN   TestGrantScopesAndRevocation\n"}
+{"Time":"2026-09-15T23:02:20.876335944Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/access","Test":"TestGrantScopesAndRevocation","Output":"--- PASS: TestGrantScopesAndRevocation (0.01s)\n"}
+{"Time":"2026-09-15T23:02:20.876357398Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/access","Test":"TestGrantScopesAndRevocation","Elapsed":0.01}
+{"Time":"2026-09-15T23:02:20.876362921Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/access","Output":"PASS\n"}
+{"Time":"2026-09-15T23:02:20.877163989Z","Action":"start","Package":"github.com/GrayCodeAI/rover/internal/archive"}
+{"Time":"2026-09-15T23:02:20.878794686Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/access","Output":"coverage: 80.0% of statements\n"}
+{"Time":"2026-09-15T23:02:20.901568007Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/archive","Test":"TestOnlineBackupRestoreRevokesExecution"}
+{"Time":"2026-09-15T23:02:20.90158666Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/archive","Test":"TestOnlineBackupRestoreRevokesExecution","Output":"=== RUN   TestOnlineBackupRestoreRevokesExecution\n"}
+{"Time":"2026-09-15T23:02:20.927789762Z","Action":"start","Package":"github.com/GrayCodeAI/rover/internal/assurance"}
+{"Time":"2026-09-15T23:02:20.945687995Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestSARIF"}
+{"Time":"2026-09-15T23:02:20.945709786Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestSARIF","Output":"=== RUN   TestSARIF\n"}
+{"Time":"2026-09-15T23:02:20.949275392Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestSARIF","Output":"--- PASS: TestSARIF (0.00s)\n"}
+{"Time":"2026-09-15T23:02:20.949293702Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestSARIF","Elapsed":0}
+{"Time":"2026-09-15T23:02:20.949301015Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestCounterfactualAndMutation"}
+{"Time":"2026-09-15T23:02:20.949304021Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestCounterfactualAndMutation","Output":"=== RUN   TestCounterfactualAndMutation\n"}
+{"Time":"2026-09-15T23:02:20.961145597Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/archive","Test":"TestOnlineBackupRestoreRevokesExecution","Output":"--- PASS: TestOnlineBackupRestoreRevokesExecution (0.06s)\n"}
+{"Time":"2026-09-15T23:02:20.961163227Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/archive","Test":"TestOnlineBackupRestoreRevokesExecution","Elapsed":0.06}
+{"Time":"2026-09-15T23:02:20.961170334Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/archive","Test":"TestBackupRejectsTraversalAndSymlinks"}
+{"Time":"2026-09-15T23:02:20.961209052Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/archive","Test":"TestBackupRejectsTraversalAndSymlinks","Output":"=== RUN   TestBackupRejectsTraversalAndSymlinks\n"}
+{"Time":"2026-09-15T23:02:20.961915735Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/archive","Test":"TestBackupRejectsTraversalAndSymlinks","Output":"--- PASS: TestBackupRejectsTraversalAndSymlinks (0.00s)\n"}
+{"Time":"2026-09-15T23:02:20.961951811Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/archive","Test":"TestBackupRejectsTraversalAndSymlinks","Elapsed":0}
+{"Time":"2026-09-15T23:02:20.961977526Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/archive","Test":"TestCancelledBackup"}
+{"Time":"2026-09-15T23:02:20.961980227Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/archive","Test":"TestCancelledBackup","Output":"=== RUN   TestCancelledBackup\n"}
+{"Time":"2026-09-15T23:02:20.983655467Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/archive","Test":"TestCancelledBackup","Output":"--- PASS: TestCancelledBackup (0.02s)\n"}
+{"Time":"2026-09-15T23:02:20.983881505Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/archive","Test":"TestCancelledBackup","Elapsed":0.02}
+{"Time":"2026-09-15T23:02:20.983887732Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/archive","Output":"PASS\n"}
+{"Time":"2026-09-15T23:02:20.985600057Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/archive","Output":"coverage: 72.9% of statements\n"}
+{"Time":"2026-09-15T23:02:21.183575507Z","Action":"start","Package":"github.com/GrayCodeAI/rover/internal/attestation"}
+{"Time":"2026-09-15T23:02:21.196507369Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/attestation","Test":"TestSignedEvidenceAndTrustKey"}
+{"Time":"2026-09-15T23:02:21.196587219Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/attestation","Test":"TestSignedEvidenceAndTrustKey","Output":"=== RUN   TestSignedEvidenceAndTrustKey\n"}
+{"Time":"2026-09-15T23:02:21.241281256Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/attestation","Test":"TestSignedEvidenceAndTrustKey","Output":"--- PASS: TestSignedEvidenceAndTrustKey (0.04s)\n"}
+{"Time":"2026-09-15T23:02:21.241304711Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/attestation","Test":"TestSignedEvidenceAndTrustKey","Elapsed":0.04}
+{"Time":"2026-09-15T23:02:21.241315655Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/attestation","Test":"TestPEMStrictness"}
+{"Time":"2026-09-15T23:02:21.241321459Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/attestation","Test":"TestPEMStrictness","Output":"=== RUN   TestPEMStrictness\n"}
+{"Time":"2026-09-15T23:02:21.2418805Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/attestation","Test":"TestPEMStrictness","Output":"--- PASS: TestPEMStrictness (0.00s)\n"}
+{"Time":"2026-09-15T23:02:21.241894303Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/attestation","Test":"TestPEMStrictness","Elapsed":0}
+{"Time":"2026-09-15T23:02:21.241905163Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/attestation","Output":"PASS\n"}
+{"Time":"2026-09-15T23:02:21.243446864Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/attestation","Output":"coverage: 78.9% of statements\n"}
+{"Time":"2026-09-15T23:02:21.868572623Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/agents","Output":"ok  \tgithub.com/GrayCodeAI/rover/internal/agents\t1.023s\tcoverage: 66.7% of statements\n"}
+{"Time":"2026-09-15T23:02:21.868611675Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/agents","Elapsed":1.024}
+{"Time":"2026-09-15T23:02:21.882830087Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/access","Output":"ok  \tgithub.com/GrayCodeAI/rover/internal/access\t1.037s\tcoverage: 80.0% of statements\n"}
+{"Time":"2026-09-15T23:02:21.882849503Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/access","Elapsed":1.038}
+{"Time":"2026-09-15T23:02:21.999329268Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/archive","Output":"ok  \tgithub.com/GrayCodeAI/rover/internal/archive\t1.122s\tcoverage: 72.9% of statements\n"}
+{"Time":"2026-09-15T23:02:21.999352976Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/archive","Elapsed":1.1219999999999999}
+{"Time":"2026-09-15T23:02:22.246814733Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/attestation","Output":"ok  \tgithub.com/GrayCodeAI/rover/internal/attestation\t1.063s\tcoverage: 78.9% of statements\n"}
+{"Time":"2026-09-15T23:02:22.246882262Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/attestation","Elapsed":1.063}
+{"Time":"2026-09-15T23:02:22.567890799Z","Action":"start","Package":"github.com/GrayCodeAI/rover/internal/cli"}
+{"Time":"2026-09-15T23:02:22.568081196Z","Action":"start","Package":"github.com/GrayCodeAI/rover/internal/config"}
+{"Time":"2026-09-15T23:02:22.568157673Z","Action":"start","Package":"github.com/GrayCodeAI/rover/internal/contextstore"}
+{"Time":"2026-09-15T23:02:22.579026242Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/contextstore","Test":"TestScopedContextAndMemory"}
+{"Time":"2026-09-15T23:02:22.579047511Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/contextstore","Test":"TestScopedContextAndMemory","Output":"=== RUN   TestScopedContextAndMemory\n"}
+{"Time":"2026-09-15T23:02:22.583238661Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/cli","Test":"TestInitIsNonDestructive"}
+{"Time":"2026-09-15T23:02:22.583259236Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/cli","Test":"TestInitIsNonDestructive","Output":"=== RUN   TestInitIsNonDestructive\n"}
+{"Time":"2026-09-15T23:02:22.588391005Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict"}
+{"Time":"2026-09-15T23:02:22.588409819Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict","Output":"=== RUN   TestDecodeStrict\n"}
+{"Time":"2026-09-15T23:02:22.591863956Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/valid"}
+{"Time":"2026-09-15T23:02:22.591882052Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/valid","Output":"=== RUN   TestDecodeStrict/valid\n"}
+{"Time":"2026-09-15T23:02:22.592517852Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/valid","Output":"--- PASS: TestDecodeStrict/valid (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.592560757Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/valid","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.592596167Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/unknown-field"}
+{"Time":"2026-09-15T23:02:22.592599691Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/unknown-field","Output":"=== RUN   TestDecodeStrict/unknown-field\n"}
+{"Time":"2026-09-15T23:02:22.592733719Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/unknown-field","Output":"--- PASS: TestDecodeStrict/unknown-field (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.59276278Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/unknown-field","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.592788933Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/duplicate-root"}
+{"Time":"2026-09-15T23:02:22.592794931Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/duplicate-root","Output":"=== RUN   TestDecodeStrict/duplicate-root\n"}
+{"Time":"2026-09-15T23:02:22.592890076Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/duplicate-root","Output":"--- PASS: TestDecodeStrict/duplicate-root (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.592922253Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/duplicate-root","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.593025731Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/duplicate-nested"}
+{"Time":"2026-09-15T23:02:22.593030933Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/duplicate-nested","Output":"=== RUN   TestDecodeStrict/duplicate-nested\n"}
+{"Time":"2026-09-15T23:02:22.593223269Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/duplicate-nested","Output":"--- PASS: TestDecodeStrict/duplicate-nested (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.593268862Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/duplicate-nested","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.593302625Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/two-documents"}
+{"Time":"2026-09-15T23:02:22.593306084Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/two-documents","Output":"=== RUN   TestDecodeStrict/two-documents\n"}
+{"Time":"2026-09-15T23:02:22.593403319Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/two-documents","Output":"--- PASS: TestDecodeStrict/two-documents (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.593439421Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/two-documents","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.593466506Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/malformed"}
+{"Time":"2026-09-15T23:02:22.593469808Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/malformed","Output":"=== RUN   TestDecodeStrict/malformed\n"}
+{"Time":"2026-09-15T23:02:22.593552597Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/malformed","Output":"--- PASS: TestDecodeStrict/malformed (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.593598073Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/malformed","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.593621484Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/empty"}
+{"Time":"2026-09-15T23:02:22.593624888Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/empty","Output":"=== RUN   TestDecodeStrict/empty\n"}
+{"Time":"2026-09-15T23:02:22.593701573Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/empty","Output":"--- PASS: TestDecodeStrict/empty (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.593740851Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/empty","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.593765531Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/oversized"}
+{"Time":"2026-09-15T23:02:22.593768834Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/oversized","Output":"=== RUN   TestDecodeStrict/oversized\n"}
+{"Time":"2026-09-15T23:02:22.59482233Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/oversized","Output":"--- PASS: TestDecodeStrict/oversized (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.594983605Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict/oversized","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.59517443Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict","Output":"--- PASS: TestDecodeStrict (0.01s)\n"}
+{"Time":"2026-09-15T23:02:22.595237863Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestDecodeStrict","Elapsed":0.01}
+{"Time":"2026-09-15T23:02:22.595273852Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate"}
+{"Time":"2026-09-15T23:02:22.59527745Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate","Output":"=== RUN   TestValidate\n"}
+{"Time":"2026-09-15T23:02:22.595475881Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/schema"}
+{"Time":"2026-09-15T23:02:22.59548824Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/schema","Output":"=== RUN   TestValidate/schema\n"}
+{"Time":"2026-09-15T23:02:22.595632718Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/schema","Output":"--- PASS: TestValidate/schema (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.595682401Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/schema","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.595711148Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/duplicate-id"}
+{"Time":"2026-09-15T23:02:22.595714756Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/duplicate-id","Output":"=== RUN   TestValidate/duplicate-id\n"}
+{"Time":"2026-09-15T23:02:22.595821506Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/duplicate-id","Output":"--- PASS: TestValidate/duplicate-id (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.595859161Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/duplicate-id","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.595885877Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/unsafe-id"}
+{"Time":"2026-09-15T23:02:22.595889366Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/unsafe-id","Output":"=== RUN   TestValidate/unsafe-id\n"}
+{"Time":"2026-09-15T23:02:22.595987407Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/unsafe-id","Output":"--- PASS: TestValidate/unsafe-id (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.596048924Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/unsafe-id","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.596094145Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/empty-argv"}
+{"Time":"2026-09-15T23:02:22.596099257Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/empty-argv","Output":"=== RUN   TestValidate/empty-argv\n"}
+{"Time":"2026-09-15T23:02:22.59621757Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/empty-argv","Output":"--- PASS: TestValidate/empty-argv (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.59625632Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/empty-argv","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.596290847Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/NUL-argv"}
+{"Time":"2026-09-15T23:02:22.596295466Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/NUL-argv","Output":"=== RUN   TestValidate/NUL-argv\n"}
+{"Time":"2026-09-15T23:02:22.59639302Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/NUL-argv","Output":"--- PASS: TestValidate/NUL-argv (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.596417994Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/NUL-argv","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.596448826Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/zero-timeout"}
+{"Time":"2026-09-15T23:02:22.596458496Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/zero-timeout","Output":"=== RUN   TestValidate/zero-timeout\n"}
+{"Time":"2026-09-15T23:02:22.596536942Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/zero-timeout","Output":"--- PASS: TestValidate/zero-timeout (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.596770783Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/zero-timeout","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.596817416Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/excessive-timeout"}
+{"Time":"2026-09-15T23:02:22.596823792Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/excessive-timeout","Output":"=== RUN   TestValidate/excessive-timeout\n"}
+{"Time":"2026-09-15T23:02:22.596937651Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/excessive-timeout","Output":"--- PASS: TestValidate/excessive-timeout (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.596967561Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/excessive-timeout","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.597025802Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/unknown-parser"}
+{"Time":"2026-09-15T23:02:22.597030577Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/unknown-parser","Output":"=== RUN   TestValidate/unknown-parser\n"}
+{"Time":"2026-09-15T23:02:22.597127879Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/unknown-parser","Output":"--- PASS: TestValidate/unknown-parser (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.59715612Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/unknown-parser","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.597218016Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/no-min-tests"}
+{"Time":"2026-09-15T23:02:22.597221869Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/no-min-tests","Output":"=== RUN   TestValidate/no-min-tests\n"}
+{"Time":"2026-09-15T23:02:22.5972978Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/no-min-tests","Output":"--- PASS: TestValidate/no-min-tests (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.597327981Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/no-min-tests","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.597364416Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/unsafe-env"}
+{"Time":"2026-09-15T23:02:22.597367627Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/unsafe-env","Output":"=== RUN   TestValidate/unsafe-env\n"}
+{"Time":"2026-09-15T23:02:22.597452526Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/unsafe-env","Output":"--- PASS: TestValidate/unsafe-env (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.597477092Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/unsafe-env","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.597499818Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/bad-glob"}
+{"Time":"2026-09-15T23:02:22.597503325Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/bad-glob","Output":"=== RUN   TestValidate/bad-glob\n"}
+{"Time":"2026-09-15T23:02:22.597588185Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/bad-glob","Output":"--- PASS: TestValidate/bad-glob (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.597614037Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/bad-glob","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.597638816Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/junit-traversal"}
+{"Time":"2026-09-15T23:02:22.597641523Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/junit-traversal","Output":"=== RUN   TestValidate/junit-traversal\n"}
+{"Time":"2026-09-15T23:02:22.597710968Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/junit-traversal","Output":"--- PASS: TestValidate/junit-traversal (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.597730214Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate/junit-traversal","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.597759812Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate","Output":"--- PASS: TestValidate (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.597780314Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestValidate","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.597811224Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestGlob"}
+{"Time":"2026-09-15T23:02:22.597814321Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestGlob","Output":"=== RUN   TestGlob\n"}
+{"Time":"2026-09-15T23:02:22.598539059Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestGlob","Output":"--- PASS: TestGlob (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.598607869Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestGlob","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.598647762Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestTaskRejectsUnsupportedDAG"}
+{"Time":"2026-09-15T23:02:22.598651881Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestTaskRejectsUnsupportedDAG","Output":"=== RUN   TestTaskRejectsUnsupportedDAG\n"}
+{"Time":"2026-09-15T23:02:22.598790536Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestTaskRejectsUnsupportedDAG","Output":"--- PASS: TestTaskRejectsUnsupportedDAG (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.598848928Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestTaskRejectsUnsupportedDAG","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.598877773Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestInvalidUTF8Path"}
+{"Time":"2026-09-15T23:02:22.598880895Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestInvalidUTF8Path","Output":"=== RUN   TestInvalidUTF8Path\n"}
+{"Time":"2026-09-15T23:02:22.59896223Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestInvalidUTF8Path","Output":"--- PASS: TestInvalidUTF8Path (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.599024465Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestInvalidUTF8Path","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.59905504Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestUnicodeGlob"}
+{"Time":"2026-09-15T23:02:22.599058763Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestUnicodeGlob","Output":"=== RUN   TestUnicodeGlob\n"}
+{"Time":"2026-09-15T23:02:22.599355906Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestUnicodeGlob","Output":"--- PASS: TestUnicodeGlob (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.599407186Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestUnicodeGlob","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.599436846Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestExplicitAuthorityFields"}
+{"Time":"2026-09-15T23:02:22.599439793Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestExplicitAuthorityFields","Output":"=== RUN   TestExplicitAuthorityFields\n"}
+{"Time":"2026-09-15T23:02:22.600443616Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestExplicitAuthorityFields","Output":"--- PASS: TestExplicitAuthorityFields (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.600502733Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestExplicitAuthorityFields","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.600536226Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestRepositoryExamples"}
+{"Time":"2026-09-15T23:02:22.600540061Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestRepositoryExamples","Output":"=== RUN   TestRepositoryExamples\n"}
+{"Time":"2026-09-15T23:02:22.604053259Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestRepositoryExamples","Output":"--- PASS: TestRepositoryExamples (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.604115304Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"TestRepositoryExamples","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.604161871Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"FuzzDecode"}
+{"Time":"2026-09-15T23:02:22.604173549Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"FuzzDecode","Output":"=== RUN   FuzzDecode\n"}
+{"Time":"2026-09-15T23:02:22.604311492Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"FuzzDecode/seed#0"}
+{"Time":"2026-09-15T23:02:22.604317609Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"FuzzDecode/seed#0","Output":"=== RUN   FuzzDecode/seed#0\n"}
+{"Time":"2026-09-15T23:02:22.604545021Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"FuzzDecode/seed#0","Output":"--- PASS: FuzzDecode/seed#0 (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.604597436Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"FuzzDecode/seed#0","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.604632391Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"FuzzDecode/seed#1"}
+{"Time":"2026-09-15T23:02:22.604635536Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"FuzzDecode/seed#1","Output":"=== RUN   FuzzDecode/seed#1\n"}
+{"Time":"2026-09-15T23:02:22.604757712Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"FuzzDecode/seed#1","Output":"--- PASS: FuzzDecode/seed#1 (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.604794449Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"FuzzDecode/seed#1","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.604834312Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"FuzzDecode","Output":"--- PASS: FuzzDecode (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.604875953Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Test":"FuzzDecode","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.604897022Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Output":"PASS\n"}
+{"Time":"2026-09-15T23:02:22.608612867Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Output":"coverage: 76.2% of statements\n"}
+{"Time":"2026-09-15T23:02:22.620634498Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/cli","Test":"TestInitIsNonDestructive","Output":"--- PASS: TestInitIsNonDestructive (0.04s)\n"}
+{"Time":"2026-09-15T23:02:22.620652535Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/cli","Test":"TestInitIsNonDestructive","Elapsed":0.04}
+{"Time":"2026-09-15T23:02:22.620658811Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/cli","Test":"TestJSONErrorAndExitCodes"}
+{"Time":"2026-09-15T23:02:22.620662044Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/cli","Test":"TestJSONErrorAndExitCodes","Output":"=== RUN   TestJSONErrorAndExitCodes\n"}
+{"Time":"2026-09-15T23:02:22.622622462Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/cli","Test":"TestJSONErrorAndExitCodes","Output":"--- PASS: TestJSONErrorAndExitCodes (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.622639728Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/cli","Test":"TestJSONErrorAndExitCodes","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.622644967Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/cli","Test":"TestCLIRejectsExecutionWithoutGrant"}
+{"Time":"2026-09-15T23:02:22.622647959Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/cli","Test":"TestCLIRejectsExecutionWithoutGrant","Output":"=== RUN   TestCLIRejectsExecutionWithoutGrant\n"}
+{"Time":"2026-09-15T23:02:22.633803959Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/contextstore","Test":"TestScopedContextAndMemory","Output":"--- PASS: TestScopedContextAndMemory (0.05s)\n"}
+{"Time":"2026-09-15T23:02:22.633823184Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/contextstore","Test":"TestScopedContextAndMemory","Elapsed":0.05}
+{"Time":"2026-09-15T23:02:22.633876064Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/contextstore","Output":"PASS\n"}
+{"Time":"2026-09-15T23:02:22.635957034Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/contextstore","Output":"coverage: 79.1% of statements\n"}
+{"Time":"2026-09-15T23:02:22.644690296Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/cli","Test":"TestCLIRejectsExecutionWithoutGrant","Output":"--- PASS: TestCLIRejectsExecutionWithoutGrant (0.02s)\n"}
+{"Time":"2026-09-15T23:02:22.644711322Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/cli","Test":"TestCLIRejectsExecutionWithoutGrant","Elapsed":0.02}
+{"Time":"2026-09-15T23:02:22.644719016Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/cli","Test":"TestReviewDoesNotRewriteDecision"}
+{"Time":"2026-09-15T23:02:22.644722144Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/cli","Test":"TestReviewDoesNotRewriteDecision","Output":"=== RUN   TestReviewDoesNotRewriteDecision\n"}
+{"Time":"2026-09-15T23:02:22.664883275Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/cli","Test":"TestReviewDoesNotRewriteDecision","Output":"--- PASS: TestReviewDoesNotRewriteDecision (0.02s)\n"}
+{"Time":"2026-09-15T23:02:22.66490071Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/cli","Test":"TestReviewDoesNotRewriteDecision","Elapsed":0.02}
+{"Time":"2026-09-15T23:02:22.664907145Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/cli","Test":"TestExplicitStateDoesNotRequireHome"}
+{"Time":"2026-09-15T23:02:22.664909079Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/cli","Test":"TestExplicitStateDoesNotRequireHome","Output":"=== RUN   TestExplicitStateDoesNotRequireHome\n"}
+{"Time":"2026-09-15T23:02:22.667113323Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/cli","Test":"TestExplicitStateDoesNotRequireHome","Output":"--- PASS: TestExplicitStateDoesNotRequireHome (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.667118401Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/cli","Test":"TestExplicitStateDoesNotRequireHome","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.667124565Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/cli","Output":"PASS\n"}
+{"Time":"2026-09-15T23:02:22.670605911Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/cli","Output":"coverage: 9.4% of statements\n"}
+{"Time":"2026-09-15T23:02:22.727583288Z","Action":"start","Package":"github.com/GrayCodeAI/rover/internal/execution"}
+{"Time":"2026-09-15T23:02:22.741904943Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestProcessResults"}
+{"Time":"2026-09-15T23:02:22.74192577Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestProcessResults","Output":"=== RUN   TestProcessResults\n"}
+{"Time":"2026-09-15T23:02:22.741960265Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestProcessResults/pass"}
+{"Time":"2026-09-15T23:02:22.74196425Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestProcessResults/pass","Output":"=== RUN   TestProcessResults/pass\n"}
+{"Time":"2026-09-15T23:02:22.745652747Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestProcessResults/pass","Output":"--- PASS: TestProcessResults/pass (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.745665601Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestProcessResults/pass","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.745671964Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestProcessResults/nonzero"}
+{"Time":"2026-09-15T23:02:22.745681207Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestProcessResults/nonzero","Output":"=== RUN   TestProcessResults/nonzero\n"}
+{"Time":"2026-09-15T23:02:22.74872706Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestProcessResults/nonzero","Output":"--- PASS: TestProcessResults/nonzero (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.748744982Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestProcessResults/nonzero","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.748749397Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestProcessResults","Output":"--- PASS: TestProcessResults (0.01s)\n"}
+{"Time":"2026-09-15T23:02:22.74875362Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestProcessResults","Elapsed":0.01}
+{"Time":"2026-09-15T23:02:22.748781767Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestTimeout"}
+{"Time":"2026-09-15T23:02:22.7487843Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestTimeout","Output":"=== RUN   TestTimeout\n"}
+{"Time":"2026-09-15T23:02:22.810381028Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestTimeout","Output":"--- PASS: TestTimeout (0.06s)\n"}
+{"Time":"2026-09-15T23:02:22.810405766Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestTimeout","Elapsed":0.06}
+{"Time":"2026-09-15T23:02:22.810411938Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestCancellation"}
+{"Time":"2026-09-15T23:02:22.810415027Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestCancellation","Output":"=== RUN   TestCancellation\n"}
+{"Time":"2026-09-15T23:02:22.852137869Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestCancellation","Output":"--- PASS: TestCancellation (0.04s)\n"}
+{"Time":"2026-09-15T23:02:22.852160111Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestCancellation","Elapsed":0.04}
+{"Time":"2026-09-15T23:02:22.852166976Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestOutputBound"}
+{"Time":"2026-09-15T23:02:22.85216979Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestOutputBound","Output":"=== RUN   TestOutputBound\n"}
+{"Time":"2026-09-15T23:02:22.916747447Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestOutputBound","Output":"--- PASS: TestOutputBound (0.06s)\n"}
+{"Time":"2026-09-15T23:02:22.917091873Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestOutputBound","Elapsed":0.06}
+{"Time":"2026-09-15T23:02:22.917103183Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestEnvironmentIsExplicit"}
+{"Time":"2026-09-15T23:02:22.917106342Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestEnvironmentIsExplicit","Output":"=== RUN   TestEnvironmentIsExplicit\n"}
+{"Time":"2026-09-15T23:02:22.930260025Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestEnvironmentIsExplicit","Output":"--- PASS: TestEnvironmentIsExplicit (0.02s)\n"}
+{"Time":"2026-09-15T23:02:22.930280011Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestEnvironmentIsExplicit","Elapsed":0.02}
+{"Time":"2026-09-15T23:02:22.930286701Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestDockerConstraints"}
+{"Time":"2026-09-15T23:02:22.930289702Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestDockerConstraints","Output":"=== RUN   TestDockerConstraints\n"}
+{"Time":"2026-09-15T23:02:22.930667919Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestDockerConstraints","Output":"--- PASS: TestDockerConstraints (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.930672694Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestDockerConstraints","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.930713209Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestTrustAdmission"}
+{"Time":"2026-09-15T23:02:22.930716463Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestTrustAdmission","Output":"=== RUN   TestTrustAdmission\n"}
+{"Time":"2026-09-15T23:02:22.930795972Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestTrustAdmission","Output":"--- PASS: TestTrustAdmission (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.930821879Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestTrustAdmission","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.930825696Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestSafeOutput"}
+{"Time":"2026-09-15T23:02:22.930828096Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestSafeOutput","Output":"=== RUN   TestSafeOutput\n"}
+{"Time":"2026-09-15T23:02:22.93090685Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestSafeOutput","Output":"--- PASS: TestSafeOutput (0.00s)\n"}
+{"Time":"2026-09-15T23:02:22.930911901Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestSafeOutput","Elapsed":0}
+{"Time":"2026-09-15T23:02:22.930915214Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestPTYRoundtripAndDetach"}
+{"Time":"2026-09-15T23:02:22.93091787Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestPTYRoundtripAndDetach","Output":"=== RUN   TestPTYRoundtripAndDetach\n"}
+{"Time":"2026-09-15T23:02:23.010105168Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestPTYRoundtripAndDetach","Output":"--- PASS: TestPTYRoundtripAndDetach (0.08s)\n"}
+{"Time":"2026-09-15T23:02:23.010127642Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestPTYRoundtripAndDetach","Elapsed":0.08}
+{"Time":"2026-09-15T23:02:23.010134677Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestPTYCancel"}
+{"Time":"2026-09-15T23:02:23.010137967Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestPTYCancel","Output":"=== RUN   TestPTYCancel\n"}
+{"Time":"2026-09-15T23:02:23.092433867Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestPTYCancel","Output":"--- PASS: TestPTYCancel (0.08s)\n"}
+{"Time":"2026-09-15T23:02:23.092459851Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/execution","Test":"TestPTYCancel","Elapsed":0.08}
+{"Time":"2026-09-15T23:02:23.092465359Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Output":"PASS\n"}
+{"Time":"2026-09-15T23:02:23.098483414Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Output":"coverage: 63.5% of statements\n"}
+{"Time":"2026-09-15T23:02:23.616678348Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/config","Output":"ok  \tgithub.com/GrayCodeAI/rover/internal/config\t1.048s\tcoverage: 76.2% of statements\n"}
+{"Time":"2026-09-15T23:02:23.616709331Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/config","Elapsed":1.049}
+{"Time":"2026-09-15T23:02:23.64071326Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/contextstore","Output":"ok  \tgithub.com/GrayCodeAI/rover/internal/contextstore\t1.072s\tcoverage: 79.1% of statements\n"}
+{"Time":"2026-09-15T23:02:23.640768064Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/contextstore","Elapsed":1.073}
+{"Time":"2026-09-15T23:02:23.694264256Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/cli","Output":"ok  \tgithub.com/GrayCodeAI/rover/internal/cli\t1.126s\tcoverage: 9.4% of statements\n"}
+{"Time":"2026-09-15T23:02:23.694290486Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/cli","Elapsed":1.126}
+{"Time":"2026-09-15T23:02:24.111139411Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/execution","Output":"ok  \tgithub.com/GrayCodeAI/rover/internal/execution\t1.383s\tcoverage: 63.5% of statements\n"}
+{"Time":"2026-09-15T23:02:24.111182124Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/execution","Elapsed":1.384}
+{"Time":"2026-09-15T23:02:24.244077258Z","Action":"start","Package":"github.com/GrayCodeAI/rover/internal/integration"}
+{"Time":"2026-09-15T23:02:24.272103048Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/integration","Test":"TestPreviewApplyUndoPreservesUserInstructions"}
+{"Time":"2026-09-15T23:02:24.272133377Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/integration","Test":"TestPreviewApplyUndoPreservesUserInstructions","Output":"=== RUN   TestPreviewApplyUndoPreservesUserInstructions\n"}
+{"Time":"2026-09-15T23:02:24.31141174Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/integration","Test":"TestPreviewApplyUndoPreservesUserInstructions","Output":"--- PASS: TestPreviewApplyUndoPreservesUserInstructions (0.04s)\n"}
+{"Time":"2026-09-15T23:02:24.311443349Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/integration","Test":"TestPreviewApplyUndoPreservesUserInstructions","Elapsed":0.04}
+{"Time":"2026-09-15T23:02:24.31145307Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/integration","Test":"TestStalePreviewAndSymlinkRefused"}
+{"Time":"2026-09-15T23:02:24.311457651Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/integration","Test":"TestStalePreviewAndSymlinkRefused","Output":"=== RUN   TestStalePreviewAndSymlinkRefused\n"}
+{"Time":"2026-09-15T23:02:24.338076646Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/integration","Test":"TestStalePreviewAndSymlinkRefused","Output":"--- PASS: TestStalePreviewAndSymlinkRefused (0.03s)\n"}
+{"Time":"2026-09-15T23:02:24.338101375Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/integration","Test":"TestStalePreviewAndSymlinkRefused","Elapsed":0.03}
+{"Time":"2026-09-15T23:02:24.338135498Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/integration","Test":"TestNewFileUndo"}
+{"Time":"2026-09-15T23:02:24.338138465Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/integration","Test":"TestNewFileUndo","Output":"=== RUN   TestNewFileUndo\n"}
+{"Time":"2026-09-15T23:02:24.364575437Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/integration","Test":"TestNewFileUndo","Output":"--- PASS: TestNewFileUndo (0.03s)\n"}
+{"Time":"2026-09-15T23:02:24.364646462Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/integration","Test":"TestNewFileUndo","Elapsed":0.03}
+{"Time":"2026-09-15T23:02:24.364681931Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/integration","Output":"PASS\n"}
+{"Time":"2026-09-15T23:02:24.366596239Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/integration","Output":"coverage: 73.7% of statements\n"}
+{"Time":"2026-09-15T23:02:24.396582465Z","Action":"start","Package":"github.com/GrayCodeAI/rover/internal/learning"}
+{"Time":"2026-09-15T23:02:24.40893073Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/learning","Test":"TestProposeHoldoutPromoteAndRevoke"}
+{"Time":"2026-09-15T23:02:24.408978342Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/learning","Test":"TestProposeHoldoutPromoteAndRevoke","Output":"=== RUN   TestProposeHoldoutPromoteAndRevoke\n"}
+{"Time":"2026-09-15T23:02:24.435981506Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/learning","Test":"TestProposeHoldoutPromoteAndRevoke","Output":"--- PASS: TestProposeHoldoutPromoteAndRevoke (0.03s)\n"}
+{"Time":"2026-09-15T23:02:24.436026758Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/learning","Test":"TestProposeHoldoutPromoteAndRevoke","Elapsed":0.03}
+{"Time":"2026-09-15T23:02:24.436033895Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/learning","Test":"TestHoldoutLeakageAndMandatoryChecks"}
+{"Time":"2026-09-15T23:02:24.436040158Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/learning","Test":"TestHoldoutLeakageAndMandatoryChecks","Output":"=== RUN   TestHoldoutLeakageAndMandatoryChecks\n"}
+{"Time":"2026-09-15T23:02:24.456693429Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/learning","Test":"TestHoldoutLeakageAndMandatoryChecks","Output":"--- PASS: TestHoldoutLeakageAndMandatoryChecks (0.02s)\n"}
+{"Time":"2026-09-15T23:02:24.456715044Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/learning","Test":"TestHoldoutLeakageAndMandatoryChecks","Elapsed":0.02}
+{"Time":"2026-09-15T23:02:24.456721133Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/learning","Output":"PASS\n"}
+{"Time":"2026-09-15T23:02:24.458846379Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/learning","Output":"coverage: 75.7% of statements\n"}
+{"Time":"2026-09-15T23:02:24.529168325Z","Action":"start","Package":"github.com/GrayCodeAI/rover/internal/mcp"}
+{"Time":"2026-09-15T23:02:24.529437064Z","Action":"start","Package":"github.com/GrayCodeAI/rover/internal/model"}
+{"Time":"2026-09-15T23:02:24.532851238Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/model","Output":"\tgithub.com/GrayCodeAI/rover/internal/model\t\tcoverage: 0.0% of statements\n"}
+{"Time":"2026-09-15T23:02:24.535771305Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/model","Elapsed":0.006}
+{"Time":"2026-09-15T23:02:24.542306683Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"TestRemoteClientTLSAndToolGrant"}
+{"Time":"2026-09-15T23:02:24.542330484Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"TestRemoteClientTLSAndToolGrant","Output":"=== RUN   TestRemoteClientTLSAndToolGrant\n"}
+{"Time":"2026-09-15T23:02:24.623315628Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"TestRemoteClientTLSAndToolGrant","Output":"--- PASS: TestRemoteClientTLSAndToolGrant (0.08s)\n"}
+{"Time":"2026-09-15T23:02:24.623340775Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"TestRemoteClientTLSAndToolGrant","Elapsed":0.08}
+{"Time":"2026-09-15T23:02:24.623391026Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"TestHTTPVerificationCancellationAndDuplicateID"}
+{"Time":"2026-09-15T23:02:24.623395407Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"TestHTTPVerificationCancellationAndDuplicateID","Output":"=== RUN   TestHTTPVerificationCancellationAndDuplicateID\n"}
+{"Time":"2026-09-15T23:02:24.712790103Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"TestHTTPVerificationCancellationAndDuplicateID","Output":"--- PASS: TestHTTPVerificationCancellationAndDuplicateID (0.09s)\n"}
+{"Time":"2026-09-15T23:02:24.712820405Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"TestHTTPVerificationCancellationAndDuplicateID","Elapsed":0.09}
+{"Time":"2026-09-15T23:02:24.712832205Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"TestRemoteExecutionToolCatalog"}
+{"Time":"2026-09-15T23:02:24.712836137Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"TestRemoteExecutionToolCatalog","Output":"=== RUN   TestRemoteExecutionToolCatalog\n"}
+{"Time":"2026-09-15T23:02:24.821168369Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"TestRemoteExecutionToolCatalog","Output":"--- PASS: TestRemoteExecutionToolCatalog (0.11s)\n"}
+{"Time":"2026-09-15T23:02:24.821257616Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"TestRemoteExecutionToolCatalog","Elapsed":0.11}
+{"Time":"2026-09-15T23:02:24.821265465Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"TestStdioLifecycle"}
+{"Time":"2026-09-15T23:02:24.821269332Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"TestStdioLifecycle","Output":"=== RUN   TestStdioLifecycle\n"}
+{"Time":"2026-09-15T23:02:24.878705446Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"TestStdioLifecycle","Output":"--- PASS: TestStdioLifecycle (0.06s)\n"}
+{"Time":"2026-09-15T23:02:24.878733671Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"TestStdioLifecycle","Elapsed":0.06}
+{"Time":"2026-09-15T23:02:24.878741199Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"TestHTTPGrantsProtocolAndOrigin"}
+{"Time":"2026-09-15T23:02:24.878743824Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"TestHTTPGrantsProtocolAndOrigin","Output":"=== RUN   TestHTTPGrantsProtocolAndOrigin\n"}
+{"Time":"2026-09-15T23:02:24.918867621Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"TestHTTPGrantsProtocolAndOrigin","Output":"--- PASS: TestHTTPGrantsProtocolAndOrigin (0.04s)\n"}
+{"Time":"2026-09-15T23:02:24.918894563Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"TestHTTPGrantsProtocolAndOrigin","Elapsed":0.04}
+{"Time":"2026-09-15T23:02:24.918901483Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"TestHTTPActualNetwork"}
+{"Time":"2026-09-15T23:02:24.91890505Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"TestHTTPActualNetwork","Output":"=== RUN   TestHTTPActualNetwork\n"}
+{"Time":"2026-09-15T23:02:24.964216868Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"TestHTTPActualNetwork","Output":"--- PASS: TestHTTPActualNetwork (0.05s)\n"}
+{"Time":"2026-09-15T23:02:24.965274874Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"TestHTTPActualNetwork","Elapsed":0.05}
+{"Time":"2026-09-15T23:02:24.965281308Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"FuzzEnvelope"}
+{"Time":"2026-09-15T23:02:24.965284225Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"FuzzEnvelope","Output":"=== RUN   FuzzEnvelope\n"}
+{"Time":"2026-09-15T23:02:24.965290839Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"FuzzEnvelope/seed#0"}
+{"Time":"2026-09-15T23:02:24.965292589Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"FuzzEnvelope/seed#0","Output":"=== RUN   FuzzEnvelope/seed#0\n"}
+{"Time":"2026-09-15T23:02:24.965296725Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"FuzzEnvelope/seed#0","Output":"--- PASS: FuzzEnvelope/seed#0 (0.00s)\n"}
+{"Time":"2026-09-15T23:02:24.965308146Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"FuzzEnvelope/seed#0","Elapsed":0}
+{"Time":"2026-09-15T23:02:24.965310338Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"FuzzEnvelope/seed#1"}
+{"Time":"2026-09-15T23:02:24.965316964Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"FuzzEnvelope/seed#1","Output":"=== RUN   FuzzEnvelope/seed#1\n"}
+{"Time":"2026-09-15T23:02:24.96531946Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"FuzzEnvelope/seed#1","Output":"--- PASS: FuzzEnvelope/seed#1 (0.00s)\n"}
+{"Time":"2026-09-15T23:02:24.965321547Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"FuzzEnvelope/seed#1","Elapsed":0}
+{"Time":"2026-09-15T23:02:24.965323673Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"FuzzEnvelope","Output":"--- PASS: FuzzEnvelope (0.00s)\n"}
+{"Time":"2026-09-15T23:02:24.965326097Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/mcp","Test":"FuzzEnvelope","Elapsed":0}
+{"Time":"2026-09-15T23:02:24.965329364Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/mcp","Output":"PASS\n"}
+{"Time":"2026-09-15T23:02:24.970841501Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/mcp","Output":"coverage: 73.3% of statements\n"}
+{"Time":"2026-09-15T23:02:25.026141164Z","Action":"start","Package":"github.com/GrayCodeAI/rover/internal/service"}
+{"Time":"2026-09-15T23:02:25.038463136Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/service","Test":"TestServiceProjectBoundary"}
+{"Time":"2026-09-15T23:02:25.038482588Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/service","Test":"TestServiceProjectBoundary","Output":"=== RUN   TestServiceProjectBoundary\n"}
+{"Time":"2026-09-15T23:02:25.153597236Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/service","Test":"TestServiceProjectBoundary","Output":"--- PASS: TestServiceProjectBoundary (0.11s)\n"}
+{"Time":"2026-09-15T23:02:25.153627518Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/service","Test":"TestServiceProjectBoundary","Elapsed":0.11}
+{"Time":"2026-09-15T23:02:25.153635756Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/service","Output":"PASS\n"}
+{"Time":"2026-09-15T23:02:25.155059912Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/service","Output":"coverage: 30.6% of statements\n"}
+{"Time":"2026-09-15T23:02:25.370756826Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/integration","Output":"ok  \tgithub.com/GrayCodeAI/rover/internal/integration\t1.126s\tcoverage: 73.7% of statements\n"}
+{"Time":"2026-09-15T23:02:25.37080459Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/integration","Elapsed":1.127}
+{"Time":"2026-09-15T23:02:25.467764938Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/learning","Output":"ok  \tgithub.com/GrayCodeAI/rover/internal/learning\t1.071s\tcoverage: 75.7% of statements\n"}
+{"Time":"2026-09-15T23:02:25.467794531Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/learning","Elapsed":1.071}
+{"Time":"2026-09-15T23:02:25.766429808Z","Action":"start","Package":"github.com/GrayCodeAI/rover/internal/source"}
+{"Time":"2026-09-15T23:02:25.779868013Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestOverlayAndMerge"}
+{"Time":"2026-09-15T23:02:25.77989638Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestOverlayAndMerge","Output":"=== RUN   TestOverlayAndMerge\n"}
+{"Time":"2026-09-15T23:02:25.836424528Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestOverlayAndMerge","Output":"--- PASS: TestOverlayAndMerge (0.06s)\n"}
+{"Time":"2026-09-15T23:02:25.836454811Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestOverlayAndMerge","Elapsed":0.06}
+{"Time":"2026-09-15T23:02:25.836463022Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestApplicableSnapshotPatch"}
+{"Time":"2026-09-15T23:02:25.836465835Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestApplicableSnapshotPatch","Output":"=== RUN   TestApplicableSnapshotPatch\n"}
+{"Time":"2026-09-15T23:02:25.961720792Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestApplicableSnapshotPatch","Output":"--- PASS: TestApplicableSnapshotPatch (0.13s)\n"}
+{"Time":"2026-09-15T23:02:25.961751532Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestApplicableSnapshotPatch","Elapsed":0.13}
+{"Time":"2026-09-15T23:02:25.961762571Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestCommitSnapshotFrozen"}
+{"Time":"2026-09-15T23:02:25.961765793Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestCommitSnapshotFrozen","Output":"=== RUN   TestCommitSnapshotFrozen\n"}
+{"Time":"2026-09-15T23:02:25.981352002Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/mcp","Output":"ok  \tgithub.com/GrayCodeAI/rover/internal/mcp\t1.452s\tcoverage: 73.3% of statements\n"}
+{"Time":"2026-09-15T23:02:25.981376347Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/mcp","Elapsed":1.452}
+{"Time":"2026-09-15T23:02:26.026596282Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestCommitSnapshotFrozen","Output":"--- PASS: TestCommitSnapshotFrozen (0.06s)\n"}
+{"Time":"2026-09-15T23:02:26.026656025Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestCommitSnapshotFrozen","Elapsed":0.06}
+{"Time":"2026-09-15T23:02:26.026662953Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestWorkingTreeRequiresUntrackedOptIn"}
+{"Time":"2026-09-15T23:02:26.02666598Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestWorkingTreeRequiresUntrackedOptIn","Output":"=== RUN   TestWorkingTreeRequiresUntrackedOptIn\n"}
+{"Time":"2026-09-15T23:02:26.090673553Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestWorkingTreeRequiresUntrackedOptIn","Output":"--- PASS: TestWorkingTreeRequiresUntrackedOptIn (0.06s)\n"}
+{"Time":"2026-09-15T23:02:26.090701545Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestWorkingTreeRequiresUntrackedOptIn","Elapsed":0.06}
+{"Time":"2026-09-15T23:02:26.090707382Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestSourceStatesRejected"}
+{"Time":"2026-09-15T23:02:26.090710089Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestSourceStatesRejected","Output":"=== RUN   TestSourceStatesRejected\n"}
+{"Time":"2026-09-15T23:02:26.090758603Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestSourceStatesRejected/symlink"}
+{"Time":"2026-09-15T23:02:26.090763245Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestSourceStatesRejected/symlink","Output":"=== RUN   TestSourceStatesRejected/symlink\n"}
+{"Time":"2026-09-15T23:02:26.129826946Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestSourceStatesRejected/symlink","Output":"--- PASS: TestSourceStatesRejected/symlink (0.04s)\n"}
+{"Time":"2026-09-15T23:02:26.130529772Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestSourceStatesRejected/symlink","Elapsed":0.04}
+{"Time":"2026-09-15T23:02:26.130550233Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestSourceStatesRejected/LFS"}
+{"Time":"2026-09-15T23:02:26.130553941Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestSourceStatesRejected/LFS","Output":"=== RUN   TestSourceStatesRejected/LFS\n"}
+{"Time":"2026-09-15T23:02:26.162694462Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/service","Output":"ok  \tgithub.com/GrayCodeAI/rover/internal/service\t1.136s\tcoverage: 30.6% of statements\n"}
+{"Time":"2026-09-15T23:02:26.163039347Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/service","Elapsed":1.137}
+{"Time":"2026-09-15T23:02:26.17417219Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestSourceStatesRejected/LFS","Output":"--- PASS: TestSourceStatesRejected/LFS (0.04s)\n"}
+{"Time":"2026-09-15T23:02:26.174979229Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestSourceStatesRejected/LFS","Elapsed":0.04}
+{"Time":"2026-09-15T23:02:26.175023813Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestSourceStatesRejected/case-collision"}
+{"Time":"2026-09-15T23:02:26.17502791Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestSourceStatesRejected/case-collision","Output":"=== RUN   TestSourceStatesRejected/case-collision\n"}
+{"Time":"2026-09-15T23:02:26.223019844Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestSourceStatesRejected/case-collision","Output":"--- PASS: TestSourceStatesRejected/case-collision (0.05s)\n"}
+{"Time":"2026-09-15T23:02:26.22303959Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestSourceStatesRejected/case-collision","Elapsed":0.05}
+{"Time":"2026-09-15T23:02:26.223047562Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestSourceStatesRejected","Output":"--- PASS: TestSourceStatesRejected (0.13s)\n"}
+{"Time":"2026-09-15T23:02:26.223054962Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestSourceStatesRejected","Elapsed":0.13}
+{"Time":"2026-09-15T23:02:26.223058511Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestGitCallbacksNotExecuted"}
+{"Time":"2026-09-15T23:02:26.223064268Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestGitCallbacksNotExecuted","Output":"=== RUN   TestGitCallbacksNotExecuted\n"}
+{"Time":"2026-09-15T23:02:26.270291607Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestGitCallbacksNotExecuted","Output":"--- PASS: TestGitCallbacksNotExecuted (0.05s)\n"}
+{"Time":"2026-09-15T23:02:26.270326701Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestGitCallbacksNotExecuted","Elapsed":0.05}
+{"Time":"2026-09-15T23:02:26.270330944Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestWorktreeNoSmudgeExecution"}
+{"Time":"2026-09-15T23:02:26.270333249Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestWorktreeNoSmudgeExecution","Output":"=== RUN   TestWorktreeNoSmudgeExecution\n"}
+{"Time":"2026-09-15T23:02:26.340589498Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestWorktreeNoSmudgeExecution","Output":"--- PASS: TestWorktreeNoSmudgeExecution (0.07s)\n"}
+{"Time":"2026-09-15T23:02:26.340613024Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestWorktreeNoSmudgeExecution","Elapsed":0.07}
+{"Time":"2026-09-15T23:02:26.340618462Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestDiffCategories"}
+{"Time":"2026-09-15T23:02:26.340621974Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestDiffCategories","Output":"=== RUN   TestDiffCategories\n"}
+{"Time":"2026-09-15T23:02:26.429766198Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestDiffCategories","Output":"--- PASS: TestDiffCategories (0.09s)\n"}
+{"Time":"2026-09-15T23:02:26.429791328Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestDiffCategories","Elapsed":0.09}
+{"Time":"2026-09-15T23:02:26.429797547Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestTamperedManifestRejected"}
+{"Time":"2026-09-15T23:02:26.429800353Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestTamperedManifestRejected","Output":"=== RUN   TestTamperedManifestRejected\n"}
+{"Time":"2026-09-15T23:02:26.500836721Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestTamperedManifestRejected","Output":"--- PASS: TestTamperedManifestRejected (0.07s)\n"}
+{"Time":"2026-09-15T23:02:26.500881533Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestTamperedManifestRejected","Elapsed":0.07}
+{"Time":"2026-09-15T23:02:26.500887484Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestSafeName"}
+{"Time":"2026-09-15T23:02:26.500890524Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestSafeName","Output":"=== RUN   TestSafeName\n"}
+{"Time":"2026-09-15T23:02:26.500896652Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestSafeName","Output":"--- PASS: TestSafeName (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.500939459Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestSafeName","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.500943751Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestResolveOptionRejected"}
+{"Time":"2026-09-15T23:02:26.500946479Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestResolveOptionRejected","Output":"=== RUN   TestResolveOptionRejected\n"}
+{"Time":"2026-09-15T23:02:26.528242123Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestResolveOptionRejected","Output":"--- PASS: TestResolveOptionRejected (0.03s)\n"}
+{"Time":"2026-09-15T23:02:26.528262306Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestResolveOptionRejected","Elapsed":0.03}
+{"Time":"2026-09-15T23:02:26.528279351Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestNestedSymlinkReadRejected"}
+{"Time":"2026-09-15T23:02:26.528282146Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestNestedSymlinkReadRejected","Output":"=== RUN   TestNestedSymlinkReadRejected\n"}
+{"Time":"2026-09-15T23:02:26.528724683Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestNestedSymlinkReadRejected","Output":"--- PASS: TestNestedSymlinkReadRejected (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.528752576Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"TestNestedSymlinkReadRejected","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.528802386Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"FuzzSafeName"}
+{"Time":"2026-09-15T23:02:26.528805349Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"FuzzSafeName","Output":"=== RUN   FuzzSafeName\n"}
+{"Time":"2026-09-15T23:02:26.528968169Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"FuzzSafeName/seed#0"}
+{"Time":"2026-09-15T23:02:26.528970664Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"FuzzSafeName/seed#0","Output":"=== RUN   FuzzSafeName/seed#0\n"}
+{"Time":"2026-09-15T23:02:26.529074034Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"FuzzSafeName/seed#0","Output":"--- PASS: FuzzSafeName/seed#0 (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.529077007Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"FuzzSafeName/seed#0","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.529079839Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"FuzzSafeName/seed#1"}
+{"Time":"2026-09-15T23:02:26.529081396Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"FuzzSafeName/seed#1","Output":"=== RUN   FuzzSafeName/seed#1\n"}
+{"Time":"2026-09-15T23:02:26.529144505Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"FuzzSafeName/seed#1","Output":"--- PASS: FuzzSafeName/seed#1 (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.530767059Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"FuzzSafeName/seed#1","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.530805091Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"FuzzSafeName/seed#2"}
+{"Time":"2026-09-15T23:02:26.530808456Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"FuzzSafeName/seed#2","Output":"=== RUN   FuzzSafeName/seed#2\n"}
+{"Time":"2026-09-15T23:02:26.530812247Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"FuzzSafeName/seed#2","Output":"--- PASS: FuzzSafeName/seed#2 (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.530815016Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"FuzzSafeName/seed#2","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.530817048Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"FuzzSafeName/seed#3"}
+{"Time":"2026-09-15T23:02:26.530818591Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"FuzzSafeName/seed#3","Output":"=== RUN   FuzzSafeName/seed#3\n"}
+{"Time":"2026-09-15T23:02:26.530820783Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"FuzzSafeName/seed#3","Output":"--- PASS: FuzzSafeName/seed#3 (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.530822696Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"FuzzSafeName/seed#3","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.530824285Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"FuzzSafeName/seed#4"}
+{"Time":"2026-09-15T23:02:26.530825711Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"FuzzSafeName/seed#4","Output":"=== RUN   FuzzSafeName/seed#4\n"}
+{"Time":"2026-09-15T23:02:26.530827728Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"FuzzSafeName/seed#4","Output":"--- PASS: FuzzSafeName/seed#4 (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.530829363Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"FuzzSafeName/seed#4","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.530831457Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"FuzzSafeName","Output":"--- PASS: FuzzSafeName (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.530833009Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/source","Test":"FuzzSafeName","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.530834549Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Output":"PASS\n"}
+{"Time":"2026-09-15T23:02:26.536197874Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Output":"coverage: 75.5% of statements\n"}
+{"Time":"2026-09-15T23:02:26.682911531Z","Action":"start","Package":"github.com/GrayCodeAI/rover/internal/store"}
+{"Time":"2026-09-15T23:02:26.696973779Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestResourceTransactions"}
+{"Time":"2026-09-15T23:02:26.697076161Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestResourceTransactions","Output":"=== RUN   TestResourceTransactions\n"}
+{"Time":"2026-09-15T23:02:26.70058966Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestResourceTransactions","Output":"--- PASS: TestResourceTransactions (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.700609865Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestResourceTransactions","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.700617478Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestPersistence"}
+{"Time":"2026-09-15T23:02:26.700620778Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestPersistence","Output":"=== RUN   TestPersistence\n"}
+{"Time":"2026-09-15T23:02:26.704754176Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestPersistence","Output":"--- PASS: TestPersistence (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.70477324Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestPersistence","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.704780621Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestParameterizedDataAndNotFound"}
+{"Time":"2026-09-15T23:02:26.704783126Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestParameterizedDataAndNotFound","Output":"=== RUN   TestParameterizedDataAndNotFound\n"}
+{"Time":"2026-09-15T23:02:26.704786374Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestParameterizedDataAndNotFound","Output":"--- PASS: TestParameterizedDataAndNotFound (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.70478833Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestParameterizedDataAndNotFound","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.704790626Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestIdempotencyAcrossConnections"}
+{"Time":"2026-09-15T23:02:26.704792386Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestIdempotencyAcrossConnections","Output":"=== RUN   TestIdempotencyAcrossConnections\n"}
+{"Time":"2026-09-15T23:02:26.708297599Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestIdempotencyAcrossConnections","Output":"--- PASS: TestIdempotencyAcrossConnections (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.708316703Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestIdempotencyAcrossConnections","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.708325486Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestMutationAtomicity"}
+{"Time":"2026-09-15T23:02:26.708328418Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestMutationAtomicity","Output":"=== RUN   TestMutationAtomicity\n"}
+{"Time":"2026-09-15T23:02:26.712655906Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestMutationAtomicity","Output":"--- PASS: TestMutationAtomicity (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.712675835Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestMutationAtomicity","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.71268475Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestBlobAtomicAndTamper"}
+{"Time":"2026-09-15T23:02:26.712686958Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestBlobAtomicAndTamper","Output":"=== RUN   TestBlobAtomicAndTamper\n"}
+{"Time":"2026-09-15T23:02:26.717042108Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestBlobAtomicAndTamper","Output":"--- PASS: TestBlobAtomicAndTamper (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.717060558Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestBlobAtomicAndTamper","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.717067088Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestSymlinkStateRejected"}
+{"Time":"2026-09-15T23:02:26.717069554Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestSymlinkStateRejected","Output":"=== RUN   TestSymlinkStateRejected\n"}
+{"Time":"2026-09-15T23:02:26.717813224Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestSymlinkStateRejected","Output":"--- PASS: TestSymlinkStateRejected (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.717853707Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestSymlinkStateRejected","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.71786769Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestNewerSchemaRejected"}
+{"Time":"2026-09-15T23:02:26.71787105Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestNewerSchemaRejected","Output":"=== RUN   TestNewerSchemaRejected\n"}
+{"Time":"2026-09-15T23:02:26.721265878Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestNewerSchemaRejected","Output":"--- PASS: TestNewerSchemaRejected (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.72129098Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestNewerSchemaRejected","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.72129953Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestRejectUnrelatedStateBeforeChangingPermissions"}
+{"Time":"2026-09-15T23:02:26.721301988Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestRejectUnrelatedStateBeforeChangingPermissions","Output":"=== RUN   TestRejectUnrelatedStateBeforeChangingPermissions\n"}
+{"Time":"2026-09-15T23:02:26.721305473Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestRejectUnrelatedStateBeforeChangingPermissions","Output":"--- PASS: TestRejectUnrelatedStateBeforeChangingPermissions (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.72130758Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/store","Test":"TestRejectUnrelatedStateBeforeChangingPermissions","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.721309695Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/store","Output":"PASS\n"}
+{"Time":"2026-09-15T23:02:26.724035969Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/store","Output":"coverage: 55.0% of statements\n"}
+{"Time":"2026-09-15T23:02:26.812773776Z","Action":"start","Package":"github.com/GrayCodeAI/rover/internal/tasks"}
+{"Time":"2026-09-15T23:02:26.812873634Z","Action":"start","Package":"github.com/GrayCodeAI/rover/internal/terminal"}
+{"Time":"2026-09-15T23:02:26.815862121Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/terminal","Output":"\tgithub.com/GrayCodeAI/rover/internal/terminal\t\tcoverage: 0.0% of statements\n"}
+{"Time":"2026-09-15T23:02:26.81841119Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/terminal","Elapsed":0.006}
+{"Time":"2026-09-15T23:02:26.818430584Z","Action":"start","Package":"github.com/GrayCodeAI/rover/internal/testutil"}
+{"Time":"2026-09-15T23:02:26.821130342Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/testutil","Output":"\tgithub.com/GrayCodeAI/rover/internal/testutil\t\tcoverage: 0.0% of statements\n"}
+{"Time":"2026-09-15T23:02:26.823568468Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/testutil","Elapsed":0.005}
+{"Time":"2026-09-15T23:02:26.82738279Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestBoundedRepairPreservesAttempts"}
+{"Time":"2026-09-15T23:02:26.827396872Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestBoundedRepairPreservesAttempts","Output":"=== RUN   TestBoundedRepairPreservesAttempts\n"}
+{"Time":"2026-09-15T23:02:26.867611837Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestCounterfactualAndMutation","Output":"--- PASS: TestCounterfactualAndMutation (5.92s)\n"}
+{"Time":"2026-09-15T23:02:26.867669637Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestCounterfactualAndMutation","Elapsed":5.92}
+{"Time":"2026-09-15T23:02:26.867676069Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestCounterfactualIdentityAmbiguity"}
+{"Time":"2026-09-15T23:02:26.867679883Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestCounterfactualIdentityAmbiguity","Output":"=== RUN   TestCounterfactualIdentityAmbiguity\n"}
+{"Time":"2026-09-15T23:02:26.869267454Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestCounterfactualIdentityAmbiguity","Output":"--- PASS: TestCounterfactualIdentityAmbiguity (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.869282526Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestCounterfactualIdentityAmbiguity","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.869287111Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers"}
+{"Time":"2026-09-15T23:02:26.869294441Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers","Output":"=== RUN   TestParsers\n"}
+{"Time":"2026-09-15T23:02:26.86929813Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/exit0"}
+{"Time":"2026-09-15T23:02:26.869301025Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/exit0","Output":"=== RUN   TestParsers/exit0\n"}
+{"Time":"2026-09-15T23:02:26.869304082Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/exit0","Output":"--- PASS: TestParsers/exit0 (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.869306564Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/exit0","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.869308868Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/exit7"}
+{"Time":"2026-09-15T23:02:26.869310428Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/exit7","Output":"=== RUN   TestParsers/exit7\n"}
+{"Time":"2026-09-15T23:02:26.869315209Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/exit7","Output":"--- PASS: TestParsers/exit7 (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.869317239Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/exit7","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.869319042Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/go-success"}
+{"Time":"2026-09-15T23:02:26.869320894Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/go-success","Output":"=== RUN   TestParsers/go-success\n"}
+{"Time":"2026-09-15T23:02:26.869323627Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/go-success","Output":"--- PASS: TestParsers/go-success (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.869325191Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/go-success","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.869329241Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/go-empty"}
+{"Time":"2026-09-15T23:02:26.869330935Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/go-empty","Output":"=== RUN   TestParsers/go-empty\n"}
+{"Time":"2026-09-15T23:02:26.869334266Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/go-empty","Output":"--- PASS: TestParsers/go-empty (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.869563222Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/go-empty","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.869636661Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/go-malformed"}
+{"Time":"2026-09-15T23:02:26.869639624Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/go-malformed","Output":"=== RUN   TestParsers/go-malformed\n"}
+{"Time":"2026-09-15T23:02:26.869701308Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/go-malformed","Output":"--- PASS: TestParsers/go-malformed (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.869786379Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/go-malformed","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.869823252Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/go-zero"}
+{"Time":"2026-09-15T23:02:26.869826995Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/go-zero","Output":"=== RUN   TestParsers/go-zero\n"}
+{"Time":"2026-09-15T23:02:26.869937938Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/go-zero","Output":"--- PASS: TestParsers/go-zero (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.869942237Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/go-zero","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.869966111Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/go-missing-run"}
+{"Time":"2026-09-15T23:02:26.869968424Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/go-missing-run","Output":"=== RUN   TestParsers/go-missing-run\n"}
+{"Time":"2026-09-15T23:02:26.870092698Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/go-missing-run","Output":"--- PASS: TestParsers/go-missing-run (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.87009633Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/go-missing-run","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.870120875Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/go-incomplete"}
+{"Time":"2026-09-15T23:02:26.870123307Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/go-incomplete","Output":"=== RUN   TestParsers/go-incomplete\n"}
+{"Time":"2026-09-15T23:02:26.870198061Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/go-incomplete","Output":"--- PASS: TestParsers/go-incomplete (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.870216418Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/go-incomplete","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.870246154Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-pass"}
+{"Time":"2026-09-15T23:02:26.870248258Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-pass","Output":"=== RUN   TestParsers/junit-pass\n"}
+{"Time":"2026-09-15T23:02:26.870373207Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-pass","Output":"--- PASS: TestParsers/junit-pass (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.870399096Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-pass","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.87042015Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-skipped"}
+{"Time":"2026-09-15T23:02:26.870422077Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-skipped","Output":"=== RUN   TestParsers/junit-skipped\n"}
+{"Time":"2026-09-15T23:02:26.870561125Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-skipped","Output":"--- PASS: TestParsers/junit-skipped (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.870564413Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-skipped","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.870591946Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-forged-count"}
+{"Time":"2026-09-15T23:02:26.870593845Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-forged-count","Output":"=== RUN   TestParsers/junit-forged-count\n"}
+{"Time":"2026-09-15T23:02:26.870861891Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-forged-count","Output":"--- PASS: TestParsers/junit-forged-count (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.87088416Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-forged-count","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.870910756Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-summary-failure"}
+{"Time":"2026-09-15T23:02:26.870915448Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-summary-failure","Output":"=== RUN   TestParsers/junit-summary-failure\n"}
+{"Time":"2026-09-15T23:02:26.871110691Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-summary-failure","Output":"--- PASS: TestParsers/junit-summary-failure (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.871131546Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-summary-failure","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.871156092Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-fail"}
+{"Time":"2026-09-15T23:02:26.871158336Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-fail","Output":"=== RUN   TestParsers/junit-fail\n"}
+{"Time":"2026-09-15T23:02:26.871361607Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-fail","Output":"--- PASS: TestParsers/junit-fail (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.871379353Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-fail","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.871405449Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-malformed"}
+{"Time":"2026-09-15T23:02:26.871407705Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-malformed","Output":"=== RUN   TestParsers/junit-malformed\n"}
+{"Time":"2026-09-15T23:02:26.871493218Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-malformed","Output":"--- PASS: TestParsers/junit-malformed (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.871496569Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-malformed","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.871540222Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-foreign-root"}
+{"Time":"2026-09-15T23:02:26.871542253Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-foreign-root","Output":"=== RUN   TestParsers/junit-foreign-root\n"}
+{"Time":"2026-09-15T23:02:26.871627981Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-foreign-root","Output":"--- PASS: TestParsers/junit-foreign-root (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.871630987Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-foreign-root","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.871667412Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-trailing"}
+{"Time":"2026-09-15T23:02:26.871669311Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-trailing","Output":"=== RUN   TestParsers/junit-trailing\n"}
+{"Time":"2026-09-15T23:02:26.871799947Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-trailing","Output":"--- PASS: TestParsers/junit-trailing (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.871815516Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-trailing","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.871838413Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-missing"}
+{"Time":"2026-09-15T23:02:26.871840408Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-missing","Output":"=== RUN   TestParsers/junit-missing\n"}
+{"Time":"2026-09-15T23:02:26.871908419Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-missing","Output":"--- PASS: TestParsers/junit-missing (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.871936557Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers/junit-missing","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.871966575Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers","Output":"--- PASS: TestParsers (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.87206422Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestParsers","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.872068787Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestIncompleteExecutionNeverPasses"}
+{"Time":"2026-09-15T23:02:26.872071428Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestIncompleteExecutionNeverPasses","Output":"=== RUN   TestIncompleteExecutionNeverPasses\n"}
+{"Time":"2026-09-15T23:02:26.872129406Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestIncompleteExecutionNeverPasses/timeout"}
+{"Time":"2026-09-15T23:02:26.872131655Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestIncompleteExecutionNeverPasses/timeout","Output":"=== RUN   TestIncompleteExecutionNeverPasses/timeout\n"}
+{"Time":"2026-09-15T23:02:26.872209166Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestIncompleteExecutionNeverPasses/timeout","Output":"--- PASS: TestIncompleteExecutionNeverPasses/timeout (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.872212617Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestIncompleteExecutionNeverPasses/timeout","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.872354635Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestIncompleteExecutionNeverPasses/cancelled"}
+{"Time":"2026-09-15T23:02:26.872356707Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestIncompleteExecutionNeverPasses/cancelled","Output":"=== RUN   TestIncompleteExecutionNeverPasses/cancelled\n"}
+{"Time":"2026-09-15T23:02:26.872409342Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestIncompleteExecutionNeverPasses/cancelled","Output":"--- PASS: TestIncompleteExecutionNeverPasses/cancelled (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.872437794Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestIncompleteExecutionNeverPasses/cancelled","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.87245897Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestIncompleteExecutionNeverPasses/truncated"}
+{"Time":"2026-09-15T23:02:26.872461259Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestIncompleteExecutionNeverPasses/truncated","Output":"=== RUN   TestIncompleteExecutionNeverPasses/truncated\n"}
+{"Time":"2026-09-15T23:02:26.872517223Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestIncompleteExecutionNeverPasses/truncated","Output":"--- PASS: TestIncompleteExecutionNeverPasses/truncated (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.872545443Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestIncompleteExecutionNeverPasses/truncated","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.872577079Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestIncompleteExecutionNeverPasses/start-error"}
+{"Time":"2026-09-15T23:02:26.872579225Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestIncompleteExecutionNeverPasses/start-error","Output":"=== RUN   TestIncompleteExecutionNeverPasses/start-error\n"}
+{"Time":"2026-09-15T23:02:26.872667813Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestIncompleteExecutionNeverPasses/start-error","Output":"--- PASS: TestIncompleteExecutionNeverPasses/start-error (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.872695647Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestIncompleteExecutionNeverPasses/start-error","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.872716818Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestIncompleteExecutionNeverPasses/cleanup-error"}
+{"Time":"2026-09-15T23:02:26.872718837Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestIncompleteExecutionNeverPasses/cleanup-error","Output":"=== RUN   TestIncompleteExecutionNeverPasses/cleanup-error\n"}
+{"Time":"2026-09-15T23:02:26.872773976Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestIncompleteExecutionNeverPasses/cleanup-error","Output":"--- PASS: TestIncompleteExecutionNeverPasses/cleanup-error (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.872799637Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestIncompleteExecutionNeverPasses/cleanup-error","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.872830091Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestIncompleteExecutionNeverPasses","Output":"--- PASS: TestIncompleteExecutionNeverPasses (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.872854674Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestIncompleteExecutionNeverPasses","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.873209849Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPolicyCompleteness"}
+{"Time":"2026-09-15T23:02:26.873217332Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPolicyCompleteness","Output":"=== RUN   TestPolicyCompleteness\n"}
+{"Time":"2026-09-15T23:02:26.873221989Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPolicyCompleteness/pass"}
+{"Time":"2026-09-15T23:02:26.873224406Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPolicyCompleteness/pass","Output":"=== RUN   TestPolicyCompleteness/pass\n"}
+{"Time":"2026-09-15T23:02:26.873227905Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPolicyCompleteness/pass","Output":"--- PASS: TestPolicyCompleteness/pass (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.873230449Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPolicyCompleteness/pass","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.873232963Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPolicyCompleteness/fail"}
+{"Time":"2026-09-15T23:02:26.873235219Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPolicyCompleteness/fail","Output":"=== RUN   TestPolicyCompleteness/fail\n"}
+{"Time":"2026-09-15T23:02:26.873289524Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPolicyCompleteness/fail","Output":"--- PASS: TestPolicyCompleteness/fail (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.873315217Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPolicyCompleteness/fail","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.873337605Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPolicyCompleteness/error"}
+{"Time":"2026-09-15T23:02:26.873339852Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPolicyCompleteness/error","Output":"=== RUN   TestPolicyCompleteness/error\n"}
+{"Time":"2026-09-15T23:02:26.873517283Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPolicyCompleteness/error","Output":"--- PASS: TestPolicyCompleteness/error (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.873559066Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPolicyCompleteness/error","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.873585449Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPolicyCompleteness/wrong-candidate"}
+{"Time":"2026-09-15T23:02:26.873588589Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPolicyCompleteness/wrong-candidate","Output":"=== RUN   TestPolicyCompleteness/wrong-candidate\n"}
+{"Time":"2026-09-15T23:02:26.873783331Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPolicyCompleteness/wrong-candidate","Output":"--- PASS: TestPolicyCompleteness/wrong-candidate (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.873787483Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPolicyCompleteness/wrong-candidate","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.873822267Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPolicyCompleteness/wrong-spec"}
+{"Time":"2026-09-15T23:02:26.873825263Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPolicyCompleteness/wrong-spec","Output":"=== RUN   TestPolicyCompleteness/wrong-spec\n"}
+{"Time":"2026-09-15T23:02:26.874142159Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPolicyCompleteness/wrong-spec","Output":"--- PASS: TestPolicyCompleteness/wrong-spec (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.874163981Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPolicyCompleteness/wrong-spec","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.874209115Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPolicyCompleteness","Output":"--- PASS: TestPolicyCompleteness (0.00s)\n"}
+{"Time":"2026-09-15T23:02:26.874354017Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPolicyCompleteness","Elapsed":0}
+{"Time":"2026-09-15T23:02:26.874379897Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestVerificationIntegration"}
+{"Time":"2026-09-15T23:02:26.874383104Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestVerificationIntegration","Output":"=== RUN   TestVerificationIntegration\n"}
+{"Time":"2026-09-15T23:02:26.874525364Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestVerificationIntegration/pass"}
+{"Time":"2026-09-15T23:02:26.874530565Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestVerificationIntegration/pass","Output":"=== RUN   TestVerificationIntegration/pass\n"}
+{"Time":"2026-09-15T23:02:26.924849171Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestVerificationIntegration/pass","Output":"--- PASS: TestVerificationIntegration/pass (0.05s)\n"}
+{"Time":"2026-09-15T23:02:26.925603184Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestVerificationIntegration/pass","Elapsed":0.05}
+{"Time":"2026-09-15T23:02:26.925621436Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestVerificationIntegration/fail"}
+{"Time":"2026-09-15T23:02:26.925625937Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestVerificationIntegration/fail","Output":"=== RUN   TestVerificationIntegration/fail\n"}
+{"Time":"2026-09-15T23:02:26.984089304Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestVerificationIntegration/fail","Output":"--- PASS: TestVerificationIntegration/fail (0.06s)\n"}
+{"Time":"2026-09-15T23:02:26.984152155Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestVerificationIntegration/fail","Elapsed":0.06}
+{"Time":"2026-09-15T23:02:26.984192419Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestVerificationIntegration/mutated-input"}
+{"Time":"2026-09-15T23:02:26.984196486Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestVerificationIntegration/mutated-input","Output":"=== RUN   TestVerificationIntegration/mutated-input\n"}
+{"Time":"2026-09-15T23:02:26.991977404Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestBoundedRepairPreservesAttempts","Output":"--- PASS: TestBoundedRepairPreservesAttempts (0.17s)\n"}
+{"Time":"2026-09-15T23:02:26.992045222Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestBoundedRepairPreservesAttempts","Elapsed":0.17}
+{"Time":"2026-09-15T23:02:26.992052235Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestRepairBudgetStops"}
+{"Time":"2026-09-15T23:02:26.992056485Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestRepairBudgetStops","Output":"=== RUN   TestRepairBudgetStops\n"}
+{"Time":"2026-09-15T23:02:27.036697825Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestVerificationIntegration/mutated-input","Output":"--- PASS: TestVerificationIntegration/mutated-input (0.05s)\n"}
+{"Time":"2026-09-15T23:02:27.036720432Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestVerificationIntegration/mutated-input","Elapsed":0.05}
+{"Time":"2026-09-15T23:02:27.036761312Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestVerificationIntegration/no-report"}
+{"Time":"2026-09-15T23:02:27.03676571Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestVerificationIntegration/no-report","Output":"=== RUN   TestVerificationIntegration/no-report\n"}
+{"Time":"2026-09-15T23:02:27.089541499Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestVerificationIntegration/no-report","Output":"--- PASS: TestVerificationIntegration/no-report (0.05s)\n"}
+{"Time":"2026-09-15T23:02:27.08958617Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestVerificationIntegration/no-report","Elapsed":0.05}
+{"Time":"2026-09-15T23:02:27.089637691Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestVerificationIntegration","Output":"--- PASS: TestVerificationIntegration (0.22s)\n"}
+{"Time":"2026-09-15T23:02:27.089643227Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestVerificationIntegration","Elapsed":0.22}
+{"Time":"2026-09-15T23:02:27.089648205Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestBaselinePolicyNotCandidatePolicy"}
+{"Time":"2026-09-15T23:02:27.089651219Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestBaselinePolicyNotCandidatePolicy","Output":"=== RUN   TestBaselinePolicyNotCandidatePolicy\n"}
+{"Time":"2026-09-15T23:02:27.168021037Z","Action":"start","Package":"github.com/GrayCodeAI/rover/internal/wire"}
+{"Time":"2026-09-15T23:02:27.180304934Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/wire","Test":"TestStrictNamesAndNull"}
+{"Time":"2026-09-15T23:02:27.180324299Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/wire","Test":"TestStrictNamesAndNull","Output":"=== RUN   TestStrictNamesAndNull\n"}
+{"Time":"2026-09-15T23:02:27.180539987Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/wire","Test":"TestStrictNamesAndNull","Output":"--- PASS: TestStrictNamesAndNull (0.00s)\n"}
+{"Time":"2026-09-15T23:02:27.180550221Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/wire","Test":"TestStrictNamesAndNull","Elapsed":0}
+{"Time":"2026-09-15T23:02:27.180555161Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/wire","Output":"PASS\n"}
+{"Time":"2026-09-15T23:02:27.181634186Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestBaselinePolicyNotCandidatePolicy","Output":"--- PASS: TestBaselinePolicyNotCandidatePolicy (0.09s)\n"}
+{"Time":"2026-09-15T23:02:27.181684414Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestBaselinePolicyNotCandidatePolicy","Elapsed":0.09}
+{"Time":"2026-09-15T23:02:27.181691899Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPreexistingReportRejected"}
+{"Time":"2026-09-15T23:02:27.181695422Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPreexistingReportRejected","Output":"=== RUN   TestPreexistingReportRejected\n"}
+{"Time":"2026-09-15T23:02:27.182070706Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/wire","Output":"coverage: 54.0% of statements\n"}
+{"Time":"2026-09-15T23:02:27.190029563Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestRepairBudgetStops","Output":"--- PASS: TestRepairBudgetStops (0.20s)\n"}
+{"Time":"2026-09-15T23:02:27.190049852Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestRepairBudgetStops","Elapsed":0.2}
+{"Time":"2026-09-15T23:02:27.190055586Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestForegroundTaskAndIdempotency"}
+{"Time":"2026-09-15T23:02:27.190058527Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestForegroundTaskAndIdempotency","Output":"=== RUN   TestForegroundTaskAndIdempotency\n"}
+{"Time":"2026-09-15T23:02:27.224280747Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPreexistingReportRejected","Output":"--- PASS: TestPreexistingReportRejected (0.04s)\n"}
+{"Time":"2026-09-15T23:02:27.224334091Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestPreexistingReportRejected","Elapsed":0.04}
+{"Time":"2026-09-15T23:02:27.224360789Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestExplicitGrantRequired"}
+{"Time":"2026-09-15T23:02:27.224363356Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestExplicitGrantRequired","Output":"=== RUN   TestExplicitGrantRequired\n"}
+{"Time":"2026-09-15T23:02:27.258503477Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestExplicitGrantRequired","Output":"--- PASS: TestExplicitGrantRequired (0.03s)\n"}
+{"Time":"2026-09-15T23:02:27.258564284Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"TestExplicitGrantRequired","Elapsed":0.03}
+{"Time":"2026-09-15T23:02:27.258635404Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"FuzzResultParser"}
+{"Time":"2026-09-15T23:02:27.25863923Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"FuzzResultParser","Output":"=== RUN   FuzzResultParser\n"}
+{"Time":"2026-09-15T23:02:27.258765526Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"FuzzResultParser/seed#0"}
+{"Time":"2026-09-15T23:02:27.258769374Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"FuzzResultParser/seed#0","Output":"=== RUN   FuzzResultParser/seed#0\n"}
+{"Time":"2026-09-15T23:02:27.258954535Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"FuzzResultParser/seed#0","Output":"--- PASS: FuzzResultParser/seed#0 (0.00s)\n"}
+{"Time":"2026-09-15T23:02:27.25898898Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"FuzzResultParser/seed#0","Elapsed":0}
+{"Time":"2026-09-15T23:02:27.259060278Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"FuzzResultParser/seed#1"}
+{"Time":"2026-09-15T23:02:27.259063436Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"FuzzResultParser/seed#1","Output":"=== RUN   FuzzResultParser/seed#1\n"}
+{"Time":"2026-09-15T23:02:27.259130466Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"FuzzResultParser/seed#1","Output":"--- PASS: FuzzResultParser/seed#1 (0.00s)\n"}
+{"Time":"2026-09-15T23:02:27.259156892Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"FuzzResultParser/seed#1","Elapsed":0}
+{"Time":"2026-09-15T23:02:27.259221778Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"FuzzResultParser","Output":"--- PASS: FuzzResultParser (0.00s)\n"}
+{"Time":"2026-09-15T23:02:27.261254249Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Test":"FuzzResultParser","Elapsed":0}
+{"Time":"2026-09-15T23:02:27.261275099Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Output":"PASS\n"}
+{"Time":"2026-09-15T23:02:27.261865179Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Output":"coverage: 72.7% of statements\n"}
+{"Time":"2026-09-15T23:02:27.303359164Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestForegroundTaskAndIdempotency","Output":"--- PASS: TestForegroundTaskAndIdempotency (0.11s)\n"}
+{"Time":"2026-09-15T23:02:27.303432559Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestForegroundTaskAndIdempotency","Elapsed":0.11}
+{"Time":"2026-09-15T23:02:27.30348965Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestTaskCancellation"}
+{"Time":"2026-09-15T23:02:27.303493067Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestTaskCancellation","Output":"=== RUN   TestTaskCancellation\n"}
+{"Time":"2026-09-15T23:02:27.552738495Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/source","Output":"ok  \tgithub.com/GrayCodeAI/rover/internal/source\t1.786s\tcoverage: 75.5% of statements\n"}
+{"Time":"2026-09-15T23:02:27.552762266Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/source","Elapsed":1.786}
+{"Time":"2026-09-15T23:02:27.592406406Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestTaskCancellation","Output":"--- PASS: TestTaskCancellation (0.29s)\n"}
+{"Time":"2026-09-15T23:02:27.592789546Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestTaskCancellation","Elapsed":0.29}
+{"Time":"2026-09-15T23:02:27.59280365Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestLostWorkerReconciliation"}
+{"Time":"2026-09-15T23:02:27.592806255Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestLostWorkerReconciliation","Output":"=== RUN   TestLostWorkerReconciliation\n"}
+{"Time":"2026-09-15T23:02:27.61312361Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestLostWorkerReconciliation","Output":"--- PASS: TestLostWorkerReconciliation (0.02s)\n"}
+{"Time":"2026-09-15T23:02:27.613147223Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestLostWorkerReconciliation","Elapsed":0.02}
+{"Time":"2026-09-15T23:02:27.613153706Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestCapabilitiesAreHonest"}
+{"Time":"2026-09-15T23:02:27.613155881Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestCapabilitiesAreHonest","Output":"=== RUN   TestCapabilitiesAreHonest\n"}
+{"Time":"2026-09-15T23:02:27.613301382Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestCapabilitiesAreHonest","Output":"--- PASS: TestCapabilitiesAreHonest (0.00s)\n"}
+{"Time":"2026-09-15T23:02:27.613319391Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestCapabilitiesAreHonest","Elapsed":0}
+{"Time":"2026-09-15T23:02:27.61334323Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestQueuedLaunchedProcessCanBeReconciled"}
+{"Time":"2026-09-15T23:02:27.613349973Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestQueuedLaunchedProcessCanBeReconciled","Output":"=== RUN   TestQueuedLaunchedProcessCanBeReconciled\n"}
+{"Time":"2026-09-15T23:02:27.632010722Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestQueuedLaunchedProcessCanBeReconciled","Output":"--- PASS: TestQueuedLaunchedProcessCanBeReconciled (0.02s)\n"}
+{"Time":"2026-09-15T23:02:27.632031504Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/tasks","Test":"TestQueuedLaunchedProcessCanBeReconciled","Elapsed":0.02}
+{"Time":"2026-09-15T23:02:27.632046501Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/tasks","Output":"PASS\n"}
+{"Time":"2026-09-15T23:02:27.634195497Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/tasks","Output":"coverage: 61.1% of statements\n"}
+{"Time":"2026-09-15T23:02:27.730633336Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/store","Output":"ok  \tgithub.com/GrayCodeAI/rover/internal/store\t1.047s\tcoverage: 55.0% of statements\n"}
+{"Time":"2026-09-15T23:02:27.73064944Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/store","Elapsed":1.048}
+{"Time":"2026-09-15T23:02:28.067034274Z","Action":"start","Package":"github.com/GrayCodeAI/rover/internal/workflow"}
+{"Time":"2026-09-15T23:02:28.081649678Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/workflow","Test":"TestCycleRejected"}
+{"Time":"2026-09-15T23:02:28.081727248Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/workflow","Test":"TestCycleRejected","Output":"=== RUN   TestCycleRejected\n"}
+{"Time":"2026-09-15T23:02:28.081768415Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/workflow","Test":"TestCycleRejected","Output":"--- PASS: TestCycleRejected (0.00s)\n"}
+{"Time":"2026-09-15T23:02:28.081794568Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/workflow","Test":"TestCycleRejected","Elapsed":0}
+{"Time":"2026-09-15T23:02:28.081855132Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/workflow","Test":"TestParallelDependencyAndIntegration"}
+{"Time":"2026-09-15T23:02:28.081859562Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/workflow","Test":"TestParallelDependencyAndIntegration","Output":"=== RUN   TestParallelDependencyAndIntegration\n"}
+{"Time":"2026-09-15T23:02:28.185854953Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/wire","Output":"ok  \tgithub.com/GrayCodeAI/rover/internal/wire\t1.018s\tcoverage: 54.0% of statements\n"}
+{"Time":"2026-09-15T23:02:28.185893909Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/wire","Elapsed":1.018}
+{"Time":"2026-09-15T23:02:28.268821903Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/assurance","Output":"ok  \tgithub.com/GrayCodeAI/rover/internal/assurance\t7.341s\tcoverage: 72.7% of statements\n"}
+{"Time":"2026-09-15T23:02:28.2688482Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/assurance","Elapsed":7.341}
+{"Time":"2026-09-15T23:02:28.463484444Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/workflow","Test":"TestParallelDependencyAndIntegration","Output":"--- PASS: TestParallelDependencyAndIntegration (0.38s)\n"}
+{"Time":"2026-09-15T23:02:28.463521927Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/workflow","Test":"TestParallelDependencyAndIntegration","Elapsed":0.38}
+{"Time":"2026-09-15T23:02:28.463531855Z","Action":"run","Package":"github.com/GrayCodeAI/rover/internal/workflow","Test":"TestIntegrationConflict"}
+{"Time":"2026-09-15T23:02:28.463534396Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/workflow","Test":"TestIntegrationConflict","Output":"=== RUN   TestIntegrationConflict\n"}
+{"Time":"2026-09-15T23:02:28.640339889Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/tasks","Output":"ok  \tgithub.com/GrayCodeAI/rover/internal/tasks\t1.827s\tcoverage: 61.1% of statements\n"}
+{"Time":"2026-09-15T23:02:28.640393397Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/tasks","Elapsed":1.8279999999999998}
+{"Time":"2026-09-15T23:02:28.655960697Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/workflow","Test":"TestIntegrationConflict","Output":"--- PASS: TestIntegrationConflict (0.19s)\n"}
+{"Time":"2026-09-15T23:02:28.65605553Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/workflow","Test":"TestIntegrationConflict","Elapsed":0.19}
+{"Time":"2026-09-15T23:02:28.656106734Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/workflow","Output":"PASS\n"}
+{"Time":"2026-09-15T23:02:28.657660313Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/workflow","Output":"coverage: 56.6% of statements\n"}
+{"Time":"2026-09-15T23:02:29.66362229Z","Action":"output","Package":"github.com/GrayCodeAI/rover/internal/workflow","Output":"ok  \tgithub.com/GrayCodeAI/rover/internal/workflow\t1.596s\tcoverage: 56.6% of statements\n"}
+{"Time":"2026-09-15T23:02:29.663663984Z","Action":"pass","Package":"github.com/GrayCodeAI/rover/internal/workflow","Elapsed":1.597}

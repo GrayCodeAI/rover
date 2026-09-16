@@ -1,0 +1,67 @@
+{
+  "status": "passed",
+  "examples": [
+    {
+      "file": ".rover/config.json",
+      "schema": "config",
+      "result": "passed"
+    },
+    {
+      "file": "examples/fixture/.rover/config.json",
+      "schema": "config",
+      "result": "passed"
+    },
+    {
+      "file": "examples/task.generic.json",
+      "schema": "task",
+      "result": "passed"
+    },
+    {
+      "file": "examples/task.claude.template.json",
+      "schema": "task",
+      "result": "passed"
+    },
+    {
+      "file": "examples/task.codex.template.json",
+      "schema": "task",
+      "result": "passed"
+    },
+    {
+      "file": "examples/task-codex.json",
+      "schema": "task",
+      "result": "passed"
+    },
+    {
+      "file": "examples/task-claude.json",
+      "schema": "task",
+      "result": "passed"
+    },
+    {
+      "file": "examples/task-pty.json",
+      "schema": "task",
+      "result": "passed"
+    },
+    {
+      "file": "examples/workflow.json",
+      "schema": "workflow",
+      "result": "passed"
+    },
+    {
+      "file": "examples/regression.json",
+      "schema": "regression",
+      "result": "passed"
+    },
+    {
+      "file": "examples/mutations.json",
+      "schema": "mutation",
+      "result": "passed"
+    },
+    {
+      "file": "examples/config-sarif.json",
+      "schema": "config",
+      "result": "passed"
+    }
+  ],
+  "count": 12,
+  "limitation": "Runtime validation additionally checks paths, durations, graph semantics, required fields and security contracts."
+}

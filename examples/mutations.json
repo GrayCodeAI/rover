@@ -1,0 +1,14 @@
+{
+  "schema": "rover/v1alpha1",
+  "check_ids": [
+    "unit"
+  ],
+  "mutations": [
+    {
+      "id": "reintroduce-defect",
+      "path": "value",
+      "before": "fixed",
+      "after": "broken"
+    }
+  ]
+}

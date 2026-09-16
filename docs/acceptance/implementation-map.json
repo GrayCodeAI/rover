@@ -1,0 +1,326 @@
+{
+  "schema_version": "rover.acceptance-map/v1alpha1",
+  "version": "0.2.0-alpha.1",
+  "interpretation": "Scope-qualified mapping, not forty passed end-to-end blueprint guarantees. See current validation report.",
+  "tests": [
+    {
+      "id": "A01",
+      "status": "tested_local",
+      "test_references": [
+        "internal/cli/cli_test.go",
+        "internal/integration/instructions_test.go"
+      ],
+      "scope_and_limits": "Preview and reversible edits, no repository hooks."
+    },
+    {
+      "id": "A02",
+      "status": "not_implemented",
+      "test_references": [],
+      "scope_and_limits": "Attestation signatures are not a signed installer/update system."
+    },
+    {
+      "id": "A03",
+      "status": "partial",
+      "test_references": [
+        "internal/agents/agents_test.go",
+        "internal/tasks/tasks_test.go"
+      ],
+      "scope_and_limits": "Declared profiles and local admission; no live-provider certification."
+    },
+    {
+      "id": "A04",
+      "status": "partial",
+      "test_references": [
+        "internal/mcp/protocol_test.go",
+        "internal/agents/agents_test.go"
+      ],
+      "scope_and_limits": "MCP and native JSONL fixtures, not all agent protocols."
+    },
+    {
+      "id": "A05",
+      "status": "tested_linux",
+      "test_references": [
+        "scripts/demo_extended.py"
+      ],
+      "scope_and_limits": "Real terminal detach/reattach while local supervisor lives."
+    },
+    {
+      "id": "A06",
+      "status": "partial",
+      "test_references": [
+        "internal/tasks/tasks_test.go",
+        "internal/archive/archive_test.go"
+      ],
+      "scope_and_limits": "Lost local processes/restore; no host migration."
+    },
+    {
+      "id": "A07",
+      "status": "tested_local",
+      "test_references": [
+        "internal/execution/process_test.go",
+        "internal/mcp/client_test.go"
+      ],
+      "scope_and_limits": "Process and request cancellation; does not reverse side effects."
+    },
+    {
+      "id": "A08",
+      "status": "partial",
+      "test_references": [
+        "internal/tasks/repair_test.go"
+      ],
+      "scope_and_limits": "Bounded attempts and shared task deadline; no global billing enforcement."
+    },
+    {
+      "id": "A09",
+      "status": "partial",
+      "test_references": [
+        "internal/execution/process_test.go"
+      ],
+      "scope_and_limits": "Bounded output; no complete global disk quota."
+    },
+    {
+      "id": "A10",
+      "status": "partial",
+      "test_references": [
+        "internal/source/source_test.go"
+      ],
+      "scope_and_limits": "Exact committed snapshots; mutable capture is not an atomic filesystem transaction."
+    },
+    {
+      "id": "A11",
+      "status": "tested_rejection",
+      "test_references": [
+        "internal/source/source_test.go"
+      ],
+      "scope_and_limits": "Unsupported special/oversized source states refused."
+    },
+    {
+      "id": "A12",
+      "status": "partial",
+      "test_references": [
+        "internal/store/resources_test.go"
+      ],
+      "scope_and_limits": "Named reservations only, not complete service/port/database provisioning."
+    },
+    {
+      "id": "A13",
+      "status": "tested_local",
+      "test_references": [
+        "internal/workflow/workflow_test.go",
+        "scripts/demo_extended.py"
+      ],
+      "scope_and_limits": "Cycle detection, exact predecessor artifacts and final re-verification."
+    },
+    {
+      "id": "A14",
+      "status": "partial",
+      "test_references": [
+        "internal/tasks/repair_test.go",
+        "scripts/demo.py"
+      ],
+      "scope_and_limits": "Baseline configuration frozen; same-user operator still controls invocation."
+    },
+    {
+      "id": "A15",
+      "status": "partial",
+      "test_references": [
+        "internal/workflow/workflow_test.go"
+      ],
+      "scope_and_limits": "Idempotent task/workflow keys; no schedules/webhook integration."
+    },
+    {
+      "id": "A16",
+      "status": "partial",
+      "test_references": [
+        "internal/service/service_test.go",
+        "internal/contextstore/context_test.go"
+      ],
+      "scope_and_limits": "API/project checks, not OS-level multi-tenant isolation."
+    },
+    {
+      "id": "A17",
+      "status": "partial",
+      "test_references": [
+        "internal/service/service_test.go"
+      ],
+      "scope_and_limits": "Untrusted tool input cannot approve/grant; no real model prompt-injection benchmark."
+    },
+    {
+      "id": "A18",
+      "status": "not_validated",
+      "test_references": [],
+      "scope_and_limits": "Docker flags only; no independently trusted worker/publication host."
+    },
+    {
+      "id": "A19",
+      "status": "tested_admission",
+      "test_references": [
+        "internal/execution/process_test.go"
+      ],
+      "scope_and_limits": "No silent local fallback; live Docker environment absent."
+    },
+    {
+      "id": "A20",
+      "status": "tested_local",
+      "test_references": [
+        "internal/assurance/verify_test.go"
+      ],
+      "scope_and_limits": "Exact local review identity; not organization-authenticated human approval."
+    },
+    {
+      "id": "A21",
+      "status": "tested_local",
+      "test_references": [
+        "internal/assurance/parse_test.go",
+        "internal/assurance/verify_test.go"
+      ],
+      "scope_and_limits": "Required result completeness and structured parser errors."
+    },
+    {
+      "id": "A22",
+      "status": "tested_local",
+      "test_references": [
+        "internal/assurance/parse_test.go"
+      ],
+      "scope_and_limits": "Generic command outcome not promoted to stronger tool semantics."
+    },
+    {
+      "id": "A23",
+      "status": "partial",
+      "test_references": [
+        "internal/source/source_test.go",
+        "internal/assurance/parse_test.go"
+      ],
+      "scope_and_limits": "Retained snapshot integrity and replay; no general remote evidence import."
+    },
+    {
+      "id": "A24",
+      "status": "tested_local",
+      "test_references": [
+        "internal/assurance/extensions_test.go",
+        "scripts/demo_extended.py"
+      ],
+      "scope_and_limits": "Named failure signature, base/candidate outcome, setup ambiguity rejected."
+    },
+    {
+      "id": "A25",
+      "status": "tested_local",
+      "test_references": [
+        "internal/tasks/repair_test.go"
+      ],
+      "scope_and_limits": "Failed attempts remain linked; no cherry-picking prior candidate evidence."
+    },
+    {
+      "id": "A26",
+      "status": "not_implemented",
+      "test_references": [],
+      "scope_and_limits": "No native formal verifier adapter or independent proof replay."
+    },
+    {
+      "id": "A27",
+      "status": "tested_local",
+      "test_references": [
+        "internal/assurance/parse_test.go"
+      ],
+      "scope_and_limits": "Empty required plan remains inconclusive."
+    },
+    {
+      "id": "A28",
+      "status": "not_implemented",
+      "test_references": [],
+      "scope_and_limits": "No PR/push/deploy write adapter. Remote client has no blind automatic retries."
+    },
+    {
+      "id": "A29",
+      "status": "not_implemented",
+      "test_references": [],
+      "scope_and_limits": "Remote control is not a fenced worker fleet."
+    },
+    {
+      "id": "A30",
+      "status": "tested_local",
+      "test_references": [
+        "internal/workflow/workflow_test.go"
+      ],
+      "scope_and_limits": "Composed source checked; external provider merge queue not implemented."
+    },
+    {
+      "id": "A31",
+      "status": "not_implemented",
+      "test_references": [],
+      "scope_and_limits": "CI YAML and local signatures are not a protected expected-publisher deployment."
+    },
+    {
+      "id": "A32",
+      "status": "partial",
+      "test_references": [
+        "internal/archive/archive_test.go",
+        "internal/contextstore/context_test.go"
+      ],
+      "scope_and_limits": "Missing artifacts rejected and notes expire; full retention service pending."
+    },
+    {
+      "id": "A33",
+      "status": "partial",
+      "test_references": [
+        "internal/archive/archive_test.go",
+        "scripts/demo_extended.py"
+      ],
+      "scope_and_limits": "Online backup/new-state restore, no public auto-updater or interrupted-version rollout."
+    },
+    {
+      "id": "A34",
+      "status": "partial",
+      "test_references": [
+        "internal/learning/learning_test.go"
+      ],
+      "scope_and_limits": "Complete check-order invariant/digest binding/local gate; no independent evaluator administration."
+    },
+    {
+      "id": "A35",
+      "status": "tested_local",
+      "test_references": [
+        "internal/learning/learning_test.go"
+      ],
+      "scope_and_limits": "Explicit attributed/synthetic/unknown labels; no merge-to-correctness inference."
+    },
+    {
+      "id": "A36",
+      "status": "partial",
+      "test_references": [
+        "internal/learning/learning_test.go"
+      ],
+      "scope_and_limits": "Candidate disjointness and reuse tracking; full external dataset-access governance pending."
+    },
+    {
+      "id": "A37",
+      "status": "partial",
+      "test_references": [
+        "internal/source/source_test.go",
+        "internal/archive/archive_test.go"
+      ],
+      "scope_and_limits": "Bounded reports, path/digest validation and sanitized text; not complete security certification."
+    },
+    {
+      "id": "A38",
+      "status": "partial",
+      "test_references": [],
+      "scope_and_limits": "No acceptance cache reuse. Exact stored replay preserves context."
+    },
+    {
+      "id": "A39",
+      "status": "not_implemented",
+      "test_references": [],
+      "scope_and_limits": "Destructive delivery is not exposed. Absence is not implemented approval/recovery."
+    },
+    {
+      "id": "A40",
+      "status": "partial",
+      "test_references": [
+        "internal/archive/archive_test.go",
+        "internal/integration/instructions_test.go"
+      ],
+      "scope_and_limits": "Evidence export and reversible instructions; full installer/uninstaller not present."
+    }
+  ]
+}

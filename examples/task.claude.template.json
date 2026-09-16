@@ -1,0 +1,15 @@
+{
+  "schema": "rover/v1alpha1",
+  "objective": "Explain this repository without modifying it.",
+  "repository": ".",
+  "base": "HEAD",
+  "argv": [
+    "claude",
+    "-p",
+    "{{objective}}",
+    "--output-format",
+    "json"
+  ],
+  "timeout": "10m",
+  "auto_verify": false
+}

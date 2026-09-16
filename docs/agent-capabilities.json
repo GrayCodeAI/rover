@@ -1,0 +1,34 @@
+[
+  {
+    "name": "generic-headless",
+    "executable": "user-defined",
+    "structured": false,
+    "interactive": false,
+    "permission_mediation": false,
+    "validation": "local command integration"
+  },
+  {
+    "name": "generic-pty",
+    "executable": "user-defined",
+    "structured": false,
+    "interactive": true,
+    "permission_mediation": false,
+    "validation": "Linux PTY; local advisory only"
+  },
+  {
+    "name": "codex-exec",
+    "executable": "codex",
+    "structured": true,
+    "interactive": false,
+    "permission_mediation": false,
+    "validation": "documented CLI; fixture conformance; live-account testing required"
+  },
+  {
+    "name": "claude-print",
+    "executable": "claude",
+    "structured": true,
+    "interactive": false,
+    "permission_mediation": false,
+    "validation": "documented CLI; fixture conformance; live-account testing required"
+  }
+]

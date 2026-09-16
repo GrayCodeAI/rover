@@ -1,0 +1,14 @@
+PASS doctor
+PASS setup_preview
+PASS explicit_execution_grant
+PASS broken_baseline
+PASS detached_execution
+PASS main_checkout_preserved
+PASS candidate_bound_evidence
+PASS review_is_not_fabricated_pass
+PASS idempotent_dispatch
+PASS log_reattachment
+PASS baseline_config_preserved
+PASS detached_cancellation
+
+12 smoke scenarios passed. No model or network services were used.

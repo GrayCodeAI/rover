@@ -1,0 +1,22 @@
+?   	github.com/GrayCodeAI/rover/cmd/rover	[no test files]
+ok  	github.com/GrayCodeAI/rover/internal/access	0.008s
+ok  	github.com/GrayCodeAI/rover/internal/agents	0.003s
+ok  	github.com/GrayCodeAI/rover/internal/archive	0.082s
+?   	github.com/GrayCodeAI/rover/internal/model	[no test files]
+?   	github.com/GrayCodeAI/rover/internal/terminal	[no test files]
+?   	github.com/GrayCodeAI/rover/internal/testutil	[no test files]
+ok  	github.com/GrayCodeAI/rover/internal/assurance	6.499s
+ok  	github.com/GrayCodeAI/rover/internal/attestation	0.049s
+ok  	github.com/GrayCodeAI/rover/internal/cli	0.152s
+ok  	github.com/GrayCodeAI/rover/internal/config	0.007s
+ok  	github.com/GrayCodeAI/rover/internal/contextstore	0.054s
+ok  	github.com/GrayCodeAI/rover/internal/execution	0.278s
+ok  	github.com/GrayCodeAI/rover/internal/integration	0.159s
+ok  	github.com/GrayCodeAI/rover/internal/learning	0.060s
+ok  	github.com/GrayCodeAI/rover/internal/mcp	0.531s
+ok  	github.com/GrayCodeAI/rover/internal/service	0.149s
+ok  	github.com/GrayCodeAI/rover/internal/source	0.850s
+ok  	github.com/GrayCodeAI/rover/internal/store	0.079s
+ok  	github.com/GrayCodeAI/rover/internal/tasks	0.918s
+ok  	github.com/GrayCodeAI/rover/internal/wire	0.006s
+ok  	github.com/GrayCodeAI/rover/internal/workflow	0.572s

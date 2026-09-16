@@ -1,0 +1,10 @@
+	github.com/GrayCodeAI/rover/cmd/rover		coverage: 0.0% of statements
+	github.com/GrayCodeAI/rover/internal/model		coverage: 0.0% of statements
+ok  	github.com/GrayCodeAI/rover/internal/assurance	0.261s	coverage: 77.9% of statements
+ok  	github.com/GrayCodeAI/rover/internal/cli	0.080s	coverage: 27.4% of statements
+ok  	github.com/GrayCodeAI/rover/internal/config	0.010s	coverage: 84.6% of statements
+ok  	github.com/GrayCodeAI/rover/internal/execution	0.156s	coverage: 73.7% of statements
+	github.com/GrayCodeAI/rover/internal/testutil		coverage: 0.0% of statements
+ok  	github.com/GrayCodeAI/rover/internal/source	0.316s	coverage: 74.9% of statements
+ok  	github.com/GrayCodeAI/rover/internal/store	0.026s	coverage: 66.1% of statements
+ok  	github.com/GrayCodeAI/rover/internal/tasks	0.410s	coverage: 60.1% of statements

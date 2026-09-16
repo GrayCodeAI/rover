@@ -1,0 +1,81 @@
+{
+  "schema": "rover/v1alpha1",
+  "id": "inv_d1c77a5b6fe1d6d3a7d71f8aecbb0e3b",
+  "rover_version": "0.1.0-alpha.1",
+  "started_at": "2026-09-15T19:14:37.871487977Z",
+  "finished_at": "2026-09-15T19:14:50.661075325Z",
+  "repository": "/mnt/data/rover",
+  "base": "snap_9ac98c405d53f021415f044a5410da86a0a572db6275c58b378156679881583a",
+  "candidate": "snap_9ac98c405d53f021415f044a5410da86a0a572db6275c58b378156679881583a",
+  "config_digest": "0aa12b51ea3fbd91e6e0d23df692348c20674df1d2cc32c907ffac85b55dcb9c",
+  "policy_source": "base-snapshot:snap_9ac98c405d53f021415f044a5410da86a0a572db6275c58b378156679881583a",
+  "executor": "local-advisory",
+  "trust": "same-user local controller; not an independently protected merge gate",
+  "environment": {
+    "arch": "amd64",
+    "go_compiler": "go1.23.2",
+    "os": "linux",
+    "sqlite": "3.46.1"
+  },
+  "checks": [
+    {
+      "id": "unit",
+      "required": true,
+      "outcome": "PASS",
+      "meaning": "identified non-skipped tests completed; adequate requirement coverage is not established",
+      "tests": 118,
+      "skipped": 0,
+      "process": {
+        "started_at": "2026-09-15T19:14:37.901197042Z",
+        "finished_at": "2026-09-15T19:14:45.184283589Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "cancelled": false,
+        "truncated": false,
+        "stdout_sha256": "7438ba35de8784f2d9679de5d85eb643721a0c1a548e8aafb5a1d8b12b163c26",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 90735,
+        "stderr_bytes": 0
+      },
+      "spec_digest": "fd38d51951d0c3c97271c4f903169f7a4ac03bf40c6f0b71f820789c321e1f1b",
+      "candidate": "snap_9ac98c405d53f021415f044a5410da86a0a572db6275c58b378156679881583a",
+      "executable": "/usr/local/go/bin/go",
+      "executable_sha256": "caa1b3c015e819aaa1408efe37b2499088bbf986bf30a2883bceab4e07b55b52",
+      "evidence_source": "controller_observed_process; repository-defined-check"
+    },
+    {
+      "id": "vet",
+      "required": true,
+      "outcome": "PASS",
+      "meaning": "configured process exited zero; not a claim of test coverage or correctness",
+      "tests": 0,
+      "skipped": 0,
+      "process": {
+        "started_at": "2026-09-15T19:14:45.203988851Z",
+        "finished_at": "2026-09-15T19:14:50.658075466Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "cancelled": false,
+        "truncated": false,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 0,
+        "stderr_bytes": 0
+      },
+      "spec_digest": "8f599862d93ffb9498cf78f0bf3b9a295d6d9de493e3bb4b63d5cbbfd5d9b185",
+      "candidate": "snap_9ac98c405d53f021415f044a5410da86a0a572db6275c58b378156679881583a",
+      "executable": "/usr/local/go/bin/go",
+      "executable_sha256": "caa1b3c015e819aaa1408efe37b2499088bbf986bf30a2883bceab4e07b55b52",
+      "evidence_source": "controller_observed_process; repository-defined-check"
+    }
+  ],
+  "findings": [],
+  "unknowns": [
+    "Passing configured checks does not establish all requirements, edge cases, security, or performance.",
+    "No authoritative GitHub/CI publisher or authenticated team approval is implemented.",
+    "External effects are not rolled back by process cancellation.",
+    "Local processes run with user permissions and can access host resources; no sandbox or complete action audit."
+  ],
+  "decision": "REVIEW_REQUIRED",
+  "decision_reason": "required checks satisfied; explicit review policy or change finding applies"
+}

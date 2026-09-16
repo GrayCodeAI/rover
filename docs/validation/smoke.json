@@ -1,0 +1,135 @@
+{
+  "schema": "rover.smoke/v1alpha1",
+  "observed_at": "2026-09-15T19:13:19.555386+00:00",
+  "status": "passed",
+  "scenario_count": 12,
+  "scenarios": [
+    {
+      "scenario": "doctor",
+      "status": "passed",
+      "detail": "Tool discovery executes no repository code"
+    },
+    {
+      "scenario": "setup_preview",
+      "status": "passed",
+      "detail": "Existing instructions and config preserved"
+    },
+    {
+      "scenario": "explicit_execution_grant",
+      "status": "passed",
+      "detail": "Verification refused without --allow-local"
+    },
+    {
+      "scenario": "broken_baseline",
+      "status": "passed",
+      "detail": "Real JUnit test failures block the candidate"
+    },
+    {
+      "scenario": "detached_execution",
+      "status": "passed",
+      "detail": "Task completed after the launching CLI exited"
+    },
+    {
+      "scenario": "main_checkout_preserved",
+      "status": "passed",
+      "detail": "Agent edits exist only in its detached Git worktree"
+    },
+    {
+      "scenario": "candidate_bound_evidence",
+      "status": "passed",
+      "detail": "Three passing tests tied to the exact resulting snapshot"
+    },
+    {
+      "scenario": "review_is_not_fabricated_pass",
+      "status": "passed",
+      "detail": "Local review is recorded without rewriting verification"
+    },
+    {
+      "scenario": "idempotent_dispatch",
+      "status": "passed",
+      "detail": "Same key and contract return the existing run"
+    },
+    {
+      "scenario": "log_reattachment",
+      "status": "passed",
+      "detail": "A new CLI reads the completed supervisor-owned output"
+    },
+    {
+      "scenario": "baseline_config_preserved",
+      "status": "passed",
+      "detail": "Candidate cannot silently replace the chosen baseline check plan"
+    },
+    {
+      "scenario": "detached_cancellation",
+      "status": "passed",
+      "detail": "Cancellation request terminates the owned command group"
+    }
+  ],
+  "agent": "deterministic fixture, not a live coding-model provider",
+  "docker_live_tested": false,
+  "demo_directory": "temporary fixture removed",
+  "fixed_candidate_report": {
+    "schema": "rover/v1alpha1",
+    "id": "inv_815fd66c004ce314484446e4963f8747",
+    "rover_version": "0.1.0-alpha.1",
+    "started_at": "2026-09-15T19:13:17.903331141Z",
+    "finished_at": "2026-09-15T19:13:18.526727257Z",
+    "repository": "/tmp/rover-demo-afwgo_r4/state/tasks/task_115f925dd388712923ffefe08d9e856d/workspace",
+    "base": "snap_480ef72a045502875a01ae337ee45de531287ee9aedb1c73e5254f54e60ef089",
+    "candidate": "snap_4b2a12059847294acc579ca3e514372c79ca98abe9a2b655eb6cdec3cbdf2398",
+    "config_digest": "b479427907a8cca3e5ed344bef32dceebd6563064d21a3ae18090b3a8635d529",
+    "policy_source": "base-snapshot:snap_480ef72a045502875a01ae337ee45de531287ee9aedb1c73e5254f54e60ef089",
+    "executor": "local-advisory",
+    "trust": "same-user local controller; not an independently protected merge gate",
+    "environment": {
+      "arch": "amd64",
+      "go_compiler": "go1.23.2",
+      "os": "linux",
+      "sqlite": "3.46.1"
+    },
+    "checks": [
+      {
+        "id": "authorization-tests",
+        "required": true,
+        "outcome": "PASS",
+        "meaning": "reported testcases passed; report is produced by repository tooling, not independent proof",
+        "tests": 3,
+        "skipped": 0,
+        "process": {
+          "started_at": "2026-09-15T19:13:17.910121754Z",
+          "finished_at": "2026-09-15T19:13:18.525610613Z",
+          "exit_code": 0,
+          "timed_out": false,
+          "cancelled": false,
+          "truncated": false,
+          "stdout_sha256": "29bb8dec5b6fe600d714c55ff950136572e1105e60b0e644c7313977311fe28e",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_bytes": 39,
+          "stderr_bytes": 0
+        },
+        "spec_digest": "aade0f1374c8e8046da46c89960f160bf0ed4963705e50822d65b18535213983",
+        "candidate": "snap_4b2a12059847294acc579ca3e514372c79ca98abe9a2b655eb6cdec3cbdf2398",
+        "executable": "/opt/pyvenv/bin/python3",
+        "executable_sha256": "17b78e0a93175e86f9ac03141924fd7a7f0c0c52e66b34bfa0de20ffef989df1",
+        "evidence_source": "controller_observed_process; repository-defined-check",
+        "report_sha256": "3c222a6cb21b8827ad18e8801aa5f143756d680265fd08fc56233b55e60e6173"
+      }
+    ],
+    "findings": [
+      {
+        "rule": "review_path_changed",
+        "message": "Approved policy requires review for this path",
+        "path": "app.py",
+        "source": "configured_rule"
+      }
+    ],
+    "unknowns": [
+      "Passing configured checks does not establish all requirements, edge cases, security, or performance.",
+      "No authoritative GitHub/CI publisher or authenticated team approval is implemented.",
+      "External effects are not rolled back by process cancellation.",
+      "Local processes run with user permissions and can access host resources; no sandbox or complete action audit."
+    ],
+    "decision": "REVIEW_REQUIRED",
+    "decision_reason": "required checks satisfied; explicit review policy or change finding applies"
+  }
+}

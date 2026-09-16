@@ -1,0 +1,6 @@
+fuzz: elapsed: 0s, gathering baseline coverage: 0/79 completed
+fuzz: elapsed: 0s, gathering baseline coverage: 79/79 completed, now fuzzing with 2 workers
+fuzz: elapsed: 3s, execs: 84025 (28003/sec), new interesting: 30 (total: 109)
+fuzz: elapsed: 4s, execs: 84025 (0/sec), new interesting: 30 (total: 109)
+PASS
+ok  	github.com/GrayCodeAI/rover/internal/assurance	4.017s

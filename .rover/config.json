@@ -1,0 +1,39 @@
+{
+  "schema": "rover/v1alpha1",
+  "checks": [
+    {
+      "id": "unit",
+      "argv": [
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "./..."
+      ],
+      "timeout": "5m",
+      "required": true,
+      "parser": "go-test-json",
+      "min_tests": 1
+    },
+    {
+      "id": "vet",
+      "argv": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "timeout": "5m",
+      "required": true,
+      "parser": "exit-code"
+    }
+  ],
+  "policy": {
+    "require_review": true,
+    "review_paths": [
+      "internal/assurance/**",
+      "internal/execution/**",
+      "internal/config/**",
+      "internal/store/**"
+    ]
+  }
+}

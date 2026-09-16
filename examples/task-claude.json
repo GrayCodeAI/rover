@@ -1,0 +1,14 @@
+{
+  "schema": "rover/v1alpha1",
+  "objective": "Perform only the approved task; preserve verification requirements.",
+  "repository": "/absolute/path/to/owned/repository",
+  "base": "HEAD",
+  "argv": [],
+  "timeout": "20m",
+  "auto_verify": true,
+  "max_attempts": 1,
+  "agent": "claude-print",
+  "agent_options": {
+    "write": false
+  }
+}

@@ -1,0 +1,6 @@
+fuzz: elapsed: 0s, gathering baseline coverage: 0/2 completed
+fuzz: elapsed: 0s, gathering baseline coverage: 2/2 completed, now fuzzing with 2 workers
+fuzz: elapsed: 3s, execs: 81116 (27031/sec), new interesting: 131 (total: 133)
+fuzz: elapsed: 3s, execs: 81116 (0/sec), new interesting: 131 (total: 133)
+PASS
+ok  	github.com/GrayCodeAI/rover/internal/agents	3.427s

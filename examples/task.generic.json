@@ -1,0 +1,13 @@
+{
+  "schema": "rover/v1alpha1",
+  "objective": "Inspect the repository and describe its layout. This template is read-only.",
+  "repository": ".",
+  "base": "HEAD",
+  "argv": [
+    "git",
+    "status",
+    "--short"
+  ],
+  "timeout": "5m",
+  "auto_verify": true
+}

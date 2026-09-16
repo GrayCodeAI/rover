@@ -1,0 +1,9 @@
+{
+  "schema": "rover/v1alpha1",
+  "check_id": "unit",
+  "test_paths": [
+    "test_regression.py"
+  ],
+  "test_id": "regression",
+  "failure_contains": "EXPECTED_DEFECT"
+}
