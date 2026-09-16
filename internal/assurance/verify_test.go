@@ -8,6 +8,7 @@ import (
 	"github.com/GrayCodeAI/rover/internal/testutil"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -101,5 +102,37 @@ func TestExplicitGrantRequired(t *testing.T) {
 	}
 	if _, e = os.Stat(marker); !os.IsNotExist(e) {
 		t.Fatal("executed without grant")
+	}
+}
+func TestReplayRetainedInvestigation(t *testing.T) {
+	repo, s := testutil.Repo(t, map[string]string{"value": "good"})
+	base, e := source.Capture(context.Background(), s, repo, "HEAD", false)
+	if e != nil {
+		t.Fatal(e)
+	}
+	cfg := commandConfig(`test "$(cat value)" = good`)
+	orig, e := Verify(context.Background(), s, base, base, cfg, Options{Mode: "local-advisory", AllowLocal: true, PolicySource: "test-origin"})
+	if e != nil || orig.Decision != "ACCEPTED" {
+		t.Fatal(e, orig)
+	}
+	replayed, e := Replay(context.Background(), s, orig.ID, Options{Mode: "local-advisory", AllowLocal: true})
+	if e != nil || replayed.Decision != "ACCEPTED" {
+		t.Fatal(e, replayed)
+	}
+	if replayed.Base != orig.Base || replayed.Candidate != orig.Candidate || replayed.ConfigDigest != orig.ConfigDigest {
+		t.Fatal("replay changed retained snapshots/config")
+	}
+	if replayed.ID == orig.ID {
+		t.Fatal("replay must produce a new investigation ID")
+	}
+	if !strings.HasPrefix(replayed.PolicySource, "replay:") {
+		t.Fatal("replay policy source not tagged", replayed.PolicySource)
+	}
+	var stillOrig model.Investigation
+	if e = s.Get("investigation", orig.ID, &stillOrig); e != nil {
+		t.Fatal(e)
+	}
+	if stillOrig.Decision != "ACCEPTED" {
+		t.Fatal("original investigation was modified", stillOrig)
 	}
 }
