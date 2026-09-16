@@ -134,19 +134,21 @@
     },
     {
       "id": "A16",
-      "scope_and_limits": "API/project checks, not OS-level multi-tenant isolation.",
-      "status": "partial",
+      "scope_and_limits": "API/project boundary checks (service and context); not OS-level multi-tenant isolation.",
+      "status": "tested_local",
       "test_references": [
-        "internal/service/service_test.go",
-        "internal/contextstore/context_test.go"
+        "internal/service/service_test.go:TestServiceProjectBoundary",
+        "internal/service/service_test.go:TestCrossProjectEvidenceDenial",
+        "internal/contextstore/context_test.go:TestScopedContextAndMemory"
       ]
     },
     {
       "id": "A17",
-      "scope_and_limits": "Untrusted tool input cannot approve/grant; no real model prompt-injection benchmark.",
-      "status": "partial",
+      "scope_and_limits": "Untrusted tool input cannot approve/grant/sign/publish/merge/configure/credentials/delete (enforced by tool surface validation); no real model prompt-injection benchmark.",
+      "status": "tested_local",
       "test_references": [
-        "internal/service/service_test.go"
+        "internal/service/service_test.go:TestToolSurfaceExcludesAuthority",
+        "internal/service/service_test.go:TestHostileTaskArgsRejected"
       ]
     },
     {
@@ -348,11 +350,13 @@
     },
     {
       "id": "A40",
-      "scope_and_limits": "Evidence export and reversible instructions; full installer/uninstaller not present.",
-      "status": "partial",
+      "scope_and_limits": "Evidence export and reversible agent instructions (preview/apply/undo with staleness/symlink protection); full installer/uninstaller not present.",
+      "status": "tested_local",
       "test_references": [
         "internal/archive/archive_test.go",
-        "internal/integration/instructions_test.go"
+        "internal/integration/instructions_test.go:TestPreviewApplyUndoPreservesUserInstructions",
+        "internal/integration/instructions_test.go:TestStalePreviewAndSymlinkRefused",
+        "internal/integration/instructions_test.go:TestNewFileUndo"
       ]
     }
   ],
