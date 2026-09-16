@@ -18,7 +18,7 @@ sys.exit(0 if ok else 1)
 '''
 def main():
  ap=argparse.ArgumentParser();ap.add_argument('--binary',default='bin/rover');ap.add_argument('--report');ap.add_argument('--keep',action='store_true');args=ap.parse_args()
- binary=str(P(args.binary).resolve());root=P(os.path.realpath(tempfile.mkdtemp(prefix='rvr-e2e-')));state=root/'state';clientstate=root/'client-state';procs=[];rows=[]
+ binary=str(P(args.binary).resolve());root=P(os.path.realpath(tempfile.mkdtemp(prefix='rvr-e2e-', dir='/tmp')));state=root/'state';clientstate=root/'client-state';procs=[];rows=[]
  env={k:v for k,v in os.environ.items() if not k.startswith('GIT_')};env.update(GIT_CONFIG_NOSYSTEM='1',GIT_CONFIG_GLOBAL=os.devnull,GIT_AUTHOR_NAME='Rover Test',GIT_AUTHOR_EMAIL='fixture@example.invalid',GIT_COMMITTER_NAME='Rover Test',GIT_COMMITTER_EMAIL='fixture@example.invalid',TERM='xterm-256color')
  def write(p,v): p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(v) if not isinstance(v,str) else v);return p
  def git(repo,*argv):return subprocess.check_output(['git','-c','core.hooksPath='+os.devnull,'-c','commit.gpgsign=false','-C',str(repo),*argv],env=env,stderr=subprocess.PIPE,text=True).strip()

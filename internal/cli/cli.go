@@ -20,7 +20,9 @@ import (
 	"github.com/GrayCodeAI/rover/internal/assurance"
 	"github.com/GrayCodeAI/rover/internal/config"
 	"github.com/GrayCodeAI/rover/internal/execution"
+	"github.com/GrayCodeAI/rover/internal/install"
 	"github.com/GrayCodeAI/rover/internal/model"
+	"github.com/GrayCodeAI/rover/internal/publish"
 	"github.com/GrayCodeAI/rover/internal/source"
 	"github.com/GrayCodeAI/rover/internal/store"
 	"github.com/GrayCodeAI/rover/internal/tasks"
@@ -76,6 +78,9 @@ Other:
   learn recommend|dataset|evaluate|promote|show|revoke
   limits [--max-agents N]        Same-store admission limit
 
+  doctor --verify                Verify SOURCE_MANIFEST.json against local files (not a signed installer)
+  publish --id ID --to DIR       Local advisory publisher (writes to DIR, not protected CI)
+
 All commands support --json where applicable.
 Verification exits: 0 policy accepted; 1 blocked; 2 error/inconclusive; 3 review required.
 Task dispatch exit 0 means dispatched, NOT accepted software.
@@ -95,6 +100,7 @@ func (a *App) emit(v any) error {
 	e.SetIndent("", "  ")
 	return e.Encode(v)
 }
+func (a *App) verifyInstall(root, manifest string) error { return install.Verify(root, manifest) }
 func (a *App) Main(ctx context.Context, args []string) int {
 	jsonMode := false
 	for _, x := range args {
@@ -137,6 +143,32 @@ func (a *App) run(ctx context.Context, args []string) (int, error) {
 		return 0, a.emit(map[string]string{"name": "Rover", "version": model.Version, "schema": model.Schema, "go": runtime.Version(), "sqlite": store.SQLiteVersion(), "os": runtime.GOOS, "arch": runtime.GOARCH})
 	}
 	if command == "doctor" {
+		verify := contains(args, "--verify")
+		if verify {
+			// Verify SOURCE_MANIFEST.json in the rover source root (two levels up from this file when run from repo).
+			// For installed binaries, manifest is not present — this is local-source verification, not a signed installer.
+			roots := []string{".", filepath.Join(filepath.Dir(os.Args[0]), ".."), filepath.Join(filepath.Dir(os.Args[0]), "../..")}
+			var lastErr error
+			for _, r := range roots {
+				abs, _ := filepath.Abs(r)
+				mp := filepath.Join(abs, "SOURCE_MANIFEST.json")
+				if _, e := os.Stat(mp); e == nil {
+					if e = func() error {
+						// Use internal/install.Verify
+						// Import is deferred to avoid cycle; call via helper.
+						return a.verifyInstall(abs, mp)
+					}(); e == nil {
+						return 0, a.emit(map[string]any{"schema": model.Schema, "verified": true, "manifest": mp, "note": "local manifest check; not a signed public installer"})
+					} else {
+						lastErr = e
+					}
+				}
+			}
+			if lastErr != nil {
+				return 2, fmt.Errorf("install verification failed: %w", lastErr)
+			}
+			return 2, errors.New("SOURCE_MANIFEST.json not found for verification")
+		}
 		tools := map[string]any{}
 		for _, n := range []string{"git", "go", "python3", "docker", "tmux", "codex", "claude"} {
 			p, e := exec.LookPath(n)
@@ -220,9 +252,25 @@ func (a *App) run(ctx context.Context, args []string) (int, error) {
 		if e != nil {
 			return 2, e
 		}
-		return 0, a.emit(map[string]any{"schema": model.Schema, "kind": *kind, "records": r, "limit": 1000, "note": "bounded export; not a complete backup; artifacts are stored separately"})
+		return 0, a.emit(map[string]any{"schema": model.Schema, "kind": *kind, "records": r, "limit": 1000, "note": "bounded export; not a complete backup; session portability is unsupported; artifacts are stored separately"})
 	case "outcome":
 		return a.outcome(s, args)
+	case "publish":
+		f := a.fs("publish")
+		id := f.String("id", "", "investigation ID")
+		to := f.String("to", "", "destination directory outside state")
+		f.Bool("json", false, "")
+		if e = f.Parse(args); e != nil {
+			return 2, e
+		}
+		if *id == "" || *to == "" {
+			return 2, errors.New("publish requires --id and --to")
+		}
+		out, e := publish.Publish(s, *id, *to)
+		if e != nil {
+			return 2, e
+		}
+		return 0, a.emit(map[string]any{"schema": model.Schema, "published": out, "note": "local advisory publisher; not a protected CI gate"})
 	default:
 		return 2, fmt.Errorf("unknown command %q; run rover help", command)
 	}

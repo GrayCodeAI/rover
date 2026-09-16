@@ -51,6 +51,21 @@ func Interpret(spec model.CheckSpec, p model.ProcessResult, out, report []byte) 
 		return Parsed{Outcome: "ERROR", Meaning: "unsupported result parser"}
 	}
 }
+
+// CapFormalScope enforces the documented boundary that an interpretive
+// parser result (exit-code, test/coverage JSON, SARIF, JUnit) is never a
+// machine-checkable proof. A scope declared "formal" that only has such an
+// interpretive PASS is capped to advisory INCONCLUSIVE with the reasoning
+// made explicit; it is never upgraded to PASS.
+func CapFormalScope(declared string, p Parsed) Parsed {
+	if declared != "formal" || p.Outcome != "PASS" {
+		return p
+	}
+	return Parsed{
+		Outcome: "INCONCLUSIVE",
+		Meaning: "declared formal scope: an interpretive PASS is not a machine-checkable proof; requires an external formal artifact (e.g. Lean/Kani/TLA+ replay) recorded as evidence",
+	}
+}
 func goTest(b []byte, min, exit int) Parsed {
 	type evt struct{ Action, Package, Test, Output string }
 	d := json.NewDecoder(bytes.NewReader(b))

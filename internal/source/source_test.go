@@ -148,6 +148,41 @@ func TestResolveOptionRejected(t *testing.T) {
 		t.Fatal("option accepted")
 	}
 }
+
+// TestCaptureConsistencyLabels covers A10/A11: the snapshot must say exactly
+// what it is — double identical reads frozen, not a filesystem-atomic capture.
+func TestCaptureConsistencyLabels(t *testing.T) {
+	repo, s := testutil.Repo(t, map[string]string{"value": "base"})
+	head, e := Capture(context.Background(), s, repo, "HEAD", false)
+	if e != nil || !strings.Contains(head.Consistency, "exact Git commit blobs") {
+		t.Fatalf("HEAD label: %q %v", head.Consistency, e)
+	}
+	wt, e := Capture(context.Background(), s, repo, "WORKTREE", true)
+	if e != nil || !strings.Contains(wt.Consistency, "not a filesystem-atomic capture") {
+		t.Fatalf("WORKTREE label: %q %v", wt.Consistency, e)
+	}
+}
+
+// TestMutationDetectedAfterCapture covers the same documented boundary from the
+// verification side: bytes captured are frozen, and a post-capture mutation is
+// caught by InputsUnchanged rather than silently accepted.
+func TestMutationDetectedAfterCapture(t *testing.T) {
+	repo, s := testutil.Repo(t, map[string]string{"value": "base"})
+	snap, e := Capture(context.Background(), s, repo, "WORKTREE", false)
+	if e != nil {
+		t.Fatal(e)
+	}
+	if e = InputsUnchanged(snap, repo); e != nil {
+		t.Fatal(e)
+	}
+	testutil.Write(t, repo, "value", "mutated-during-capture")
+	if e = InputsUnchanged(snap, repo); e == nil {
+		t.Fatal("post-capture mutation not detected")
+	}
+	if b, e := FileContent(s, snap, "value"); e != nil || string(b) != "base" {
+		t.Fatalf("frozen byte lost: %q %v", b, e)
+	}
+}
 func TestNestedSymlinkReadRejected(t *testing.T) {
 	root := t.TempDir()
 	outside := t.TempDir()

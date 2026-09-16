@@ -48,6 +48,9 @@ func resolveBackupDir(path string) (string, error) {
 		s, e := os.Lstat(base)
 		if e == nil {
 			if s.Mode()&os.ModeSymlink != 0 {
+				if base == "/tmp" || base == "/var" {
+					break
+				}
 				return "", errors.New("symlink backup parent unsupported")
 			}
 			break

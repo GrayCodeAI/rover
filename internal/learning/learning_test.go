@@ -109,3 +109,37 @@ func TestHoldoutLeakageAndMandatoryChecks(t *testing.T) {
 		}
 	}
 }
+
+// TestNoAcceptanceCacheReuse covers A38: check outcomes are credited only when
+// bound to the exact stored candidate. A result replayed against a different
+// candidate is not reused (there is no acceptance cache to short-circuit replay).
+func TestNoAcceptanceCacheReuse(t *testing.T) {
+	repo, s, c := setup(t)
+	one := fixture(t, s, repo, c, model.ID("snap_one"))
+	two := fixture(t, s, repo, c, model.ID("snap_two"))
+	candidate := model.ID("snap_three")
+	at := time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC)
+	mismatched := model.Investigation{Schema: model.Schema, ID: model.ID("inv"), Repository: repo, Candidate: candidate, ConfigDigest: model.Hash(c), FinishedAt: model.Now(), Decision: "BLOCKED"}
+	for _, ch := range c.Checks {
+		mismatched.Checks = append(mismatched.Checks, model.CheckResult{ID: ch.ID, Candidate: "snap_one", SpecDigest: model.Hash(ch), Parser: ch.Parser, Outcome: "PASS", Process: model.ProcessResult{StartedAt: at.Format(time.RFC3339Nano), FinishedAt: at.Add(time.Second).Format(time.RFC3339Nano)}})
+	}
+	if e := s.Put("investigation", mismatched.ID, mismatched, "fixture.mismatched-candidate"); e != nil {
+		t.Fatal(e)
+	}
+	p, e := Suggest(s, repo, c)
+	if e != nil {
+		t.Fatal(e)
+	}
+	// two properly bound PASS results are counted; the mismatched-candidate
+	// leftover (a stale cached-looking outcome) must not be credited.
+	if p.Statistics[0].Samples != 2 {
+		t.Fatalf("acceptance reused across candidates: %+v", p.Statistics)
+	}
+	// The original fixture candidates stay replayable from exact evidence.
+	for _, in := range []model.Investigation{one, two} {
+		var got model.Investigation
+		if e = s.Get("investigation", in.ID, &got); e != nil {
+			t.Fatal(e)
+		}
+	}
+}

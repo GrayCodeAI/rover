@@ -224,7 +224,7 @@ func Verify(ctx context.Context, s *store.Store, base, candidate model.Snapshot,
 				return in, e
 			}
 		}
-		parsed := Interpret(spec, run.Process, run.Stdout, report)
+		parsed := CapFormalScope(spec.Scope, Interpret(spec, run.Process, run.Stdout, report))
 		cr.Outcome = parsed.Outcome
 		cr.Meaning = parsed.Meaning
 		cr.Tests = parsed.Tests
