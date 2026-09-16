@@ -181,7 +181,7 @@ is claimed. The public naming collision noted in the design remains unresolved.
 - [Architecture](docs/ARCHITECTURE.md)
 - [Security and limitations](docs/SECURITY_MODEL.md)
 - [Current validation](docs/validation/v0.2.0/REPORT.md)
-- [Python CLI client](sdk/python/README.md)
+- [Python CLI client](sdk/python/README.md) · [TypeScript CLI client](sdk/typescript/README.md) · [Go CLI client](sdk/go/README.md)
 - [Original ten-layer plan and acceptance inventory](docs/acceptance/)
 
 MIT. No telemetry, model training, automatic upload, push, merge, or deployment

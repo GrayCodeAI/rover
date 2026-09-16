@@ -6,6 +6,7 @@
   "main": "src/rover_client.ts",
   "types": "src/rover_client.ts",
   "license": "MIT",
+  "repository": { "type": "git", "url": "https://github.com/GrayCodeAI/rover.git", "directory": "sdk/typescript" },
   "engines": { "node": ">=18" },
   "scripts": {
     "test": "node --test test/*.test.ts",

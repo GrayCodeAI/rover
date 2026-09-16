@@ -48,3 +48,5 @@ demo-extended: build
 	python3 scripts/demo_extended.py --binary bin/rover
 sdk-test:
 	python3 -m unittest discover -s sdk/python -p 'test_*.py'
+	node --test sdk/typescript/test/*.test.ts
+	go test ./sdk/go -count=1 -v

@@ -34,5 +34,9 @@ jobs:
         run: make demo-extended
       - name: Python CLI client
         run: make sdk-test
+      - name: TypeScript CLI client
+        run: node --test sdk/typescript/test/*.test.ts
+      - name: Go CLI client
+        run: go test ./sdk/go -count=1 -v
 # This validates Rover's own source. It is not an independently trusted Rover
 # acceptance publisher for arbitrary candidate PRs. Hosted execution is pending.

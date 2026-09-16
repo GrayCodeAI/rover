@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rover-client"
+version = "0.2.0a1"
+description = "Small stdlib client for Rover's CLI — argv only, no shell, bounded JSON"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+authors = [{name = "GrayCodeAI"}]
+keywords = ["rover", "agent-orchestration", "verification", "mcp"]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+]
+
+[project.urls]
+Homepage = "https://github.com/GrayCodeAI/rover"
+Repository = "https://github.com/GrayCodeAI/rover"
+
+[tool.setuptools]
+py-modules = ["rover_client"]
