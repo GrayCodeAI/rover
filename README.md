@@ -184,5 +184,5 @@ is claimed. The public naming collision noted in the design remains unresolved.
 - [Python CLI client](sdk/python/README.md)
 - [Original ten-layer plan and acceptance inventory](docs/acceptance/)
 
-Apache-2.0. No telemetry, model training, automatic upload, push, merge, or deployment
+MIT. No telemetry, model training, automatic upload, push, merge, or deployment
 is enabled by default. Source and user-owned Git history remain independent of Rover.
