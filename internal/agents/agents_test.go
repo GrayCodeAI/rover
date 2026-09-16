@@ -51,3 +51,39 @@ func FuzzTranscript(f *testing.F) {
 	f.Add([]byte(`null`))
 	f.Fuzz(func(t *testing.T, b []byte) { _, _ = Parse("claude-print", b); _, _ = Parse("codex-exec", b) })
 }
+
+// TestUnknownProfileRejected covers A03/A04: an undeclared adapter must be an
+// explicit error, not silently downgraded to the generic headless profile.
+func TestUnknownProfileRejected(t *testing.T) {
+	s := model.TaskSpec{Agent: "never-declared"}
+	if _, e := Argv(s, "do task", false); e == nil || !strings.Contains(e.Error(), "unknown agent adapter") {
+		t.Fatalf("want explicit unknown-adapter error, got %v", e)
+	}
+	// Name() must not guess a native adapter for an undeclared profile.
+	if n := Name(s); n != "never-declared" {
+		t.Fatalf("Name() rewrote undeclared adapter to %q", n)
+	}
+}
+
+// TestMalformedNativeEventRejected covers A03/A04 malformed JSONL handling:
+// a corrupt line inside an otherwise native transcript must fail the attempt
+// rather than silently becoming a successful run.
+func TestMalformedNativeEventRejected(t *testing.T) {
+	good := []byte("{\"type\":\"result\",\"session_id\":\"s\",\"is_error\":false,\"result\":\"ok\"}\n")
+	cases := [][]byte{
+		[]byte("not-json\n"),
+		[]byte("{\"result\":\"no type\"}\n"),
+		append([]byte("{\"type\":\"result\",\"session_id\":\"s\",\"is_error\":false,\"result\":\"ok\"}\n"), []byte("garbage\n")...),
+		append(good, []byte("{\"type\":\"system\"}\n")...),
+	}
+	for i, b := range cases {
+		if _, e := Parse("claude-print", b); e == nil {
+			t.Fatalf("case %d: malformed transcript accepted", i)
+		}
+	}
+	// A second terminal event after a completed run must not be silently accepted.
+	both := append(append([]byte{}, good...), []byte("{\"type\":\"result\",\"session_id\":\"s\",\"is_error\":false}\n")...)
+	if _, e := Parse("claude-print", both); e == nil {
+		t.Fatal("event-after-terminal accepted")
+	}
+}

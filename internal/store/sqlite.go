@@ -73,6 +73,11 @@ func canonicalStatePath(p string) (string, error) {
 		s, e := os.Lstat(base)
 		if e == nil {
 			if s.Mode()&os.ModeSymlink != 0 {
+				// Allow OS-standard top-level symlinks on darwin; user-planted
+				// intermediate links are still rejected.
+				if base == "/tmp" || base == "/var" {
+					break
+				}
 				return "", fmt.Errorf("unsafe directory %s", base)
 			}
 			break
@@ -335,6 +340,9 @@ func (s *Store) Put(kind, id string, v any, event string) error {
 func (s *Store) Get(kind, id string, dst any) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
+	return s.get(kind, id, dst)
+}
+func (s *Store) get(kind, id string, dst any) error {
 	r, e := s.query("SELECT payload FROM records WHERE kind=? AND id=?", kind, id)
 	if e != nil {
 		return e

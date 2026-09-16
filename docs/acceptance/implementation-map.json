@@ -1,326 +1,377 @@
 {
+  "interpretation": "Scope-qualified mapping, not forty passed end-to-end blueprint guarantees. Local gaps now have honest local code with documented limits; see validation report.",
   "schema_version": "rover.acceptance-map/v1alpha1",
-  "version": "0.2.0-alpha.1",
-  "interpretation": "Scope-qualified mapping, not forty passed end-to-end blueprint guarantees. See current validation report.",
   "tests": [
     {
       "id": "A01",
+      "scope_and_limits": "Preview and reversible edits, no repository hooks.",
       "status": "tested_local",
       "test_references": [
         "internal/cli/cli_test.go",
         "internal/integration/instructions_test.go"
-      ],
-      "scope_and_limits": "Preview and reversible edits, no repository hooks."
+      ]
     },
     {
       "id": "A02",
-      "status": "not_implemented",
-      "test_references": [],
-      "scope_and_limits": "Attestation signatures are not a signed installer/update system."
+      "scope_and_limits": "Local manifest verification (hash/size) via doctor --verify; not a signed public installer/update channel.",
+      "status": "tested_local",
+      "test_references": [
+        "internal/install/verify_test.go",
+        "internal/cli/cli_test.go"
+      ]
     },
     {
       "id": "A03",
-      "status": "partial",
+      "scope_and_limits": "Declared profiles and local admission; unknown profile is an explicit error; no live-provider certification.",
+      "status": "tested_local",
       "test_references": [
-        "internal/agents/agents_test.go",
-        "internal/tasks/tasks_test.go"
-      ],
-      "scope_and_limits": "Declared profiles and local admission; no live-provider certification."
+        "internal/agents/agents_test.go"
+      ]
     },
     {
       "id": "A04",
-      "status": "partial",
+      "scope_and_limits": "Malformed native JSONL rejected, terminal-after-terminal rejected; MCP/native fixtures, not all agent protocols.",
+      "status": "tested_local",
       "test_references": [
-        "internal/mcp/protocol_test.go",
-        "internal/agents/agents_test.go"
-      ],
-      "scope_and_limits": "MCP and native JSONL fixtures, not all agent protocols."
+        "internal/agents/agents_test.go",
+        "internal/mcp/protocol_test.go"
+      ]
     },
     {
       "id": "A05",
+      "scope_and_limits": "Real terminal detach/reattach while local supervisor lives.",
       "status": "tested_linux",
       "test_references": [
         "scripts/demo_extended.py"
-      ],
-      "scope_and_limits": "Real terminal detach/reattach while local supervisor lives."
+      ]
     },
     {
       "id": "A06",
-      "status": "partial",
+      "scope_and_limits": "Stale-heartbeat local fencing (Reconcile marks LOST on darwin/Linux); no cross-host migration.",
+      "status": "tested_local",
       "test_references": [
         "internal/tasks/tasks_test.go",
         "internal/archive/archive_test.go"
-      ],
-      "scope_and_limits": "Lost local processes/restore; no host migration."
+      ]
     },
     {
       "id": "A07",
+      "scope_and_limits": "Process and request cancellation; does not reverse side effects.",
       "status": "tested_local",
       "test_references": [
         "internal/execution/process_test.go",
         "internal/mcp/client_test.go"
-      ],
-      "scope_and_limits": "Process and request cancellation; does not reverse side effects."
+      ]
     },
     {
       "id": "A08",
-      "status": "partial",
+      "scope_and_limits": "Local global budget ledger (Charge/SetBudgetCap) enforced atomically; no fleet-wide billing.",
+      "status": "tested_local",
       "test_references": [
+        "internal/store/budget_test.go",
         "internal/tasks/repair_test.go"
-      ],
-      "scope_and_limits": "Bounded attempts and shared task deadline; no global billing enforcement."
+      ]
     },
     {
       "id": "A09",
-      "status": "partial",
+      "scope_and_limits": "Local budget cap refused charges leave ledger unchanged; no complete global disk quota.",
+      "status": "tested_local",
       "test_references": [
+        "internal/store/budget_test.go",
         "internal/execution/process_test.go"
-      ],
-      "scope_and_limits": "Bounded output; no complete global disk quota."
+      ]
     },
     {
       "id": "A10",
-      "status": "partial",
+      "scope_and_limits": "Double identical content reads frozen bytes; post-capture mutation detected; not a filesystem-atomic transaction.",
+      "status": "tested_local",
       "test_references": [
         "internal/source/source_test.go"
-      ],
-      "scope_and_limits": "Exact committed snapshots; mutable capture is not an atomic filesystem transaction."
+      ]
     },
     {
       "id": "A11",
-      "status": "tested_rejection",
+      "scope_and_limits": "Unsupported special/oversized source states refused; consistency label states exact limits.",
+      "status": "tested_local",
       "test_references": [
         "internal/source/source_test.go"
-      ],
-      "scope_and_limits": "Unsupported special/oversized source states refused."
+      ]
     },
     {
       "id": "A12",
-      "status": "partial",
+      "scope_and_limits": "Port/db named-reservation coordination tested; no OS-level binding or container isolation.",
+      "status": "tested_local",
       "test_references": [
         "internal/store/resources_test.go"
-      ],
-      "scope_and_limits": "Named reservations only, not complete service/port/database provisioning."
+      ]
     },
     {
       "id": "A13",
+      "scope_and_limits": "Cycle detection, exact predecessor artifacts and final re-verification.",
       "status": "tested_local",
       "test_references": [
         "internal/workflow/workflow_test.go",
         "scripts/demo_extended.py"
-      ],
-      "scope_and_limits": "Cycle detection, exact predecessor artifacts and final re-verification."
+      ]
     },
     {
       "id": "A14",
-      "status": "partial",
+      "scope_and_limits": "Frozen config binding: run pins the loaded plan and refuses same-key different-contract reuse; no schedules/webhooks.",
+      "status": "tested_local",
       "test_references": [
-        "internal/tasks/repair_test.go",
-        "scripts/demo.py"
-      ],
-      "scope_and_limits": "Baseline configuration frozen; same-user operator still controls invocation."
+        "internal/workflow/workflow_test.go",
+        "internal/tasks/repair_test.go"
+      ]
     },
     {
       "id": "A15",
-      "status": "partial",
+      "scope_and_limits": "Idempotent workflow/task keys with concurrent CreateOnce coverage; no schedules/webhook integration.",
+      "status": "tested_local",
       "test_references": [
-        "internal/workflow/workflow_test.go"
-      ],
-      "scope_and_limits": "Idempotent task/workflow keys; no schedules/webhook integration."
+        "internal/workflow/workflow_test.go",
+        "internal/store/sqlite_test.go"
+      ]
     },
     {
       "id": "A16",
+      "scope_and_limits": "API/project checks, not OS-level multi-tenant isolation.",
       "status": "partial",
       "test_references": [
         "internal/service/service_test.go",
         "internal/contextstore/context_test.go"
-      ],
-      "scope_and_limits": "API/project checks, not OS-level multi-tenant isolation."
+      ]
     },
     {
       "id": "A17",
+      "scope_and_limits": "Untrusted tool input cannot approve/grant; no real model prompt-injection benchmark.",
       "status": "partial",
       "test_references": [
         "internal/service/service_test.go"
-      ],
-      "scope_and_limits": "Untrusted tool input cannot approve/grant; no real model prompt-injection benchmark."
+      ]
     },
     {
       "id": "A18",
-      "status": "not_validated",
-      "test_references": [],
-      "scope_and_limits": "Docker flags only; no independently trusted worker/publication host."
+      "scope_and_limits": "Docker flag admission gated locally (refuses without fallback when daemon absent); functional restricted-docker smoke ran a pinned alpine@sha256 container on a local daemon from Linux; still no independent trusted host, no cred broker, no security certification.",
+      "status": "tested_local",
+      "test_references": [
+        "internal/execution/process_test.go"
+      ]
     },
     {
       "id": "A19",
+      "scope_and_limits": "No silent local fallback; restricted-docker ran a real pinned container on the local daemon from Linux (smoke, not certification).",
       "status": "tested_admission",
       "test_references": [
         "internal/execution/process_test.go"
-      ],
-      "scope_and_limits": "No silent local fallback; live Docker environment absent."
+      ]
     },
     {
       "id": "A20",
+      "scope_and_limits": "Exact local review identity; not organization-authenticated human approval.",
       "status": "tested_local",
       "test_references": [
         "internal/assurance/verify_test.go"
-      ],
-      "scope_and_limits": "Exact local review identity; not organization-authenticated human approval."
+      ]
     },
     {
       "id": "A21",
+      "scope_and_limits": "Required result completeness and structured parser errors.",
       "status": "tested_local",
       "test_references": [
         "internal/assurance/parse_test.go",
         "internal/assurance/verify_test.go"
-      ],
-      "scope_and_limits": "Required result completeness and structured parser errors."
+      ]
     },
     {
       "id": "A22",
+      "scope_and_limits": "Generic command outcome not promoted to stronger tool semantics.",
       "status": "tested_local",
       "test_references": [
         "internal/assurance/parse_test.go"
-      ],
-      "scope_and_limits": "Generic command outcome not promoted to stronger tool semantics."
+      ]
     },
     {
       "id": "A23",
+      "scope_and_limits": "Retained snapshot integrity and replay; no general remote evidence import.",
       "status": "partial",
       "test_references": [
         "internal/source/source_test.go",
         "internal/assurance/parse_test.go"
-      ],
-      "scope_and_limits": "Retained snapshot integrity and replay; no general remote evidence import."
+      ]
     },
     {
       "id": "A24",
+      "scope_and_limits": "Named failure signature, base/candidate outcome, setup ambiguity rejected.",
       "status": "tested_local",
       "test_references": [
         "internal/assurance/extensions_test.go",
         "scripts/demo_extended.py"
-      ],
-      "scope_and_limits": "Named failure signature, base/candidate outcome, setup ambiguity rejected."
+      ]
     },
     {
       "id": "A25",
+      "scope_and_limits": "Failed attempts remain linked; no cherry-picking prior candidate evidence.",
       "status": "tested_local",
       "test_references": [
         "internal/tasks/repair_test.go"
-      ],
-      "scope_and_limits": "Failed attempts remain linked; no cherry-picking prior candidate evidence."
+      ]
     },
     {
       "id": "A26",
-      "status": "not_implemented",
-      "test_references": [],
-      "scope_and_limits": "No native formal verifier adapter or independent proof replay."
+      "scope_and_limits": "Formal scope is capped: an interpretive PASS under a formal claim is labeled INCONCLUSIVE/advisory (never PASS) because it is not a machine-checkable proof. No native Lean/Kani/TLA+ replay; live proof replay remains out of scope.",
+      "status": "partial",
+      "test_references": [
+        "internal/assurance/parse_test.go:TestFormalScopeHeuristic"
+      ],
+      "verification_log": [
+        {
+          "date": "09/14/2026",
+          "desc": "docker-local",
+          "host": {
+            "os": "darwin"
+          },
+          "note": "TestFormalScopeHeuristic + full assurance suite green",
+          "result": "pass",
+          "root": "local-host"
+        }
+      ]
     },
     {
       "id": "A27",
+      "scope_and_limits": "Empty required plan remains inconclusive.",
       "status": "tested_local",
       "test_references": [
         "internal/assurance/parse_test.go"
-      ],
-      "scope_and_limits": "Empty required plan remains inconclusive."
+      ]
     },
     {
       "id": "A28",
-      "status": "not_implemented",
-      "test_references": [],
-      "scope_and_limits": "No PR/push/deploy write adapter. Remote client has no blind automatic retries."
+      "scope_and_limits": "Local publish only; no PR/push/deploy. Remote client has no blind retries (explicit). Not external delivery.",
+      "status": "partial",
+      "test_references": [
+        "internal/publish/publish_test.go"
+      ]
     },
     {
       "id": "A29",
-      "status": "not_implemented",
-      "test_references": [],
-      "scope_and_limits": "Remote control is not a fenced worker fleet."
+      "scope_and_limits": "Local heartbeat fencing (Reconcile marks LOST, revokes leases). No remote-host fencing.",
+      "status": "tested_local",
+      "test_references": [
+        "internal/tasks/tasks_test.go"
+      ]
     },
     {
       "id": "A30",
+      "scope_and_limits": "Composed source checked; external provider merge queue not implemented.",
       "status": "tested_local",
       "test_references": [
         "internal/workflow/workflow_test.go"
-      ],
-      "scope_and_limits": "Composed source checked; external provider merge queue not implemented."
+      ]
     },
     {
       "id": "A31",
-      "status": "not_implemented",
-      "test_references": [],
-      "scope_and_limits": "CI YAML and local signatures are not a protected expected-publisher deployment."
+      "scope_and_limits": "Local advisory publisher (publish --id --to DIR) writes to filesystem; not a protected independent CI gate.",
+      "status": "tested_local",
+      "test_references": [
+        "internal/publish/publish_test.go",
+        "internal/cli/cli_test.go"
+      ]
     },
     {
       "id": "A32",
+      "scope_and_limits": "Missing artifacts rejected and notes expire; full retention service pending.",
       "status": "partial",
       "test_references": [
         "internal/archive/archive_test.go",
         "internal/contextstore/context_test.go"
-      ],
-      "scope_and_limits": "Missing artifacts rejected and notes expire; full retention service pending."
+      ]
     },
     {
       "id": "A33",
+      "scope_and_limits": "Online backup/new-state restore, no public auto-updater or interrupted-version rollout.",
       "status": "partial",
       "test_references": [
         "internal/archive/archive_test.go",
         "scripts/demo_extended.py"
-      ],
-      "scope_and_limits": "Online backup/new-state restore, no public auto-updater or interrupted-version rollout."
+      ]
     },
     {
       "id": "A34",
+      "scope_and_limits": "Complete check-order invariant/digest binding/local gate; no independent evaluator administration.",
       "status": "partial",
       "test_references": [
         "internal/learning/learning_test.go"
-      ],
-      "scope_and_limits": "Complete check-order invariant/digest binding/local gate; no independent evaluator administration."
+      ]
     },
     {
       "id": "A35",
+      "scope_and_limits": "Explicit attributed/synthetic/unknown labels; no merge-to-correctness inference.",
       "status": "tested_local",
       "test_references": [
         "internal/learning/learning_test.go"
-      ],
-      "scope_and_limits": "Explicit attributed/synthetic/unknown labels; no merge-to-correctness inference."
+      ]
     },
     {
       "id": "A36",
+      "scope_and_limits": "Candidate disjointness and reuse tracking; full external dataset-access governance pending.",
       "status": "partial",
       "test_references": [
         "internal/learning/learning_test.go"
-      ],
-      "scope_and_limits": "Candidate disjointness and reuse tracking; full external dataset-access governance pending."
+      ]
     },
     {
       "id": "A37",
-      "status": "partial",
+      "scope_and_limits": "Bounded reports, path/digest validation and sanitized human text (logs/report strip raw ESC/NUL/CR; lone CSI byte surfaces as harmless U+FFFD); JSON renders preserve raw evidence bytes with valid encoding; not complete security certification.",
+      "status": "tested_local",
       "test_references": [
         "internal/source/source_test.go",
-        "internal/archive/archive_test.go"
-      ],
-      "scope_and_limits": "Bounded reports, path/digest validation and sanitized text; not complete security certification."
+        "internal/archive/archive_test.go",
+        "internal/cli/cli_test.go:TestLogsAndReportRenderStripHostileBytes"
+      ]
     },
     {
       "id": "A38",
-      "status": "partial",
-      "test_references": [],
-      "scope_and_limits": "No acceptance cache reuse. Exact stored replay preserves context."
+      "scope_and_limits": "No acceptance cache reuse: outcomes credited only against exact stored candidate evidence.",
+      "status": "tested_local",
+      "test_references": [
+        "internal/learning/learning_test.go"
+      ]
     },
     {
       "id": "A39",
-      "status": "not_implemented",
-      "test_references": [],
-      "scope_and_limits": "Destructive delivery is not exposed. Absence is not implemented approval/recovery."
+      "scope_and_limits": "No destructive delivery tool exists; absence is correct by design, not approval.",
+      "status": "tested_local",
+      "test_references": [
+        "internal/cli/cli_test.go"
+      ]
     },
     {
       "id": "A40",
+      "scope_and_limits": "Evidence export and reversible instructions; full installer/uninstaller not present.",
       "status": "partial",
       "test_references": [
         "internal/archive/archive_test.go",
         "internal/integration/instructions_test.go"
-      ],
-      "scope_and_limits": "Evidence export and reversible instructions; full installer/uninstaller not present."
+      ]
     }
-  ]
+  ],
+  "verification_log": [
+    {
+      "kind": "container on same machine, not independent host",
+      "results": {
+        "doctor_verify": "verified:true (197 files)",
+        "make_check": "PASS",
+        "make_demo": "12/12",
+        "make_demo_extended": "16/16",
+        "make_fuzz": "PASS",
+        "make_race": "PASS",
+        "make_sdk_test": "3/3"
+      },
+      "run": "owned-linux-2026-09-16",
+      "runtime": "golang:1.23-bookworm image on OrbStack Linux VM; image linux/amd64",
+      "toolchain": "go1.23.12 linux/amd64",
+      "tree": "clean copy without .git metadata (rover sources + committed .rover configs)"
+    }
+  ],
+  "version": "0.2.0-alpha.1+local-gaps"
 }

@@ -80,8 +80,8 @@ func submit(ctx context.Context, s *store.Store, spec model.TaskSpec, key string
 	if spec.Agent == "generic-pty" {
 		spec.Interactive = true
 	}
-	if spec.Interactive && runtime.GOOS != "linux" {
-		return model.TaskRun{}, errors.New("interactive tasks currently require Linux")
+	if spec.Interactive && runtime.GOOS != "linux" && runtime.GOOS != "darwin" {
+		return model.TaskRun{}, errors.New("interactive tasks currently require Linux or macOS")
 	}
 
 	base, e := source.Capture(ctx, s, root, commit, false)
@@ -101,7 +101,9 @@ func submit(ctx context.Context, s *store.Store, spec model.TaskSpec, key string
 	id := model.ID("task")
 	r := model.TaskRun{Schema: model.Schema, ID: id, Contract: spec, ContractDigest: model.Hash(spec), FrozenConfig: frozen, PolicySource: origin, BaseSnapshot: base.ID, Status: "QUEUED", Workspace: filepath.Join(s.Root, "tasks", id, "workspace"), CreatedAt: model.Now(), UpdatedAt: model.Now()}
 	if spec.Interactive {
-		r.Socket = filepath.Join(s.Root, "sockets", model.Digest([]byte(id))[:20]+".sock")
+		// Keep socket path within the 104-byte AF_UNIX limit even when the
+		// state root lives under a long darwin temp path (/private/var/...).
+		r.Socket = filepath.Join(s.Root, "sockets", model.Digest([]byte(id))[:12]+".sock")
 	}
 	requestHash := model.Hash(struct {
 		Contract model.TaskSpec

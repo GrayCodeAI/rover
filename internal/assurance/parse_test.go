@@ -2,6 +2,7 @@ package assurance
 
 import (
 	"github.com/GrayCodeAI/rover/internal/model"
+	"strings"
 	"testing"
 )
 
@@ -56,6 +57,34 @@ func TestIncompleteExecutionNeverPasses(t *testing.T) {
 		})
 	}
 }
+func TestFormalScopeHeuristic(t *testing.T) {
+	cases := []struct {
+		name, scope string
+		in, want    Parsed
+	}{
+		{"formal-pass-capped", "formal", Parsed{Outcome: "PASS"}, Parsed{Outcome: "INCONCLUSIVE"}},
+		{"formal-fail-unchanged", "formal", Parsed{Outcome: "FAIL"}, Parsed{Outcome: "FAIL"}},
+		{"formal-inconclusive-unchanged", "formal", Parsed{Outcome: "INCONCLUSIVE"}, Parsed{Outcome: "INCONCLUSIVE"}},
+		{"advisory-pass-unchanged", "advisory", Parsed{Outcome: "PASS"}, Parsed{Outcome: "PASS"}},
+		{"empty-scope-pass-unchanged", "", Parsed{Outcome: "PASS"}, Parsed{Outcome: "PASS"}},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			got := CapFormalScope(tc.scope, tc.in)
+			if got.Outcome != tc.want.Outcome {
+				t.Fatalf("CapFormalScope(%q, PASS) = %s, want %s", tc.scope, got.Outcome, tc.want.Outcome)
+			}
+		})
+	}
+	capped := CapFormalScope("formal", Parsed{Outcome: "PASS", Meaning: "advisory meaning"})
+	if capped.Outcome != "INCONCLUSIVE" || !strings.Contains(capped.Meaning, "not a machine-checkable proof") {
+		t.Fatalf("capped result must name the missing proof artifact, got %+v", capped)
+	}
+	if CapFormalScope("advisory", Parsed{Outcome: "PASS", Meaning: "x"}).Meaning != "x" {
+		t.Fatal("advisory scope must not be rewritten")
+	}
+}
+
 func TestPolicyCompleteness(t *testing.T) {
 	spec := model.CheckSpec{ID: "a", Argv: []string{"true"}, Timeout: "1s", Required: true, Parser: "exit-code"}
 	cfg := model.Config{Schema: model.Schema, Checks: []model.CheckSpec{spec}}
