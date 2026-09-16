@@ -1,0 +1,23 @@
+{
+  "schema": "rover/v1alpha1",
+  "checks": [
+    {
+      "id": "authorization-tests",
+      "argv": [
+        "python3",
+        "tests/run_tests.py"
+      ],
+      "timeout": "20s",
+      "required": true,
+      "parser": "junit",
+      "min_tests": 3,
+      "report_path": ".rover-results/tests.xml"
+    }
+  ],
+  "policy": {
+    "require_review": true,
+    "review_paths": [
+      "app.py"
+    ]
+  }
+}

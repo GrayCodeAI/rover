@@ -1,0 +1,9 @@
+Rover
+Copyright 2026 Rover contributors.
+
+This initial source implementation was generated with AI assistance at the project
+owner's request. No human review, DCO sign-off, public publication, or security audit
+is inferred. The executable uses the system SQLite C library; no SQLite source is
+vendored. Go standard-library and toolchain licensing applies to their own components.
+Research/design references are attributed in documentation; their implementations
+were not copied into this source tree.

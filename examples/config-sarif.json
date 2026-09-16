@@ -1,0 +1,26 @@
+{
+  "schema": "rover/v1alpha1",
+  "checks": [
+    {
+      "id": "analyzer",
+      "argv": [
+        "your-reviewed-analyzer",
+        "--sarif-output",
+        ".rover-results/analysis.sarif"
+      ],
+      "timeout": "5m",
+      "required": true,
+      "parser": "sarif",
+      "report_path": ".rover-results/analysis.sarif",
+      "fail_level": "warning",
+      "property": "No reported findings above the configured severity",
+      "scope": "Only the configured analyzer rules and source input",
+      "assumptions": [
+        "Analyzer configuration and executable must be reviewed; no findings is not a security proof."
+      ]
+    }
+  ],
+  "policy": {
+    "require_review": true
+  }
+}

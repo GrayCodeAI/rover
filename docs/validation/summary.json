@@ -1,0 +1,115 @@
+{
+  "schema": "rover.validation/v1alpha1",
+  "version": "0.1.0-alpha.1",
+  "observed_at": "2026-09-15T19:14:04.093103+00:00",
+  "status": "passed_for_recorded_scope",
+  "environment": {
+    "os": "Linux",
+    "machine": "x86_64",
+    "go": "go version go1.23.2 linux/amd64",
+    "git": "git version 2.47.3",
+    "sqlite": "3.46.1",
+    "python": "3.13.5",
+    "network_downloads": "blocked; toolchain/module retrieval failed"
+  },
+  "tests": {
+    "top_level_tests_passed": 50,
+    "subtests_passed": 56,
+    "fuzz_seed_cases_passed": 9,
+    "tested_packages": [
+      "github.com/GrayCodeAI/rover/internal/assurance",
+      "github.com/GrayCodeAI/rover/internal/config",
+      "github.com/GrayCodeAI/rover/internal/cli",
+      "github.com/GrayCodeAI/rover/internal/execution",
+      "github.com/GrayCodeAI/rover/internal/source",
+      "github.com/GrayCodeAI/rover/internal/store",
+      "github.com/GrayCodeAI/rover/internal/tasks"
+    ],
+    "failed_events": 0,
+    "race_detector": "passed",
+    "go_vet": "passed",
+    "gofmt": "passed",
+    "statement_coverage_all_packages": "64.0%",
+    "coverage_scope": "Go coverage run, not detached Python smoke coverage and not a correctness guarantee"
+  },
+  "smoke_scenarios_passed": 12,
+  "fuzz_smoke_campaigns": [
+    {
+      "package": "config",
+      "requested_duration": "3s",
+      "workers": 2,
+      "executions_reported": 28964,
+      "result": "passed"
+    },
+    {
+      "package": "source",
+      "requested_duration": "3s",
+      "workers": 2,
+      "executions_reported": 90266,
+      "result": "passed"
+    },
+    {
+      "package": "assurance",
+      "requested_duration": "3s",
+      "workers": 2,
+      "executions_reported": 84025,
+      "result": "passed"
+    }
+  ],
+  "go_source_manifest_sha256": "bc0abb7e2166633178631ab8b54acd6b559a735cd5332e8b1bc32c5a08bd6ca6",
+  "go_source_manifest": {
+    "cmd/rover/main.go": "8c1c93e6f2e112e386f7178f56c3a179724a582cc0485b6e1a78ecebb85dc2d6",
+    "go.mod": "b6e5c01c116787e40407425ede2c0008fa0ffbfb5cd4f8d6c2f9867f3c20af04",
+    "internal/assurance/parse.go": "b8a077536d42ddf7756d215170f341603732da53d0d2cb0e7ed2cf6b83c69504",
+    "internal/assurance/parse_test.go": "69c8a3378e99b1f781bb2b604b49810e025beeaa1c7835926b28df29abfeb838",
+    "internal/assurance/verify.go": "e343f4e3db077c2fa6ce7d985928411fafbe591d93a00fbc8370bcdb4a7bb10d",
+    "internal/assurance/verify_test.go": "6f99f1d6b830a3bc699434e2758dc691310d078a20988e8baaba852b0cdd418e",
+    "internal/cli/cli.go": "7989c4f81720a4fb85f60222494e3f27123b67561580641aa6b017cb6fb626b5",
+    "internal/cli/cli_test.go": "38199f746ba8e63d604d3d2824fb3893e357d03e42e80315239e4880e21f6c9c",
+    "internal/config/config.go": "b1ecce4874a7ae30b211113974c643a931bf3c6943477046a43e760750ac0b89",
+    "internal/config/config_test.go": "3543f14f7bbea6c3f3da88896013aa0a90269d16906ed308f0529a6ef1c2a80e",
+    "internal/execution/process.go": "57c008dcf526f27ff5a18aa800eef5fdf3c80db54c5b79915d3843dca43eaf6e",
+    "internal/execution/process_other.go": "b8fa9a4a884b6979658c5190f5541dfcf953c9d316f8c4f980b21d98017f5c66",
+    "internal/execution/process_test.go": "2ae3b4c420566627c13bd265194c3cde49db2c4d3381cab5ad210e64f510092b",
+    "internal/execution/process_unix.go": "3b7457a55f72a5e98be243534382ee175a62822d446c6ec1a20a76b1713b2c4a",
+    "internal/model/model.go": "0f0d7dcfca1729a27ea67de1908d5b1dca5602a8dde08a982152e4383b5226b3",
+    "internal/source/source.go": "4d40d989bfb00ab61ebdf3f6edc5f9c1e25305d4a35a9cae656a37d5cdf1639c",
+    "internal/source/source_test.go": "21bab636bb7446751c056241677bba142f4771393c59666f2dbb6bb2105cd709",
+    "internal/store/sqlite.go": "d7b8f130a7ed274c6f8beb760b2646c1ef6ff5e8cef0b3fb3b6940fca15ae381",
+    "internal/store/sqlite_test.go": "5426232a13752695588ffdeeb3f7b4b88e3385447de5fe4f9adc2ef948b42034",
+    "internal/tasks/identity_darwin.go": "4c03a771655f42cbbd1966f9007413e0e0d8eadd0056cda5fe96f82b6055cf5a",
+    "internal/tasks/identity_linux.go": "979d45b64d7ba0300e3991c45e90de3ac70832976c4b8a1cd8e6d452ba280b22",
+    "internal/tasks/identity_other.go": "c5d068397d93ffff3ba5a5985f8d5a76a5deacd3cbe962a50fdc846ce0b6f4f4",
+    "internal/tasks/tasks.go": "fffbc538c8e367e8d24751496400341748e344258f1ee8a41d2f1af30a88290f",
+    "internal/tasks/tasks_test.go": "8b174af9803b20f434271453be4e235d265f7129916687975306f10add4b9474",
+    "internal/testutil/repo.go": "bb468ee9092c7b283becff1fa5b4d59140b0367efe8f45fed230604a80ad5922"
+  },
+  "not_validated": [
+    "Live Claude/Codex/provider integration",
+    "Interactive PTY or native agent resume",
+    "Live Docker isolation",
+    "macOS / Windows execution",
+    "Current Go 1.27.1 toolchain",
+    "Hosted GitHub Actions or protected CI publisher",
+    "Production security audit or complete 40-scenario acceptance inventory"
+  ],
+  "development_regression": "A state-root safety guard initially prevented the detached supervisor opening its state from its working directory. End-to-end smoke detected it; worker cwd and dispatch startup observability were fixed; final smoke passed.",
+  "self_verification": {
+    "source_git_commit": "7114d8daed5d093e2c4f067d332d277c610b6812",
+    "decision": "REVIEW_REQUIRED",
+    "checks": [
+      {
+        "id": "unit",
+        "outcome": "PASS",
+        "tests": 118
+      },
+      {
+        "id": "vet",
+        "outcome": "PASS",
+        "tests": 0
+      }
+    ],
+    "exit_code": 3,
+    "note": "REVIEW_REQUIRED is expected; this is not authenticated approval or an independent security audit."
+  }
+}

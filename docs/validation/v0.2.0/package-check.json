@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "fresh_extraction": true,
+  "go_source_module_hashes_checked": 76,
+  "checks": {
+    "tests": {
+      "exit_code": 0
+    },
+    "build": {
+      "exit_code": 0
+    },
+    "extended": {
+      "exit_code": 0
+    },
+    "sdk": {
+      "exit_code": 0
+    }
+  },
+  "extended_scenarios": 16,
+  "python_tests": 3,
+  "limitations": [
+    "Same Linux build host; not independent-host certification",
+    "Documentation/validation files added after candidate archive test; Go code unchanged"
+  ]
+}

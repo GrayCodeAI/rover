@@ -1,0 +1,18 @@
+PASS bounded_repair_preserves_attempts
+PASS applicable_snapshot_diff
+PASS exact_replay
+PASS counterfactual_cli
+PASS mutation_cli
+PASS snapshot_context
+PASS scoped_memory
+PASS reversible_agent_instructions
+PASS actual_pty_task
+PASS keyboard_tui
+PASS detached_parallel_workflow
+PASS mcp_stdio_cli
+PASS remote_cli_actual_task
+PASS remote_grant_revocation
+PASS signed_evidence
+PASS backup_restore_cli
+
+16 extended CLI scenarios passed.

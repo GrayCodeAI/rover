@@ -1,0 +1,53 @@
+{
+  "schema": "rover/v1alpha1",
+  "objective": "Coordinate explicitly configured agents on an owned repository",
+  "repository": "/absolute/path/to/owned/repository",
+  "base": "HEAD",
+  "timeout": "30m",
+  "max_parallel": 2,
+  "allow_unreviewed_handoffs": false,
+  "nodes": [
+    {
+      "id": "backend",
+      "depends_on": [],
+      "task": {
+        "objective": "backend",
+        "argv": [
+          "your-installed-backend-agent",
+          "{{objective}}"
+        ],
+        "timeout": "5m",
+        "auto_verify": true
+      }
+    },
+    {
+      "id": "frontend",
+      "depends_on": [],
+      "task": {
+        "objective": "frontend",
+        "argv": [
+          "your-installed-frontend-agent",
+          "{{objective}}"
+        ],
+        "timeout": "5m",
+        "auto_verify": true
+      }
+    },
+    {
+      "id": "integration",
+      "depends_on": [
+        "backend",
+        "frontend"
+      ],
+      "task": {
+        "objective": "integration",
+        "argv": [
+          "your-installed-integration-agent",
+          "{{objective}}"
+        ],
+        "timeout": "5m",
+        "auto_verify": true
+      }
+    }
+  ]
+}

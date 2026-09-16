@@ -1,0 +1,11 @@
+/bin/
+/.validation/
+/.rover-results/
+*.test
+coverage.out
+__pycache__/
+*.pyc
+.DS_Store
+
+__pycache__/
+*.pyc

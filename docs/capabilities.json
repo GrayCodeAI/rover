@@ -1,0 +1,66 @@
+{
+  "schema": "rover.capabilities/v1alpha1",
+  "version": "0.2.0-alpha.1",
+  "validated_platform": "linux/amd64",
+  "agent_profiles": {
+    "generic_headless": "local process tested",
+    "generic_pty": "real Linux PTY tested",
+    "codex_exec": "argument/transcript fixture tested; live provider NOT tested",
+    "claude_print": "argument/transcript fixture tested; live provider NOT tested"
+  },
+  "workflow": {
+    "dag": true,
+    "bounded_repairs": true,
+    "named_reservations": true,
+    "integrated_snapshot_reverification": true,
+    "merge_to_user_branch": false
+  },
+  "interface": {
+    "cli": true,
+    "keyboard_tui": true,
+    "mcp_stdio": "tested protocol 2025-11-25 subset",
+    "mcp_http": "tested JSON-only stateless subset",
+    "python_client": true,
+    "remote_control": "localhost HTTP/TLS tested; real remote host not tested"
+  },
+  "checks": [
+    "exit-code",
+    "go-test-json",
+    "junit",
+    "sarif"
+  ],
+  "assurance": {
+    "counterfactual": "explicit named test/failure signature",
+    "mutation": "bounded explicit text mutations",
+    "test_integrity": "lexical heuristics",
+    "native_formal_tools": false
+  },
+  "security": {
+    "project_scoped_bearer_grants": true,
+    "revocation": true,
+    "local_isolation": false,
+    "docker_live_tested": false,
+    "protected_ci_publisher": false
+  },
+  "evidence": {
+    "sqlite": true,
+    "local_ed25519_attestation": true,
+    "independent_signed_acceptance": false,
+    "backup_restore": true
+  },
+  "learning": {
+    "offline_check_order_proposals": true,
+    "holdout_evaluation_and_explicit_promotion": true,
+    "full_model_RL": false,
+    "recursive_self_modification": false
+  },
+  "not_claimed": [
+    "all blueprint acceptance tests implemented",
+    "hosted CI execution",
+    "macOS or Windows validation",
+    "live-provider certification",
+    "safe execution of hostile repositories on user host",
+    "SLSA/in-toto compliance",
+    "all edge cases covered"
+  ]
+}
