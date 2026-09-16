@@ -280,28 +280,28 @@
     },
     {
       "id": "A32",
-      "scope_and_limits": "Missing artifacts rejected and notes expire; full retention service pending.",
-      "status": "partial",
+      "scope_and_limits": "Missing artifacts rejected and notes expire; full retention service pending (local backup/restore/integrity checks exist).",
+      "status": "tested_local",
       "test_references": [
         "internal/archive/archive_test.go",
-        "internal/contextstore/context_test.go"
+        "internal/contextstore/context_test.go:TestScopedContextAndMemory"
       ]
     },
     {
       "id": "A33",
-      "scope_and_limits": "Online backup/new-state restore, no public auto-updater or interrupted-version rollout.",
-      "status": "partial",
+      "scope_and_limits": "Online backup/new-state restore (SQLite online backup + integrity verification); no public auto-updater or interrupted-version rollout.",
+      "status": "tested_local",
       "test_references": [
-        "internal/archive/archive_test.go",
+        "internal/archive/archive_test.go:TestOnlineBackupRestoreRevokesExecution",
         "scripts/demo_extended.py"
       ]
     },
     {
       "id": "A34",
-      "scope_and_limits": "Complete check-order invariant/digest binding/local gate; no independent evaluator administration.",
-      "status": "partial",
+      "scope_and_limits": "Complete check-order invariant/digest binding/local gate; strategy promotion requires explicit local review, revoked strategies are rejected, mutated proposals invalidate promotion; no independent evaluator administration.",
+      "status": "tested_local",
       "test_references": [
-        "internal/learning/learning_test.go"
+        "internal/learning/learning_test.go:TestProposeHoldoutPromoteAndRevoke"
       ]
     },
     {
@@ -314,10 +314,10 @@
     },
     {
       "id": "A36",
-      "scope_and_limits": "Candidate disjointness and reuse tracking; full external dataset-access governance pending.",
-      "status": "partial",
+      "scope_and_limits": "Candidate disjointness and reuse tracking (outcomes credited only against exact stored candidate, no acceptance cache reuse); full external dataset-access governance pending.",
+      "status": "tested_local",
       "test_references": [
-        "internal/learning/learning_test.go"
+        "internal/learning/learning_test.go:TestNoAcceptanceCacheReuse"
       ]
     },
     {
