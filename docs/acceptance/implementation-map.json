@@ -247,10 +247,10 @@
     },
     {
       "id": "A28",
-      "scope_and_limits": "Local publish only; no PR/push/deploy. Remote client has no blind retries (explicit). Not external delivery.",
-      "status": "partial",
+      "scope_and_limits": "Local advisory publisher (publish --id --to DIR) writes to filesystem; not a protected CI gate. Remote client has no blind retries (explicit). Not external delivery.",
+      "status": "tested_local",
       "test_references": [
-        "internal/publish/publish_test.go"
+        "internal/publish/publish_test.go:TestPublishLocal"
       ]
     },
     {
