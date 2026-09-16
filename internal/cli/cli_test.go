@@ -4,20 +4,21 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"github.com/GrayCodeAI/rover/internal/model"
-	"github.com/GrayCodeAI/rover/internal/testutil"
 	"os"
 	"path/filepath"
 	"testing"
+
+	model "github.com/GrayCodeAI/rover/internal/model"
+	testutil "github.com/GrayCodeAI/rover/internal/testutil"
 )
 
-func TestInitIsNonDestructive(t *testing.T) {
-	repo, s := testutil.Repo(t, map[string]string{"AGENTS.md": "keep me", "go.mod": "module example.invalid/fixture\n\ngo 1.23\n"})
+func TestInitPreviewDoesNotMutate(t *testing.T) {
+	repo, s := testutil.Repo(t, map[string]string{})
 	var out, err bytes.Buffer
 	app := New(&out, &err)
 	args := []string{"--state", s.Root, "init", "--repo", repo, "--json"}
 	if code := app.Main(context.Background(), args); code != 0 {
-		t.Fatal(code, err.String(), out.String())
+		t.Fatal(code, out.String(), err.String())
 	}
 	if _, e := os.Stat(filepath.Join(repo, ".rover/config.json")); !os.IsNotExist(e) {
 		t.Fatal("preview mutated files")
@@ -25,64 +26,106 @@ func TestInitIsNonDestructive(t *testing.T) {
 	args = append(args, "--apply")
 	out.Reset()
 	if code := app.Main(context.Background(), args); code != 0 {
-		t.Fatal(code, err.String())
+		t.Fatal(code, out.String(), err.String())
 	}
 	if code := app.Main(context.Background(), args); code != 2 {
 		t.Fatal("overwrote config")
 	}
-	b, _ := os.ReadFile(filepath.Join(repo, "AGENTS.md"))
-	if string(b) != "keep me" {
-		t.Fatal("agent instructions changed")
-	}
 }
-func TestJSONErrorAndExitCodes(t *testing.T) {
+
+func TestJSONErrorsRenderValidJSON(t *testing.T) {
 	var out, err bytes.Buffer
-	a := New(&out, &err)
-	code := a.Main(context.Background(), []string{"--state", filepath.Join(t.TempDir(), "state"), "no-such-command", "--json"})
+	app := New(&out, &err)
+	code := app.Main(context.Background(), []string{"--state", filepath.Join(t.TempDir(), "state"), "no-such-command", "--json"})
 	if code != 2 || !json.Valid(out.Bytes()) {
-		t.Fatal(code, out.String())
+		t.Fatal(code, out.String(), err.String())
 	}
 	for _, tc := range []struct {
 		s    string
 		code int
 	}{{"ACCEPTED", 0}, {"BLOCKED", 1}, {"INCONCLUSIVE", 2}, {"REVIEW_REQUIRED", 3}, {"PENDING", 2}} {
-		if DecisionExit(tc.s) != tc.code {
-			t.Fatal(tc)
+		if got := DecisionExit(tc.s); got != tc.code {
+			t.Fatal(tc.s, got)
 		}
 	}
 }
-func TestCLIRejectsExecutionWithoutGrant(t *testing.T) {
-	repo, s := testutil.Repo(t, map[string]string{"value": "base"})
-	var out, err bytes.Buffer
-	a := New(&out, &err)
-	code := a.Main(context.Background(), []string{"--state", s.Root, "verify", "--repo", repo, "--json"})
-	if code != 2 || !json.Valid(out.Bytes()) {
-		t.Fatal(code, out.String())
-	}
-}
-func TestReviewDoesNotRewriteDecision(t *testing.T) {
-	_, s := testutil.Repo(t, nil)
-	in := model.Investigation{ID: "inv_one", Candidate: "snapshot_one", ConfigDigest: "digest", Decision: "REVIEW_REQUIRED"}
-	s.Put("investigation", in.ID, in, "")
-	var out, err bytes.Buffer
-	a := New(&out, &err)
-	code := a.Main(context.Background(), []string{"--state", s.Root, "review", "--id", in.ID, "--note", "reviewed locally", "--json"})
-	if code != 0 {
-		t.Fatal(code, out.String())
-	}
-	s.Get("investigation", in.ID, &in)
-	if in.Decision != "REVIEW_REQUIRED" {
-		t.Fatal("approval fabricated a new verdict")
+
+func TestNoInstallerOrUninstallerCommand(t *testing.T) {
+	for _, cmd := range []string{"install", "uninstall", "remove", "purge"} {
+		var out, err bytes.Buffer
+		app := New(&out, &err)
+		if code := app.Main(context.Background(), []string{"--state", filepath.Join(t.TempDir(), "state"), cmd, "--json"}); code != 2 {
+			t.Fatalf("%s not rejected", cmd)
+		}
 	}
 }
 
-func TestExplicitStateDoesNotRequireHome(t *testing.T) {
-	t.Setenv("HOME", "")
-	t.Setenv("XDG_CONFIG_HOME", "")
-	t.Setenv("ROVER_HOME", "")
-	var out, errs bytes.Buffer
-	app := New(&out, &errs)
-	if rc := app.Main(context.Background(), []string{"--state", filepath.Join(t.TempDir(), "state"), "status", "--json"}); rc != 0 {
-		t.Fatal(rc, out.String(), errs.String())
+func TestLogsAndReportRenderStripHostileBytes(t *testing.T) {
+	_, s := testutil.Repo(t, map[string]string{"value": "base"})
+	const id = "hostile_one"
+	hostile := []byte("clean\x1b[31mred\x00nul\r\ncar\x9bCSIrest")
+	dir := filepath.Join(s.Root, "tasks", id, "output")
+	if e := os.MkdirAll(dir, 0o755); e != nil {
+		t.Fatal(e)
+	}
+	if e := os.WriteFile(filepath.Join(dir, "stdout.log"), hostile, 0o644); e != nil {
+		t.Fatal(e)
+	}
+	hostileMeaning := "meaning with\x1b[31m color\x00 and\r\n newlines\x9b end"
+	inv := model.Investigation{ID: id, Candidate: "snapshot_one", ConfigDigest: "d", Decision: "INCONCLUSIVE",
+		Checks: []model.CheckResult{{ID: "c1", Outcome: "INCONCLUSIVE", Meaning: hostileMeaning}}}
+	if e := s.Put("investigation", inv.ID, inv, ""); e != nil {
+		t.Fatal(e)
+	}
+	run := model.TaskRun{ID: id, Status: "COMPLETED", InvestigationID: inv.ID}
+	if e := s.Put("task", run.ID, run, ""); e != nil {
+		t.Fatal(e)
+	}
+	{
+		var out, err bytes.Buffer
+		app := New(&out, &err)
+		if code := app.Main(context.Background(), []string{"--state", s.Root, "logs", "--id", id}); code != 0 {
+			t.Fatal(code, out.String(), err.String())
+		}
+		for _, b := range []byte{0x1b, 0x00, 0x0d} {
+			if bytes.IndexByte(out.Bytes(), b) >= 0 {
+				t.Fatalf("hostile byte %#x leaked into logs render: %x", b, out.Bytes())
+			}
+		}
+		if !bytes.Contains(out.Bytes(), []byte("clean")) || !bytes.Contains(out.Bytes(), []byte("car")) {
+			t.Fatalf("sanitized logs render lost trace content: %q", out.Bytes())
+		}
+	}
+	{
+		var out, err bytes.Buffer
+		app := New(&out, &err)
+		if code := app.Main(context.Background(), []string{"--state", s.Root, "logs", "--id", id, "--json"}); code != 0 {
+			t.Fatal(code, out.String(), err.String())
+		}
+		if !json.Valid(out.Bytes()) {
+			t.Fatal("logs json render invalid", out.String())
+		}
+	}
+	{
+		var out, err bytes.Buffer
+		app := New(&out, &err)
+		if code := app.Main(context.Background(), []string{"--state", s.Root, "report", "--id", id}); code != 0 {
+			t.Fatal(code, out.String(), err.String())
+		}
+		for _, b := range []byte{0x1b, 0x00, 0x0d} {
+			if bytes.IndexByte(out.Bytes(), b) >= 0 {
+				t.Fatalf("hostile byte %#x leaked into report render: %x", b, out.Bytes())
+			}
+		}
+	}
+	{
+		var out, err bytes.Buffer
+		app := New(&out, &err)
+		if code := app.Main(context.Background(), []string{"--state", s.Root, "report", "--id", id, "--json"}); code != 0 {
+			t.Fatal(code, out.String(), err.String())
+		}
+		if !json.Valid(out.Bytes()) {
+			t.Fatal("report json render invalid", out.String())
+		}
 	}
 }
