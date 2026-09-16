@@ -1,0 +1,15 @@
+{
+  "name": "@graycodeai/rover",
+  "version": "0.2.0-alpha.1",
+  "description": "Small Node client for Rover's CLI — argv only, no shell, bounded JSON",
+  "type": "module",
+  "main": "src/rover_client.ts",
+  "types": "src/rover_client.ts",
+  "license": "MIT",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "test": "node --test test/*.test.ts",
+    "check": "tsc --noEmit"
+  },
+  "keywords": ["rover", "agent-orchestration", "verification", "mcp"]
+}
