@@ -1,4 +1,4 @@
-# Command reference — 0.2.0-alpha.1
+# Command reference — 0.0.1
 
 Build first. All examples use `./bin/rover --state /private/state COMMAND ...`.
 `--state` is global and must precede the command. IDs come from JSON output, not
@@ -14,7 +14,7 @@ absent. Review/commit this config before using it as the approved baseline.
 
 ## Inspect / verify
 
-```
+```text
 inspect --repo REPO --base REF [--worktree --include-untracked] [--config TRUSTED_FILE]
 verify  --repo REPO --base REF [--worktree --include-untracked] [--config TRUSTED_FILE]
         --mode local-advisory --allow-local [--strategy PROMOTED_ID] --json
@@ -30,7 +30,7 @@ return read-operation status instead; always inspect the JSON `decision` field.
 
 ## Tasks / sessions
 
-```
+```text
 agent list
 agent capabilities generic-pty
 task run --file TASK_JSON --allow-local [--key IDEMPOTENCY_KEY]
@@ -60,7 +60,7 @@ environment settings and adapter configuration may still grant sensitive access.
 
 ## Workflows
 
-```
+```text
 workflow run --file WORKFLOW_JSON --allow-local [--key KEY] [--foreground]
 workflow status [--id WORKFLOW]
 workflow cancel --id WORKFLOW
@@ -75,7 +75,7 @@ exceptions; they do not create human approval records.
 
 ## Review / source
 
-```
+```text
 report --id INVESTIGATION --json
 review --id INVESTIGATION --note TEXT --json
 outcome --id INVESTIGATION --label LABEL --note TEXT
@@ -91,7 +91,7 @@ exact patch content. Replays create new evidence without overwriting the old att
 
 ## Counterfactuals / mutation
 
-```
+```text
 prove regression --repo REPO --base-snapshot BASE_ID --candidate CANDIDATE_ID \
   --file REGRESSION_JSON --allow-local
 mutate --repo REPO --base-snapshot BASE_ID --candidate CANDIDATE_ID \
@@ -108,7 +108,7 @@ explicitly synthetic; this is not AST mutation or unlimited fuzzing.
 
 ## Context / memory / agent instructions
 
-```
+```text
 context search --snapshot ID --query TEXT [--limit N]
 context search --repo REPO --base REF --query TEXT
 context bundle --snapshot ID --path FILE [--path FILE ...]
@@ -127,7 +127,7 @@ new user edits. No package install or repository hook executes during preview.
 
 ## MCP / scoped HTTP
 
-```
+```text
 mcp --repo REPO --base REF [--enable-execution --allow-local]
 serve --repo REPO --base REF --listen 127.0.0.1:8765 [--ready-file NEW_JSON]
       [--tls-cert CERT --tls-key KEY] [--enable-execution --allow-local]
@@ -148,7 +148,7 @@ verify/task-run/task-cancel. No grant, review, key, merge or deployment tool is 
 
 ## Remote CLI
 
-```
+```text
 remote node-add --node NAME --endpoint URL --token-file PRIVATE_FILE [--ca-file PEM]
 remote node-list
 remote node-delete --node NAME
@@ -163,7 +163,7 @@ timeout may be an unknown operation outcome; reconcile before reissuing work.
 
 ## Maintenance / signatures
 
-```
+```text
 backup --to NEW_DIRECTORY
 backup-check --from BACKUP_DIRECTORY
 restore --from BACKUP_DIRECTORY --to NEW_STATE_DIRECTORY
@@ -179,7 +179,7 @@ correctness or independently administered CI. Protect keys separately from worke
 
 ## Learning / evaluation
 
-```
+```text
 learn recommend --repo REPO --base REF
 learn dataset --file DATASET_JSON
 learn evaluate --id PROPOSAL --dataset DATASET
