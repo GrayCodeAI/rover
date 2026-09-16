@@ -3,9 +3,7 @@
 **Terminal-first agent workspaces, persistent sessions, parallel workflows,
 verification, review, and evidence.**
 
-`0.2.0-alpha.1` is an expanded, executable OSS development release. It builds on
-`0.1.0-alpha.1`; it is not a rewrite or a claim that the full ten-layer roadmap is
-production-complete. See [STATUS.md](STATUS.md) for explicit boundaries.
+`0.0.1` is the initial public OSS release — terminal-first, agent-neutral, monorepo (Go + Python + TypeScript + Go SDKs). See [STATUS.md](STATUS.md) for explicit boundaries.
 
 ## Run the complete demonstrations
 

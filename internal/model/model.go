@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-const Version = "0.2.0-alpha.1"
+const Version = "0.0.1"
 const Schema = "rover/v1alpha1"
 
 var validID = regexp.MustCompile(`^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,127}$`)
