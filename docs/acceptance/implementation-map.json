@@ -192,11 +192,12 @@
     },
     {
       "id": "A23",
-      "scope_and_limits": "Retained snapshot integrity and replay; no general remote evidence import.",
-      "status": "partial",
+      "scope_and_limits": "Retained snapshot integrity and local replay (Replay re-runs frozen candidate+config); no general remote evidence import.",
+      "status": "tested_local",
       "test_references": [
         "internal/source/source_test.go",
-        "internal/assurance/parse_test.go"
+        "internal/assurance/parse_test.go",
+        "internal/assurance/verify_test.go:TestReplayRetainedInvestigation"
       ]
     },
     {
