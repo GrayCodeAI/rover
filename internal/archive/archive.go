@@ -12,6 +12,7 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
+	"syscall"
 
 	"github.com/GrayCodeAI/rover/internal/model"
 	"github.com/GrayCodeAI/rover/internal/store"
@@ -111,11 +112,14 @@ func readFile(root, name string, max int64) ([]byte, error) {
 	if !st.Mode().IsRegular() || st.Size() < 0 || st.Size() > max {
 		return nil, errors.New("archive file oversized or nonregular")
 	}
-	f, e := os.Open(p)
+	f, e := os.OpenFile(p, os.O_RDONLY|syscall.O_NOFOLLOW, 0)
 	if e != nil {
 		return nil, e
 	}
 	defer f.Close()
+	if st, e := f.Stat(); e != nil || !st.Mode().IsRegular() {
+		return nil, errors.New("archive file changed during open")
+	}
 	b, e := io.ReadAll(io.LimitReader(f, max+1))
 	if e != nil {
 		return nil, e
@@ -184,7 +188,13 @@ func Backup(ctx context.Context, s *store.Store, destination string) (Manifest, 
 			return m, errors.New("backup byte budget exceeded")
 		}
 		name := "objects/" + x.Name()
-		if e = os.WriteFile(filepath.Join(dest, filepath.FromSlash(name)), b, 0600); e != nil {
+		objPath := filepath.Join(dest, filepath.FromSlash(name))
+		if f, e := os.OpenFile(objPath, os.O_WRONLY|os.O_CREATE|os.O_EXCL|syscall.O_NOFOLLOW, 0600); e != nil {
+			return m, e
+		} else if _, e = f.Write(b); e != nil {
+			f.Close()
+			return m, e
+		} else if e = f.Close(); e != nil {
 			return m, e
 		}
 		m.Files = append(m.Files, File{name, model.Digest(b), int64(len(b))})
@@ -278,8 +288,20 @@ func Restore(ctx context.Context, directory, destination string) (Manifest, erro
 		if model.Digest(b) != f.SHA256 {
 			return m, errors.New("backup changed during restore")
 		}
-		if e = os.WriteFile(filepath.Join(dest, filepath.FromSlash(f.Path)), b, 0600); e != nil {
+		destPath := filepath.Join(dest, filepath.FromSlash(f.Path))
+		if !store.IsWithin(dest, destPath) {
+			return m, errors.New("restore path escape")
+		}
+		if tmp, e := os.OpenFile(destPath, os.O_WRONLY|os.O_CREATE|os.O_EXCL|syscall.O_NOFOLLOW, 0600); e != nil {
 			return m, e
+		} else if _, e = tmp.Write(b); e != nil {
+			tmp.Close()
+			return m, e
+		} else if e = tmp.Sync(); e != nil {
+			tmp.Close()
+			return m, e
+		} else {
+			tmp.Close()
 		}
 	}
 	s, e := store.Open(dest)

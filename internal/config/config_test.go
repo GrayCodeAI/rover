@@ -16,7 +16,7 @@ func TestDecodeStrict(t *testing.T) {
 	cases := []struct {
 		name, b string
 		wantErr bool
-	}{{"valid", `{"schema":"rover/v1alpha1","checks":[],"policy":{"require_review":true}}`, false}, {"unknown-field", `{"schema":"rover/v1alpha1","cheks":[]}`, true}, {"duplicate-root", `{"schema":"a","schema":"b"}`, true}, {"duplicate-nested", `{"policy":{"require_review":true,"require_review":false}}`, true}, {"two-documents", `{} {}`, true}, {"malformed", `{"x":`, true}, {"empty", "", true}, {"oversized", strings.Repeat(" ", MaxBytes+1), true}}
+	}{{"valid", `{"schema":"rover/v1alpha1","checks":[],"policy":{"require_review":true}}`, false}, {"unknown-field", `{"schema":"rover/v1alpha1","cheks":[]}`, true}, {"duplicate-root", `{"schema":"a","schema":"b"}`, true}, {"duplicate-nested", `{"policy":{"require_review":true,"require_review":false}}`, true}, {"two-documents", `{} {}`, true}, {"malformed", `{"x":`, true}, {"empty", "", true}, {"oversized", strings.Repeat(" ", MaxBytes+1), true}, {"deep-nesting", strings.Repeat("[", 150) + strings.Repeat("]", 150), true}}
 	for _, c := range cases {
 		t.Run(c.name, func(t *testing.T) {
 			var v model.Config

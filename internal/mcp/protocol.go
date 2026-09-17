@@ -14,6 +14,7 @@ import (
 	"github.com/GrayCodeAI/rover/internal/service"
 	"github.com/GrayCodeAI/rover/internal/wire"
 	"strconv"
+	"strings"
 )
 
 const Protocol = "2025-11-25"
@@ -131,7 +132,20 @@ func handle(ctx context.Context, s *service.Service, r Request, g *access.Grant,
 		}
 		v, e := s.Call(ctx, p.Name, p.Arguments, g)
 		if e != nil {
-			return result(map[string]any{"content": []map[string]string{{"type": "text", "text": e.Error()}}, "isError": true})
+			msg := e.Error()
+			if len(msg) > 300 {
+				msg = msg[:300] + "..."
+			}
+			safe := strings.Map(func(r rune) rune {
+				if r == '\n' || r == '\t' {
+					return ' '
+				}
+				if r < 32 || r == 127 {
+					return -1
+				}
+				return r
+			}, msg)
+			return result(map[string]any{"content": []map[string]string{{"type": "text", "text": "tool failed: " + safe}}, "isError": true})
 		}
 		b, e := json.Marshal(v)
 		if e != nil {

@@ -124,6 +124,10 @@ func (a *extendedApp) tuiScreen(parent context.Context, s *store.Store) (int, st
 				if h != "" {
 					b, e := s.ReadBlob(h)
 					if e == nil {
+						if len(b) > 256<<10 {
+							b = b[len(b)-(256<<10):]
+							lines = append(lines, "[truncated to last 256KiB for display; use logs for full output]")
+						}
 						lines = append(lines, strings.Split(string(b), "\n")...)
 					}
 				} else {

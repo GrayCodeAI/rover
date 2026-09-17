@@ -15,6 +15,7 @@ import (
 	"regexp"
 	"sort"
 	"strings"
+	"syscall"
 	"time"
 	"unicode/utf8"
 
@@ -52,6 +53,12 @@ func gitEnv() []string {
 	return append(e, "GIT_CONFIG_NOSYSTEM=1", "GIT_CONFIG_GLOBAL="+os.DevNull, "GIT_TERMINAL_PROMPT=0", "GIT_NO_REPLACE_OBJECTS=1", "GIT_OPTIONAL_LOCKS=0", "LC_ALL=C")
 }
 func Git(ctx context.Context, repo string, args ...string) ([]byte, error) {
+	if len(args) == 0 {
+		return nil, errors.New("git requires arguments")
+	}
+	if strings.ContainsRune(repo, 0) || strings.HasPrefix(repo, "-") {
+		return nil, errors.New("invalid repository path")
+	}
 	ctx, cancel := context.WithTimeout(ctx, 30*time.Second)
 	defer cancel()
 	fixed := []string{"--no-optional-locks", "-c", "core.hooksPath=" + os.DevNull, "-c", "core.fsmonitor=false", "-c", "core.untrackedCache=false", "-c", "core.pager=cat", "-c", "color.ui=false", "-c", "protocol.file.allow=never"}
@@ -364,14 +371,14 @@ func Materialize(s *store.Store, snap model.Snapshot, dest string) error {
 		if e != nil {
 			return e
 		}
-		if int64(len(b)) != f.Size {
+		if int64(len(b)) != f.Size || model.Digest(b) != f.SHA256 {
 			return errors.New("snapshot size mismatch")
 		}
 		p := filepath.Join(dest, filepath.FromSlash(f.Path))
 		if e = store.PrivateDir(filepath.Dir(p)); e != nil {
 			return e
 		}
-		out, e := os.OpenFile(p, os.O_WRONLY|os.O_CREATE|os.O_EXCL, os.FileMode(f.Mode))
+		out, e := os.OpenFile(p, os.O_WRONLY|os.O_CREATE|os.O_EXCL|syscall.O_NOFOLLOW, os.FileMode(f.Mode))
 		if e != nil {
 			return e
 		}
@@ -410,6 +417,25 @@ func FileContent(s *store.Store, snap model.Snapshot, name string) ([]byte, erro
 	}
 	return nil, store.ErrNotFound
 }
+func isTestPath(p string) bool {
+	b := strings.ToLower(filepath.Base(p))
+	lowered := strings.ToLower(p)
+	segs := strings.Split(lowered, "/")
+	for _, s := range segs {
+		if s == "test" || s == "tests" || s == "__tests__" {
+			return true
+		}
+	}
+	if strings.HasPrefix(b, "test") || strings.HasPrefix(b, "test_") {
+		return true
+	}
+	for _, suf := range []string{"_test.go", "_test.py", ".test.js", ".test.ts", ".test.jsx", ".test.tsx", "-test.js", "-test.ts"} {
+		if strings.HasSuffix(b, suf) {
+			return true
+		}
+	}
+	return false
+}
 func Category(p string) string {
 	b := strings.ToLower(filepath.Base(p))
 	p = strings.ToLower(p)
@@ -422,7 +448,7 @@ func Category(p string) string {
 		return "migration"
 	case strings.HasPrefix(p, "docs/") || strings.HasSuffix(p, ".md"):
 		return "documentation"
-	case strings.Contains(b, "test") || strings.HasPrefix(p, "tests/"):
+	case isTestPath(p):
 		return "test"
 	case b == "go.mod" || b == "go.sum" || b == "package.json" || strings.Contains(b, "lock") || b == "requirements.txt" || b == "pyproject.toml":
 		return "dependency"
@@ -475,6 +501,9 @@ func Compare(base, cand model.Snapshot) model.Inspection {
 func AddWorktree(ctx context.Context, s *store.Store, base model.Snapshot, dir string) error {
 	if _, e := os.Lstat(dir); !os.IsNotExist(e) {
 		return errors.New("worktree destination must not exist")
+	}
+	if !oidRE.MatchString(base.Commit) {
+		return errors.New("invalid base commit identity")
 	}
 	if _, e := Git(ctx, base.Repository, "worktree", "add", "--detach", "--no-checkout", dir, base.Commit); e != nil {
 		return e

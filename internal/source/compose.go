@@ -15,6 +15,9 @@ func validateSnapshot(snap model.Snapshot) error {
 	if snap.Schema != model.Schema || snap.ID != snapshotID(snap.Repository, snap.Files) {
 		return errors.New("snapshot identity mismatch")
 	}
+	if !oidRE.MatchString(snap.Commit) {
+		return errors.New("invalid snapshot commit identity")
+	}
 	if len(snap.Files) > MaxFiles {
 		return errors.New("snapshot has too many files")
 	}
@@ -72,7 +75,7 @@ func Compose(s *store.Store, origin model.Snapshot, files []model.File, label st
 		if e != nil {
 			return out, e
 		}
-		if int64(len(b)) != f.Size {
+		if int64(len(b)) != f.Size || model.Digest(b) != f.SHA256 {
 			return out, errors.New("object size mismatch")
 		}
 	}

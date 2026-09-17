@@ -177,8 +177,16 @@ func junit(b []byte, min, exit int) Parsed {
 	if len(b) == 0 {
 		return Parsed{Outcome: "INCONCLUSIVE", Meaning: "JUnit report is missing or empty"}
 	}
+	if len(b) > 8<<20 {
+		return Parsed{Outcome: "ERROR", Meaning: "JUnit report exceeds response budget"}
+	}
+	if bytes.Contains(b, []byte("<!DOCTYPE")) || bytes.Contains(b, []byte("<!ENTITY")) {
+		return Parsed{Outcome: "ERROR", Meaning: "JUnit document type declarations are not accepted"}
+	}
 	var root junitSuite
 	d := xml.NewDecoder(bytes.NewReader(b))
+	d.Strict = true
+	d.Entity = map[string]string{"amp": "&", "lt": "<", "gt": ">", "quot": "\"", "apos": "'"}
 	if e := d.Decode(&root); e != nil {
 		return Parsed{Outcome: "ERROR", Meaning: "malformed JUnit XML: " + e.Error()}
 	}
@@ -200,12 +208,17 @@ func junit(b []byte, min, exit int) Parsed {
 	}
 	r := Parsed{}
 	bad := false
+	capped := false
 	var visit func(junitSuite)
 	visit = func(s junitSuite) {
 		if s.Failures > 0 || s.Errors > 0 {
 			bad = true
 		}
 		for _, c := range s.Cases {
+			if r.Tests+r.Skipped >= 100000 {
+				capped = true
+				return
+			}
 			if c.Skipped != nil {
 				r.Skipped++
 			} else {
@@ -217,9 +230,15 @@ func junit(b []byte, min, exit int) Parsed {
 		}
 		for _, sub := range s.Suites {
 			visit(sub)
+			if capped {
+				return
+			}
 		}
 	}
 	visit(root)
+	if capped {
+		return Parsed{Outcome: "ERROR", Meaning: "JUnit testcase budget exceeded"}
+	}
 	if bad || exit != 0 {
 		r.Outcome = "FAIL"
 		r.Meaning = "JUnit failure/error or nonzero process exit"

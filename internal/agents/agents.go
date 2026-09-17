@@ -9,8 +9,38 @@ import (
 	"errors"
 	"fmt"
 	"github.com/GrayCodeAI/rover/internal/model"
+	"regexp"
 	"strings"
 )
+
+var (
+	modelRE = regexp.MustCompile(`^[A-Za-z0-9._:-]{1,256}$`)
+	toolRE  = regexp.MustCompile(`^[A-Za-z0-9._-]{1,128}$`)
+)
+
+func validModel(m string) bool {
+	if !modelRE.MatchString(m) {
+		return false
+	}
+	if strings.HasPrefix(m, "-") {
+		return false
+	}
+	return true
+}
+func validExecutable(e string) error {
+	if e == "" || len(e) > 1024 || strings.ContainsRune(e, 0) {
+		return errors.New("invalid agent executable")
+	}
+	if strings.HasPrefix(e, "-") || e == "." || e == ".." {
+		return errors.New("invalid agent executable")
+	}
+	for _, part := range strings.Split(e, "/") {
+		if part == ".." {
+			return errors.New("invalid agent executable")
+		}
+	}
+	return nil
+}
 
 type Descriptor struct {
 	Name                string `json:"name"`
@@ -60,6 +90,12 @@ func Argv(s model.TaskSpec, prompt string, repair bool) ([]string, error) {
 		if e == "" {
 			e = "codex"
 		}
+		if err := validExecutable(e); err != nil {
+			return nil, err
+		}
+		if s.AgentOptions.Model != "" && !validModel(s.AgentOptions.Model) {
+			return nil, errors.New("invalid agent model")
+		}
 		sandbox := "read-only"
 		if s.AgentOptions.Write {
 			sandbox = "workspace-write"
@@ -73,6 +109,17 @@ func Argv(s model.TaskSpec, prompt string, repair bool) ([]string, error) {
 		e := s.AgentOptions.Executable
 		if e == "" {
 			e = "claude"
+		}
+		if err := validExecutable(e); err != nil {
+			return nil, err
+		}
+		if s.AgentOptions.Model != "" && !validModel(s.AgentOptions.Model) {
+			return nil, errors.New("invalid agent model")
+		}
+		for _, t := range s.AgentOptions.AllowedTools {
+			if !toolRE.MatchString(t) || strings.HasPrefix(t, "-") {
+				return nil, fmt.Errorf("invalid allowed tool %q", t)
+			}
 		}
 		mode := "plan"
 		if s.AgentOptions.Write {

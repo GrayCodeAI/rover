@@ -35,8 +35,14 @@ recommendation to deploy an outdated Go version. Validate with a supported toolc
 2. Let Rover supervise a command/agent session in its own worktree and verify the
    resulting candidate, optionally repairing or coordinating dependent tasks.
 
-The global `--state` option **must precede the command**. Choose a private state
-directory outside all repositories. Do not replace another installed `rover` binary.
+The global `--state` option **must precede the command**. It defaults to
+`$ROVER_HOME` or `~/.config/rover`; pass `--state` to override. Choose a
+private state directory outside all repositories. Do not replace another
+installed `rover` binary.
+
+Shortcuts: `check --repo . --worktree --allow-local` runs inspect + verify +
+decision in one step; `do --file task.json --allow-local` runs a task in the
+foreground instead of polling `status`/`logs`. Aliases: `st`, `lg`, `wf`, `rep`.
 
 ```sh
 ROVER="$PWD/bin/rover"

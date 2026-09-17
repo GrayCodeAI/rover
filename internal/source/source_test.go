@@ -148,6 +148,37 @@ func TestResolveOptionRejected(t *testing.T) {
 		t.Fatal("option accepted")
 	}
 }
+func TestGitRejectsFlagRepo(t *testing.T) {
+	if _, e := Git(context.Background(), "-evil", "status"); e == nil {
+		t.Fatal("flag repo accepted")
+	}
+	if _, e := Git(context.Background(), "x"); e == nil {
+		t.Fatal("empty git args accepted")
+	}
+}
+func TestCategoryStrict(t *testing.T) {
+	for _, p := range []string{"latest.go", "contest.py", "attest.txt", "src/protest/index.js"} {
+		if Category(p) == "test" {
+			t.Fatalf("%q misclassified as test", p)
+		}
+	}
+	for _, p := range []string{"foo_test.go", "tests/a.py", "pkg/__tests__/a.js", "test_helper.py"} {
+		if Category(p) != "test" {
+			t.Fatalf("%q not classified as test", p)
+		}
+	}
+}
+func TestSnapshotCommitValidated(t *testing.T) {
+	repo, s := testutil.Repo(t, map[string]string{"value": "base"})
+	snap, e := Capture(context.Background(), s, repo, "HEAD", false)
+	if e != nil {
+		t.Fatal(e)
+	}
+	snap.Commit = "not-an-oid"
+	if e := validateSnapshot(snap); e == nil {
+		t.Fatal("bad commit accepted")
+	}
+}
 
 // TestCaptureConsistencyLabels covers A10/A11: the snapshot must say exactly
 // what it is — double identical reads frozen, not a filesystem-atomic capture.

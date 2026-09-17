@@ -189,6 +189,7 @@ func Import(s *store.Store, d Dataset) (Dataset, error) {
 		return d, errors.New("dataset needs schema, partition, description and 1..10000 cases")
 	}
 	seen := map[string]bool{}
+	repo := ""
 	for _, c := range d.Cases {
 		if !model.ValidID(c.Investigation) || seen[c.Investigation] || strings.TrimSpace(c.Attribution) == "" {
 			return d, errors.New("case requires unique investigation and explicit attribution")
@@ -205,6 +206,11 @@ func Import(s *store.Store, d Dataset) (Dataset, error) {
 		}
 		if in.FinishedAt == "" {
 			return d, errors.New("dataset contains unfinished investigation")
+		}
+		if repo == "" {
+			repo = in.Repository
+		} else if in.Repository != repo {
+			return d, errors.New("dataset mixes repositories; import one repository per dataset")
 		}
 	}
 	d.ID = "dataset_"
@@ -339,6 +345,9 @@ func Evaluate(s *store.Store, proposalID, datasetID string) (Evaluation, error) 
 		}
 	}
 	e.Eligible = e.Cases > 0 && e.FailureCases > 0 && e.Inconclusive == 0 && e.ProposedSecondsToSignal < e.BaselineSecondsToSignal
+	if e.RepeatedHoldoutUse >= 3 {
+		e.Eligible = false
+	}
 	e.Reason = "offline order replay; all checks remain mandatory/optional as configured; timing assumes independent checks and does not establish live benefit or causal defect detection"
 	return e, s.Put("evaluation", e.ID, e, "learning.evaluated")
 }

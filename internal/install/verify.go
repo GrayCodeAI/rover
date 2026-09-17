@@ -8,6 +8,8 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strings"
+	"syscall"
 )
 
 // Manifest mirrors SOURCE_MANIFEST.json.
@@ -24,9 +26,20 @@ type Manifest struct {
 // matches its recorded hash and size. It does not claim to be a signed public
 // installer — it verifies a local checkout against its own manifest.
 func Verify(root, manifestPath string) error {
-	data, e := os.ReadFile(manifestPath)
+	f, e := os.OpenFile(manifestPath, os.O_RDONLY|syscall.O_NOFOLLOW, 0)
 	if e != nil {
 		return fmt.Errorf("manifest read: %w", e)
+	}
+	defer f.Close()
+	if st, e := f.Stat(); e != nil || !st.Mode().IsRegular() {
+		return fmt.Errorf("manifest must be a regular file")
+	}
+	data, e := io.ReadAll(io.LimitReader(f, (1<<20)+1))
+	if e != nil {
+		return fmt.Errorf("manifest read: %w", e)
+	}
+	if len(data) > 1<<20 {
+		return fmt.Errorf("manifest exceeds 1MiB")
 	}
 	var m Manifest
 	if e = json.Unmarshal(data, &m); e != nil {
@@ -68,11 +81,14 @@ func Verify(root, manifestPath string) error {
 }
 
 func fileHash(p string) (string, error) {
-	f, e := os.Open(p)
+	f, e := os.OpenFile(p, os.O_RDONLY|syscall.O_NOFOLLOW, 0)
 	if e != nil {
 		return "", e
 	}
 	defer f.Close()
+	if st, e := f.Stat(); e != nil || !st.Mode().IsRegular() {
+		return "", fmt.Errorf("not regular file during hash")
+	}
 	h := sha256.New()
 	if _, e = io.Copy(h, f); e != nil {
 		return "", e
@@ -85,5 +101,8 @@ func isWithin(root, p string) bool {
 	if e != nil {
 		return false
 	}
-	return rel != "." && rel != ".." && rel[:2] != ".."+string(filepath.Separator)
+	if rel == "." || rel == ".." {
+		return false
+	}
+	return !strings.HasPrefix(rel, ".."+string(filepath.Separator))
 }

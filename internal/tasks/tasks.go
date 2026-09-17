@@ -250,6 +250,9 @@ func Execute(parent context.Context, s *store.Store, id string) (returned error)
 					return nil
 				})
 				if e != nil {
+					if errors.Is(e, store.ErrBusy) {
+						continue
+					}
 					cancel()
 					return
 				}

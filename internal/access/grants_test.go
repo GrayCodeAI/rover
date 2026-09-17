@@ -41,3 +41,27 @@ func TestGrantScopesAndRevocation(t *testing.T) {
 		t.Fatal(e)
 	}
 }
+
+func TestGrantToolAllowlist(t *testing.T) {
+	s, e := store.Open(filepath.Join(t.TempDir(), "state"))
+	if e != nil {
+		t.Fatal(e)
+	}
+	defer s.Close()
+	if _, _, e := Issue(s, "/p", []string{"rover_status_typo"}, "x", time.Hour); e == nil {
+		t.Fatal("undeclared tool accepted")
+	}
+	if _, _, e := Issue(s, "/p", []string{"rover_status", "rover_status"}, "x", time.Hour); e == nil {
+		t.Fatal("duplicate tool accepted")
+	}
+}
+
+func TestGrantRepoCanonicalization(t *testing.T) {
+	// Trailing-slash and dot variants must scope identically.
+	if ProjectID("/project/a") != ProjectID("/project/a/") {
+		t.Fatal("trailing slash changes project scope")
+	}
+	if ProjectID("/project/a") != ProjectID("/project/a/.") {
+		t.Fatal("dot path changes project scope")
+	}
+}
