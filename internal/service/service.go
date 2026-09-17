@@ -75,14 +75,17 @@ func (s *Service) Tools(g *access.Grant) []Tool {
 	}
 	out := []Tool{}
 	for _, t := range tools {
+		readTool := t.Name != "rover_verify" && t.Name != "rover_task_run" && t.Name != "rover_task_cancel"
 		if g != nil && !g.Allows(t.Name) {
 			continue
 		}
-		read := t.Name != "rover_verify" && t.Name != "rover_task_run" && t.Name != "rover_task_cancel"
-		t.Annotations = map[string]any{"readOnlyHint": read, "destructiveHint": !read, "openWorldHint": !read}
+		t.Annotations = map[string]any{"readOnlyHint": readTool, "destructiveHint": !readTool, "openWorldHint": !readTool}
 		out = append(out, t)
 	}
 	return out
+}
+func isExecutionTool(name string) bool {
+	return name == "rover_verify" || name == "rover_task_run" || name == "rover_task_cancel"
 }
 func AllNames() []string {
 	return []string{"rover_agent_capabilities", "rover_inspect", "rover_status", "rover_report", "rover_diff", "rover_context_search", "rover_verify", "rover_task_run", "rover_task_cancel"}
@@ -90,7 +93,7 @@ func AllNames() []string {
 func (s *Service) Call(ctx context.Context, name string, b json.RawMessage, g *access.Grant) (any, error) {
 	// Re-validate a network grant against current store state so revocation
 	// or expiry between Authenticate and Call is not bypassed. A nil grant
-	// remains local stdio UID-trust (read-only unless execution enabled).
+	// remains local stdio UID-trust.
 	if g != nil {
 		var fresh access.Grant
 		if e := s.Store.Get("grant", g.ID, &fresh); e != nil {
@@ -112,6 +115,40 @@ func (s *Service) Call(ctx context.Context, name string, b json.RawMessage, g *a
 		}
 	}
 	if !allowed {
+		return nil, access.ErrDenied
+	}
+	// Local stdio (nil grant) may not execute; validate args then deny so
+	// hostile executor-selection keys surface as field errors, not silent
+	// downgrades. Network callers must carry a valid grant for any tool.
+	if g == nil && isExecutionTool(name) {
+		switch name {
+		case "rover_task_run":
+			var a struct {
+				Objective string   `json:"objective"`
+				Agent     string   `json:"agent"`
+				Argv      []string `json:"argv"`
+				Write     bool     `json:"write"`
+				Timeout   string   `json:"timeout"`
+				Key       string   `json:"key"`
+			}
+			if e := wire.Decode(b, &a); e != nil {
+				return nil, e
+			}
+		case "rover_task_cancel":
+			var a struct {
+				ID string `json:"task_id"`
+			}
+			if e := wire.Decode(b, &a); e != nil {
+				return nil, e
+			}
+		case "rover_verify":
+			var a struct {
+				Candidate string `json:"candidate_id"`
+			}
+			if e := wire.Decode(b, &a); e != nil {
+				return nil, e
+			}
+		}
 		return nil, access.ErrDenied
 	}
 	if len(b) == 0 {

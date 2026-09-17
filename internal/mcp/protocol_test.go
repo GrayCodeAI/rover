@@ -128,7 +128,7 @@ func TestHTTPActualNetwork(t *testing.T) {
 	ready := make(chan string, 1)
 	done := make(chan error, 1)
 	go func() {
-		done <- RunHTTP(ctx, svc, "127.0.0.1:0", "", "", func(a string) error { ready <- a; return nil })
+		done <- RunHTTP(ctx, svc, "127.0.0.1:0", "", "", false, func(a string) error { ready <- a; return nil })
 	}()
 	address := <-ready
 	b := []byte(`{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"rover_status","arguments":{}}}`)
@@ -149,7 +149,7 @@ func TestHTTPActualNetwork(t *testing.T) {
 	if e = <-done; e != nil {
 		t.Fatal(e)
 	}
-	if e = RunHTTP(context.Background(), svc, "0.0.0.0:0", "", "", nil); e == nil {
+	if e = RunHTTP(context.Background(), svc, "0.0.0.0:0", "", "", false, nil); e == nil {
 		t.Fatal("public HTTP without TLS admitted")
 	}
 }
