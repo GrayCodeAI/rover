@@ -335,6 +335,9 @@ func (a *extendedApp) diffCommand(ctx context.Context, args []string) int {
 			return a.emit(map[string]any{"output": *out, "sha256": model.Digest(patch), "candidate": c.ID})
 		}
 		if j {
+			if len(patch) > 1<<20 {
+				return a.fail(errors.New("patch exceeds 1MiB JSON budget; use diff --output"))
+			}
 			return a.emit(map[string]any{"base": b.ID, "candidate": c.ID, "patch": string(patch)})
 		}
 		if len(patch) > 1<<20 {

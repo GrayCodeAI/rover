@@ -89,9 +89,22 @@ func TestCrossProjectEvidenceDenial(t *testing.T) {
 			t.Fatalf("%s: expected ErrDenied, got %v", name, e)
 		}
 	}
-	args, _ := json.Marshal(map[string]any{"candidate_id": snap.ID})
-	if _, e = svc.Call(context.Background(), "rover_verify", args, nil); !errors.Is(e, access.ErrDenied) {
-		t.Fatalf("rover_verify: expected ErrDenied for foreign candidate, got %v", e)
+	// Cross-project candidate is rejected even with a valid grant:
+	// the candidate snapshot must belong to this service's repository.
+	other2 := filepath.Join(t.TempDir(), "other2")
+	os.Mkdir(other2, 0700)
+	testutil.Git(t, other2, "init", "-q")
+	testutil.Git(t, other2, "config", "user.email", "test@invalid")
+	testutil.Git(t, other2, "config", "user.name", "fixture")
+	testutil.Write(t, other2, "secret.txt", "private B")
+	testutil.Commit(t, other2)
+	snap2, e2 := source.Capture(context.Background(), s, other2, "HEAD", false)
+	if e2 != nil {
+		t.Fatal(e2)
+	}
+	args2, _ := json.Marshal(map[string]any{"candidate_id": snap2.ID})
+	if _, e = svc.Call(context.Background(), "rover_verify", args2, nil); !errors.Is(e, access.ErrDenied) {
+		t.Fatalf("foreign candidate: expected ErrDenied, got %v", e)
 	}
 }
 

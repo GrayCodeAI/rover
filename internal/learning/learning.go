@@ -394,10 +394,14 @@ func LoadOrder(s *store.Store, id string, c model.Config) ([]string, error) {
 	return append([]string(nil), p.Order...), nil
 }
 func Explain(s *store.Store, id string) (any, error) {
+	// Records are looked up by ID only and are owned by the local operator;
+	// they carry no per-project grant surface. Cross-project isolation is
+	// enforced at Evaluate/Promote via Repository+ConfigDigest binding, not
+	// here. This read is advisory.
+	var raw json.RawMessage
 	for _, kind := range []string{"proposal", "dataset", "evaluation", "strategy"} {
-		var v json.RawMessage
-		if e := s.Get(kind, id, &v); e == nil {
-			return v, nil
+		if e := s.Get(kind, id, &raw); e == nil {
+			return raw, nil
 		} else if !errors.Is(e, store.ErrNotFound) {
 			return nil, e
 		}

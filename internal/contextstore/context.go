@@ -11,6 +11,7 @@ import (
 	"github.com/GrayCodeAI/rover/internal/source"
 	"github.com/GrayCodeAI/rover/internal/store"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"time"
 	"unicode/utf8"
@@ -49,6 +50,22 @@ func sensitive(p string) bool {
 	}
 	return strings.HasPrefix(lp, ".git/")
 }
+
+var secretPatterns = []*regexp.Regexp{
+	regexp.MustCompile(`(?i)\b(api[_-]?key|secret|token|password|passwd|pwd|private[_-]?key)\b[=:]\s*\S+`),
+	regexp.MustCompile(`(?i)-----BEGIN (RSA |EC |DSA |OPENSSH |)PRIVATE KEY-----`),
+	regexp.MustCompile(`(?i)gh[pousr]_[A-Za-z0-9]{36,}`),
+	regexp.MustCompile(`(?i)sk-[A-Za-z0-9]{20,}`),
+	regexp.MustCompile(`(?i)AKIA[0-9A-Z]{16}`),
+}
+
+func redactSecrets(line string) string {
+	red := line
+	for _, re := range secretPatterns {
+		red = re.ReplaceAllString(red, "[REDACTED]")
+	}
+	return red
+}
 func cleanContextPath(p string) error {
 	if p == "" || strings.Contains(p, "\\") || filepath.IsAbs(p) {
 		return errors.New("invalid context path")
@@ -60,7 +77,7 @@ func cleanContextPath(p string) error {
 	return nil
 }
 func Search(ctx context.Context, s *store.Store, snap model.Snapshot, query string, limit int) (r SearchResult, e error) {
-	r = SearchResult{Snapshot: snap.ID, Query: query, Matches: []Match{}, Limits: "literal local search; sensitive filenames excluded best-effort, not a secret detector"}
+	r = SearchResult{Snapshot: snap.ID, Query: query, Matches: []Match{}, Limits: "literal local search; sensitive filenames excluded and inline credentials best-effort redacted, not a secret detector"}
 	if query == "" || len(query) > 4096 || limit < 1 || limit > 200 {
 		return r, errors.New("query and limit 1..200 required")
 	}
@@ -90,7 +107,7 @@ func Search(ctx context.Context, s *store.Store, snap model.Snapshot, query stri
 				r.Truncated = true
 				return r, nil
 			}
-			r.Matches = append(r.Matches, Match{f.Path, i + 1, line, f.SHA256})
+			r.Matches = append(r.Matches, Match{f.Path, i + 1, redactSecrets(line), f.SHA256})
 			n += len(line)
 		}
 	}

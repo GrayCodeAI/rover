@@ -30,6 +30,7 @@ func (a *extendedApp) serverCommand(ctx context.Context, args []string) int {
 	listen := f.String("listen", "127.0.0.1:0", "HTTP address; non-loopback requires TLS")
 	cert := f.String("tls-cert", "", "TLS certificate")
 	key := f.String("tls-key", "", "TLS key")
+	insecure := f.Bool("allow-insecure", false, "allow plaintext HTTP bearer auth for non-loopback listeners (requires explicit TLS for security; same-user sniffing risk)")
 	ready := f.String("ready-file", "", "write new JSON address file; never overwrite")
 	var pass stringList
 	f.Var(&pass, "pass-env", "explicit execution environment grant (repeatable)")
@@ -48,7 +49,10 @@ func (a *extendedApp) serverCommand(ctx context.Context, args []string) int {
 		c, cancel := context.WithCancel(ctx)
 		defer cancel()
 		var readyErr error
-		e = mcp.RunHTTP(c, sv, *listen, *cert, *key, func(addr string) error {
+		if *cert == "" && *insecure {
+			fmt.Fprintln(a.Err, "warning: --allow-insecure permits plaintext bearer auth; tokens are sniffable by same-user processes; prefer TLS")
+		}
+		e = mcp.RunHTTP(c, sv, *listen, *cert, *key, *insecure, func(addr string) error {
 			scheme := "http"
 			if *cert != "" {
 				scheme = "https"

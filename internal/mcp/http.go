@@ -16,13 +16,14 @@ import (
 	"time"
 )
 
-func HTTP(s *service.Service) http.Handler {
+func HTTP(s *service.Service, allowedHosts ...string) http.Handler {
 	slots := make(chan struct{}, 8)
 	var activeMu sync.Mutex
 	active := map[string]context.CancelFunc{}
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("X-Content-Type-Options", "nosniff")
 		w.Header().Set("Cache-Control", "no-store")
+		w.Header().Set("Vary", "Origin")
 		if r.URL.Path != "/mcp" {
 			http.NotFound(w, r)
 			return
@@ -35,6 +36,23 @@ func HTTP(s *service.Service) http.Handler {
 		if r.Header.Get("Origin") != "" {
 			http.Error(w, "browser origins are not authorized", http.StatusForbidden)
 			return
+		}
+		if len(allowedHosts) > 0 {
+			h := r.Host
+			if i := strings.LastIndexByte(h, ':'); i >= 0 {
+				h = h[:i]
+			}
+			ok := false
+			for _, want := range allowedHosts {
+				if h == want {
+					ok = true
+					break
+				}
+			}
+			if !ok {
+				http.Error(w, "host not authorized", http.StatusForbidden)
+				return
+			}
 		}
 		auth := r.Header.Get("Authorization")
 		if !strings.HasPrefix(auth, "Bearer ") {
@@ -123,8 +141,10 @@ func HTTP(s *service.Service) http.Handler {
 }
 
 // RunHTTP requires TLS for non-loopback listeners. Preconfigured bearer grants
-// are supported; this is not an OAuth discovery service or a remote-worker API.
-func RunHTTP(ctx context.Context, s *service.Service, address, cert, key string, ready func(string) error) error {
+// are supported; bearer tokens sent over plaintext loopback are only accepted
+// when allowPlaintextLoopback is true and the listener is loopback. This is not
+// an OAuth discovery service or a remote-worker API.
+func RunHTTP(ctx context.Context, s *service.Service, address, cert, key string, allowPlaintextLoopback bool, ready func(string) error) error {
 	host, _, e := net.SplitHostPort(address)
 	if e != nil {
 		return e
@@ -142,7 +162,11 @@ func RunHTTP(ctx context.Context, s *service.Service, address, cert, key string,
 		return e
 	}
 	defer ln.Close()
-	server := &http.Server{Handler: HTTP(s), ReadHeaderTimeout: 5 * time.Second, ReadTimeout: 30 * time.Second, IdleTimeout: 60 * time.Second, MaxHeaderBytes: 16 << 10, TLSConfig: &tls.Config{MinVersion: tls.VersionTLS13}}
+	handler := HTTP(s)
+	if !local && !allowPlaintextLoopback && cert == "" {
+		return errors.New("non-loopback bearer auth requires TLS; pass allowPlaintextLoopback to bypass (same-user sniffing risk)")
+	}
+	server := &http.Server{Handler: handler, ReadHeaderTimeout: 5 * time.Second, ReadTimeout: 30 * time.Second, IdleTimeout: 60 * time.Second, MaxHeaderBytes: 16 << 10, TLSConfig: &tls.Config{MinVersion: tls.VersionTLS13}}
 	if cert != "" {
 		pair, e := tls.LoadX509KeyPair(cert, key)
 		if e != nil {

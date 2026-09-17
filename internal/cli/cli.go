@@ -143,7 +143,7 @@ func (a *App) run(ctx context.Context, args []string) (int, error) {
 		return 2, defaultErr
 	}
 	args = f.Args()
-	if len(args) == 0 || args[0] == "help" {
+	if len(args) == 0 || args[0] == "help" || args[0] == "--help" || args[0] == "-h" {
 		fmt.Fprint(a.Out, help)
 		return 0, nil
 	}
