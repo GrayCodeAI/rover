@@ -1,6 +1,7 @@
 package store
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"os"
@@ -249,4 +250,77 @@ func TestRejectUnrelatedStateBeforeChangingPermissions(t *testing.T) {
 			t.Fatalf("accepted %q", p)
 		}
 	}
+}
+
+func TestBackupDatabase(t *testing.T) {
+	root := t.TempDir()
+	s, e := Open(root)
+	if e != nil {
+		t.Fatal(e)
+	}
+	if e = s.Put("test", "k", map[string]string{"v": "original"}, "created"); e != nil {
+		t.Fatal(e)
+	}
+	dest := filepath.Join(root, "backup.db")
+	if e = s.BackupDatabase(context.Background(), dest); e != nil {
+		t.Fatalf("backup failed: %v", e)
+	}
+	st, e := os.Stat(dest)
+	if e != nil {
+		t.Fatalf("backup missing: %v", e)
+	}
+	if st.Size() == 0 {
+		t.Fatal("backup file is empty")
+	}
+	// Source must remain usable after backup (mutex not held).
+	var v map[string]string
+	if e = s.Get("test", "k", &v); e != nil || v["v"] != "original" {
+		t.Fatalf("source unusable after backup: %v %v", e, v)
+	}
+	// Reopen backup into a fresh store to prove content survived.
+	dir := t.TempDir()
+	dbpath := filepath.Join(dir, "rover.db")
+	if e := os.Link(dest, dbpath); e != nil {
+		// fallback: copy
+		b, be := os.ReadFile(dest)
+		if be != nil {
+			t.Fatal(be)
+		}
+		if be := os.WriteFile(dbpath, b, 0600); be != nil {
+			t.Fatal(be)
+		}
+	}
+	bk, e := Open(dir)
+	if e != nil {
+		t.Fatalf("open backup: %v", e)
+	}
+	defer bk.Close()
+	var bv map[string]string
+	if e = bk.Get("test", "k", &bv); e != nil {
+		t.Fatalf("read from backup: %v", e)
+	}
+	if bv["v"] != "original" {
+		t.Fatalf("backup content mismatch: %v", bv)
+	}
+}
+
+func TestBackupDatabaseConcurrent(t *testing.T) {
+	root := t.TempDir()
+	s, e := Open(root)
+	if e != nil {
+		t.Fatal(e)
+	}
+	defer s.Close()
+	var wg sync.WaitGroup
+	for i := 0; i < 4; i++ {
+		wg.Add(1)
+		go func(i int) {
+			defer wg.Done()
+			dest := filepath.Join(root, "backup-"+string(rune('A'+i))+".db")
+			if err := s.BackupDatabase(context.Background(), dest); err != nil {
+				t.Errorf("worker %d backup: %v", i, err)
+			}
+		}(i)
+	}
+	wg.Wait()
 }
