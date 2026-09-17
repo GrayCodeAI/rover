@@ -18,20 +18,47 @@ const Schema = "rover/v1alpha1"
 var validID = regexp.MustCompile(`^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,127}$`)
 
 func ValidID(s string) bool { return validID.MatchString(s) }
+
+// ID generates a unique identifier with prefix. rand.Read fails only on
+// catastrophic syscall exhaustion; callers that need to propagate that
+// should call TryID.
 func ID(prefix string) string {
-	b := make([]byte, 16)
-	if _, err := rand.Read(b); err != nil {
+	b, err := TryID(prefix)
+	if err != nil {
 		panic(fmt.Sprintf("system random source unavailable: %v", err))
 	}
-	return prefix + "_" + hex.EncodeToString(b)
+	return b
 }
+
+// TryID is the fallible form of ID.
+func TryID(prefix string) (string, error) {
+	b := make([]byte, 16)
+	if _, err := rand.Read(b); err != nil {
+		return "", err
+	}
+	return prefix + "_" + hex.EncodeToString(b), nil
+}
+
+// Digest returns the SHA-256 hex of b. Never fails.
 func Digest(b []byte) string { x := sha256.Sum256(b); return hex.EncodeToString(x[:]) }
+
+// Hash marshals v and returns its Digest. Callers needing to treat a
+// marshal failure as a recoverable error should use TryHash.
 func Hash(v any) string {
-	b, err := json.Marshal(v)
+	b, err := TryHash(v)
 	if err != nil {
 		panic(err)
 	}
-	return Digest(b)
+	return b
+}
+
+// TryHash is the fallible form of Hash.
+func TryHash(v any) (string, error) {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return "", fmt.Errorf("model: unhashable value: %w", err)
+	}
+	return Digest(b), nil
 }
 func Now() string { return time.Now().UTC().Format(time.RFC3339Nano) }
 

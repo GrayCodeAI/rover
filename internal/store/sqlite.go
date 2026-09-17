@@ -38,6 +38,11 @@ type Store struct {
 	mu   sync.Mutex
 	db   *C.sqlite3
 	Root string
+	// DBPath is the absolute path to the SQLite database file. It is set at
+	// Open time and is safe to read concurrently. BackupDatabase uses it to
+	// open an independent source connection so s.mu is not held during the
+	// page-by-page backup.
+	DBPath string
 }
 
 func SQLiteVersion() string { return C.GoString(C.sqlite3_libversion()) }
@@ -194,7 +199,7 @@ func Open(root string) (*Store, error) {
 			f.Close()
 		}
 	}
-	s := &Store{Root: r}
+	s := &Store{Root: r, DBPath: dbpath}
 	cp := C.CString(dbpath)
 	defer C.free(unsafe.Pointer(cp))
 	if rc := C.sqlite3_open_v2(cp, &s.db, C.SQLITE_OPEN_READWRITE|C.SQLITE_OPEN_CREATE|C.SQLITE_OPEN_FULLMUTEX, nil); rc != C.SQLITE_OK {
@@ -600,8 +605,11 @@ func IsWithin(root, p string) bool {
 	return e == nil && r != ".." && !strings.HasPrefix(r, ".."+string(filepath.Separator)) && !filepath.IsAbs(r)
 }
 
-// BackupDatabase uses SQLite's online backup API, never a raw copy of an active
-// WAL file. The destination must not exist. Context cancellation bounds retries.
+// BackupDatabase uses SQLite's online backup API. It opens a *separate*
+// read-only source connection to the live database so the store mutex (s.mu)
+// is not held during the page-by-page copy — concurrent callers are not
+// blocked. The destination must not exist (O_EXCL). Context cancellation
+// bounds retries.
 func (s *Store) BackupDatabase(ctx context.Context, destination string) (err error) {
 	f, e := os.OpenFile(destination, os.O_CREATE|os.O_EXCL|os.O_WRONLY|syscall.O_NOFOLLOW, 0600)
 	if e != nil {
@@ -610,10 +618,6 @@ func (s *Store) BackupDatabase(ctx context.Context, destination string) (err err
 	if e = f.Close(); e != nil {
 		return e
 	}
-	// Re-verify the placeholder is still a regular file just before handing
-	// the path to the SQLite C backup API (which follows paths). Same-user
-	// TOCTOU cannot be fully closed without an fd-based backup; this narrows
-	// the symlink-swap window and fails closed.
 	if st, e := os.Lstat(destination); e != nil || !st.Mode().IsRegular() {
 		_ = os.Remove(destination)
 		return errors.New("backup destination is not a regular file")
@@ -624,15 +628,36 @@ func (s *Store) BackupDatabase(ctx context.Context, destination string) (err err
 			_ = os.Remove(destination)
 		}
 	}()
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	if s.db == nil {
-		return errors.New("database closed")
+
+	var src *C.sqlite3
+	func() {
+		srcPath := C.CString(s.DBPath)
+		defer C.free(unsafe.Pointer(srcPath))
+		// SQLITE_OPEN_READONLY lets us attach a second connection to the
+		// same file concurrently with s.db. FULLMUTEX keeps serialization
+		// inside SQLite itself so no Go-side lock is required.
+		if rc := C.sqlite3_open_v2(srcPath, &src, C.SQLITE_OPEN_READONLY|C.SQLITE_OPEN_FULLMUTEX, nil); rc != C.SQLITE_OK {
+			if src != nil {
+				C.sqlite3_close(src)
+				src = nil
+			}
+			err = fmt.Errorf("backup source sqlite error %d", int(rc))
+		}
+	}()
+	if err != nil {
+		return err
 	}
-	path := C.CString(destination)
-	defer C.free(unsafe.Pointer(path))
+	defer func() {
+		rc := C.sqlite3_close(src)
+		if err == nil && rc != C.SQLITE_OK {
+			err = fmt.Errorf("backup source close failed: %d", int(rc))
+		}
+	}()
+
+	dstPath := C.CString(destination)
+	defer C.free(unsafe.Pointer(dstPath))
 	var target *C.sqlite3
-	if rc := C.sqlite3_open_v2(path, &target, C.SQLITE_OPEN_READWRITE|C.SQLITE_OPEN_FULLMUTEX, nil); rc != C.SQLITE_OK {
+	if rc := C.sqlite3_open_v2(dstPath, &target, C.SQLITE_OPEN_READWRITE|C.SQLITE_OPEN_FULLMUTEX|C.SQLITE_OPEN_CREATE, nil); rc != C.SQLITE_OK {
 		if target != nil {
 			C.sqlite3_close(target)
 		}
@@ -644,9 +669,10 @@ func (s *Store) BackupDatabase(ctx context.Context, destination string) (err err
 			err = fmt.Errorf("backup close failed: %d", int(rc))
 		}
 	}()
+
 	main := C.CString("main")
 	defer C.free(unsafe.Pointer(main))
-	b := C.sqlite3_backup_init(target, main, s.db, main)
+	b := C.sqlite3_backup_init(target, main, src, main)
 	if b == nil {
 		return errors.New("SQLite backup initialization failed")
 	}
