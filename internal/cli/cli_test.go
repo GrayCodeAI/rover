@@ -129,3 +129,69 @@ func TestLogsAndReportRenderStripHostileBytes(t *testing.T) {
 		}
 	}
 }
+
+func TestShortAliasesRoute(t *testing.T) {
+	// Aliases must reach the real command, not "unknown command".
+	cases := []struct {
+		args []string
+		want string
+	}{
+		{[]string{"lg", "--id", "bad id"}, "valid task ID required"},
+		{[]string{"rep", "--id", "bad id"}, "valid investigation ID required"},
+		{[]string{"st", "--id", "bad id"}, "valid task ID required"},
+	}
+	for _, c := range cases {
+		var out, err bytes.Buffer
+		app := New(&out, &err)
+		full := append([]string{"--state", filepath.Join(t.TempDir(), "state")}, c.args...)
+		code := app.Main(context.Background(), full)
+		if code != 2 {
+			t.Fatalf("%v: code=%d", c.args, code)
+		}
+		got := out.String() + err.String()
+		if !bytes.Contains([]byte(got), []byte(c.want)) {
+			t.Fatalf("%v: want %q in %q", c.args, c.want, got)
+		}
+		if bytes.Contains([]byte(got), []byte("unknown command")) {
+			t.Fatalf("%v: alias not routed", c.args)
+		}
+	}
+	// wf must reach workflow routing, not top-level unknown-command.
+	var out, err bytes.Buffer
+	app := New(&out, &err)
+	code := app.Main(context.Background(), []string{"--state", filepath.Join(t.TempDir(), "state"), "wf", "bogus", "--json"})
+	if code != 2 {
+		t.Fatal(code)
+	}
+	if bytes.Contains(out.Bytes(), []byte("unknown command")) {
+		t.Fatalf("wf alias not routed: %s", out.String())
+	}
+}
+
+func TestCheckRequiresAdmissionLikeVerify(t *testing.T) {
+	repo, s := testutil.Repo(t, map[string]string{"value": "base"})
+	for _, cmd := range []string{"check", "verify"} {
+		var out, err bytes.Buffer
+		app := New(&out, &err)
+		code := app.Main(context.Background(), []string{"--state", s.Root, cmd, "--repo", repo, "--json"})
+		if code != 2 {
+			t.Fatalf("%s without --allow-local: code=%d", cmd, code)
+		}
+		if !bytes.Contains(out.Bytes(), []byte("allow-local")) {
+			t.Fatalf("%s without --allow-local: %s", cmd, out.String())
+		}
+	}
+}
+
+func TestDoReadsTaskFile(t *testing.T) {
+	_, s := testutil.Repo(t, map[string]string{"value": "base"})
+	var out, err bytes.Buffer
+	app := New(&out, &err)
+	code := app.Main(context.Background(), []string{"--state", s.Root, "do", "--file", filepath.Join(t.TempDir(), "missing.json"), "--allow-local", "--json"})
+	if code != 2 {
+		t.Fatal(code, out.String(), err.String())
+	}
+	if !json.Valid(out.Bytes()) {
+		t.Fatal("do error is not valid JSON", out.String())
+	}
+}

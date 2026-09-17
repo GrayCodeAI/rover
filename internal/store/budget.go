@@ -22,6 +22,8 @@ type Budget struct {
 // BudgetUse returns the current per-owner accounting. cap 0 means no budget is
 // configured and Charge never refuses (honest default: not enforced).
 func (s *Store) BudgetUse() (Budget, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	b, e := s.budget()
 	return *b, e
 }
@@ -35,11 +37,16 @@ func (s *Store) budget() (*Budget, error) {
 	if e != nil {
 		return nil, e
 	}
-	if b.Cap < 0 || b.Version < 0 {
+	if b.Cap < 0 || b.Cap > 1<<30 || b.Version < 0 {
 		return nil, errors.New("invalid budget ledger")
 	}
 	if b.Use == nil {
 		b.Use = map[string]int{}
+	}
+	for _, v := range b.Use {
+		if v < 0 || v > 1<<30 {
+			return nil, errors.New("invalid budget ledger")
+		}
 	}
 	return b, nil
 }
@@ -82,8 +89,8 @@ func (s *Store) Charge(owner string, amount int) error {
 			return e
 		}
 		cur := b.Use[owner]
-		total := b.Total() + amount
-		if b.Cap > 0 && total > b.Cap {
+		var total int64 = int64(b.Total()) + int64(amount)
+		if b.Cap > 0 && total > int64(b.Cap) {
 			return ErrBudgetExhausted
 		}
 		b.Use[owner] = cur + amount

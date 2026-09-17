@@ -13,6 +13,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+	"syscall"
 	"time"
 	"unicode/utf8"
 
@@ -28,7 +29,7 @@ func Decode(b []byte, dst any) error {
 		return errors.New("configuration exceeds 1 MiB")
 	}
 	d := json.NewDecoder(bytes.NewReader(b))
-	if err := walk(d); err != nil {
+	if err := walkDepth(d, 0); err != nil {
 		return err
 	}
 	if _, err := d.Token(); err != io.EOF {
@@ -89,7 +90,11 @@ func exactObject(b []byte, required, optional []string) (map[string]json.RawMess
 	}
 	return obj, nil
 }
-func walk(d *json.Decoder) error {
+func walk(d *json.Decoder) error { return walkDepth(d, 0) }
+func walkDepth(d *json.Decoder, depth int) error {
+	if depth > 100 {
+		return errors.New("JSON nesting exceeds bound")
+	}
 	t, e := d.Token()
 	if e != nil {
 		return e
@@ -114,13 +119,13 @@ func walk(d *json.Decoder) error {
 				return fmt.Errorf("duplicate JSON key %q", s)
 			}
 			seen[s] = true
-			if e := walk(d); e != nil {
+			if e := walkDepth(d, depth+1); e != nil {
 				return e
 			}
 		}
 	case '[':
 		for d.More() {
-			if e := walk(d); e != nil {
+			if e := walkDepth(d, depth+1); e != nil {
 				return e
 			}
 		}
@@ -131,18 +136,18 @@ func walk(d *json.Decoder) error {
 	return e
 }
 func Read(path string, dst any) error {
-	st, e := os.Lstat(path)
+	f, e := os.OpenFile(path, os.O_RDONLY|syscall.O_NOFOLLOW, 0)
+	if e != nil {
+		return e
+	}
+	defer f.Close()
+	st, e := f.Stat()
 	if e != nil {
 		return e
 	}
 	if !st.Mode().IsRegular() {
 		return errors.New("config must be a regular file, not a symlink")
 	}
-	f, e := os.Open(path)
-	if e != nil {
-		return e
-	}
-	defer f.Close()
 	b, e := io.ReadAll(io.LimitReader(f, MaxBytes+1))
 	if e != nil {
 		return e

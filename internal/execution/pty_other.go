@@ -8,5 +8,5 @@ import (
 )
 
 func runPTY(ctx context.Context, o Options) (Result, error) {
-	return Result{}, errors.New("PTY backend currently supports Linux only")
+	return Result{}, errors.New("PTY backend currently supports Linux and darwin only")
 }

@@ -97,7 +97,11 @@ func HTTP(s *service.Service) http.Handler {
 			http.Error(w, "concurrency limit", http.StatusTooManyRequests)
 			return
 		}
-		expires, _ := time.Parse(time.RFC3339Nano, g.ExpiresAt)
+		expires, e := time.Parse(time.RFC3339Nano, g.ExpiresAt)
+		if e != nil {
+			http.Error(w, "grant expiry invalid", http.StatusUnauthorized)
+			return
+		}
 		ctx, cancel := context.WithDeadline(r.Context(), expires)
 		defer cancel()
 		requestKey, _ := idKey(req.ID)

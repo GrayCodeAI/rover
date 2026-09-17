@@ -77,6 +77,9 @@ func Diff(ctx context.Context, s *store.Store, base, cand model.Snapshot) ([]byt
 				if f.Mode == 0755 {
 					mode = "100755"
 				}
+				if strings.ContainsAny(f.Path, "\"\n\r") {
+					return fmt.Errorf("unsupported path for diff framing: %q", f.Path)
+				}
 				p := "\"" + strings.ReplaceAll(f.Path, "\"", "\\\"") + "\""
 				if _, e := fmt.Fprintf(pipe, "M %s :%d %s\n", mode, marks[f.SHA256], p); e != nil {
 					return e

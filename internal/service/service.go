@@ -88,6 +88,23 @@ func AllNames() []string {
 	return []string{"rover_agent_capabilities", "rover_inspect", "rover_status", "rover_report", "rover_diff", "rover_context_search", "rover_verify", "rover_task_run", "rover_task_cancel"}
 }
 func (s *Service) Call(ctx context.Context, name string, b json.RawMessage, g *access.Grant) (any, error) {
+	// Re-validate a network grant against current store state so revocation
+	// or expiry between Authenticate and Call is not bypassed. A nil grant
+	// remains local stdio UID-trust (read-only unless execution enabled).
+	if g != nil {
+		var fresh access.Grant
+		if e := s.Store.Get("grant", g.ID, &fresh); e != nil {
+			return nil, access.ErrDenied
+		}
+		exp, e := time.Parse(time.RFC3339Nano, fresh.ExpiresAt)
+		if e != nil || fresh.Revoked || !time.Now().Before(exp) {
+			return nil, access.ErrDenied
+		}
+		if fresh.Audience != access.Audience(s.Store, s.Repository) || fresh.Project != access.ProjectID(s.Repository) {
+			return nil, access.ErrDenied
+		}
+		g = &fresh
+	}
 	allowed := false
 	for _, t := range s.Tools(g) {
 		if t.Name == name {
@@ -132,6 +149,9 @@ func (s *Service) Call(ctx context.Context, name string, b json.RawMessage, g *a
 			return nil, e
 		}
 		if a.TaskID != "" {
+			if !model.ValidID(a.TaskID) {
+				return nil, access.ErrDenied
+			}
 			return s.task(a.TaskID)
 		}
 		raw, e := s.Store.ListAll("task", 100000)
@@ -160,6 +180,9 @@ func (s *Service) Call(ctx context.Context, name string, b json.RawMessage, g *a
 		}
 		if e := wire.Decode(b, &a); e != nil {
 			return nil, e
+		}
+		if !model.ValidID(a.ID) {
+			return nil, access.ErrDenied
 		}
 		in, e := s.investigation(a.ID)
 		if e != nil {
@@ -193,6 +216,9 @@ func (s *Service) Call(ctx context.Context, name string, b json.RawMessage, g *a
 		var snap model.Snapshot
 		var e error
 		if a.Snapshot != "" {
+			if !model.ValidID(a.Snapshot) {
+				return nil, access.ErrDenied
+			}
 			snap, e = s.snapshot(a.Snapshot)
 		} else {
 			snap, e = source.Capture(ctx, s.Store, s.Repository, "HEAD", false)
@@ -211,6 +237,9 @@ func (s *Service) Call(ctx context.Context, name string, b json.RawMessage, g *a
 		if e := wire.Decode(b, &a); e != nil {
 			return nil, e
 		}
+		if !model.ValidID(a.Candidate) {
+			return nil, access.ErrDenied
+		}
 		cand, e := s.snapshot(a.Candidate)
 		if e != nil {
 			return nil, e
@@ -222,6 +251,9 @@ func (s *Service) Call(ctx context.Context, name string, b json.RawMessage, g *a
 		}
 		if e := wire.Decode(b, &a); e != nil {
 			return nil, e
+		}
+		if !model.ValidID(a.ID) {
+			return nil, access.ErrDenied
 		}
 		if _, e := s.task(a.ID); e != nil {
 			return nil, e
@@ -251,7 +283,7 @@ func (s *Service) Call(ctx context.Context, name string, b json.RawMessage, g *a
 		if a.Timeout == "" {
 			a.Timeout = "30m"
 		}
-		if d, e := time.ParseDuration(a.Timeout); e != nil || d > 24*time.Hour {
+		if d, e := time.ParseDuration(a.Timeout); e != nil || d <= 0 || d > 24*time.Hour {
 			return nil, errors.New("invalid task timeout")
 		}
 		cb, _ := json.Marshal(s.Config)
@@ -293,6 +325,9 @@ func (s *Service) investigation(id string) (model.Investigation, error) {
 	var x model.Investigation
 	if e := s.Store.Get("investigation", id, &x); e != nil {
 		return x, access.ErrDenied
+	}
+	if x.Repository != s.Repository {
+		return model.Investigation{}, access.ErrDenied
 	}
 	if _, e := s.snapshot(x.Candidate); e != nil {
 		return model.Investigation{}, e

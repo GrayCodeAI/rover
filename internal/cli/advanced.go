@@ -294,12 +294,18 @@ func (a *extendedApp) diffCommand(ctx context.Context, args []string) int {
 	}
 	return a.withStore(func(s *store.Store) int {
 		if *id != "" {
+			if !model.ValidID(*id) {
+				return a.fail(errors.New("valid investigation ID required"))
+			}
 			var in model.Investigation
 			if e := s.Get("investigation", *id, &in); e != nil {
 				return a.fail(e)
 			}
 			*base = in.Base
 			*candidate = in.Candidate
+		}
+		if !model.ValidID(*base) || !model.ValidID(*candidate) {
+			return a.fail(errors.New("valid snapshot IDs required"))
 		}
 		b, e := source.Load(s, *base)
 		if e != nil {
@@ -330,6 +336,9 @@ func (a *extendedApp) diffCommand(ctx context.Context, args []string) int {
 		}
 		if j {
 			return a.emit(map[string]any{"base": b.ID, "candidate": c.ID, "patch": string(patch)})
+		}
+		if len(patch) > 1<<20 {
+			return a.fail(errors.New("patch exceeds 1MiB display budget; use diff --output"))
 		}
 		fmt.Fprint(a.Out, execution.SafeText(string(patch)))
 		return 0
@@ -396,10 +405,10 @@ func (a *extendedApp) contextCommand(ctx context.Context, args []string) int {
 			case "delete":
 				var n contextstore.Note
 				if e = s.Get("memory", *id, &n); e != nil {
-					return a.fail(e)
+					return a.fail(errors.New("memory record not available"))
 				}
 				if n.Project != model.Digest([]byte(snap.Repository)) {
-					return a.fail(errors.New("memory project mismatch"))
+					return a.fail(errors.New("memory record not available"))
 				}
 				if e = s.Delete("memory", *id, "memory.deleted"); e != nil {
 					return a.fail(e)

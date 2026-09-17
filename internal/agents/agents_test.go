@@ -87,3 +87,32 @@ func TestMalformedNativeEventRejected(t *testing.T) {
 		t.Fatal("event-after-terminal accepted")
 	}
 }
+
+func TestNativeOptionValidation(t *testing.T) {
+	for _, bad := range []string{"-evil", "../evil", "a\x00b", ""} {
+		if bad == "" {
+			continue // empty means default binary, valid
+		}
+		s := model.TaskSpec{Agent: "codex-exec", AgentOptions: model.AgentOptions{Executable: bad}}
+		if _, e := Argv(s, "task", false); e == nil {
+			t.Fatalf("codex executable %q accepted", bad)
+		}
+		s = model.TaskSpec{Agent: "claude-print", AgentOptions: model.AgentOptions{Executable: bad}}
+		if _, e := Argv(s, "task", false); e == nil {
+			t.Fatalf("claude executable %q accepted", bad)
+		}
+	}
+	for _, bad := range []string{"--evil", "model with spaces", "m,evil", ""} {
+		if bad == "" {
+			continue
+		}
+		s := model.TaskSpec{Agent: "codex-exec", AgentOptions: model.AgentOptions{Model: bad}}
+		if _, e := Argv(s, "task", false); e == nil {
+			t.Fatalf("model %q accepted", bad)
+		}
+	}
+	s := model.TaskSpec{Agent: "claude-print", AgentOptions: model.AgentOptions{AllowedTools: []string{"--evil"}}}
+	if _, e := Argv(s, "task", false); e == nil {
+		t.Fatal("evil allowed tool accepted")
+	}
+}

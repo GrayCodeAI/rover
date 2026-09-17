@@ -21,6 +21,14 @@ func TestScopedContextAndMemory(t *testing.T) {
 	if _, e = Build(s, snap, []string{".env"}); e == nil {
 		t.Fatal("sensitive file included")
 	}
+	for _, p := range []string{"secrets.json", "token.txt", "a/../a.go", "/abs/path", "a\\b"} {
+		if _, e = Build(s, snap, []string{p}); e == nil {
+			t.Fatalf("restricted/unclean path %q accepted", p)
+		}
+	}
+	if !sensitive("secrets.json") || !sensitive("deploy.p12") || !sensitive("token.txt") {
+		t.Fatal("expanded secret list not enforced")
+	}
 	b, e := Build(s, snap, []string{"a.go"})
 	if e != nil || b.Snapshot != snap.ID {
 		t.Fatal(b, e)

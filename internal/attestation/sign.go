@@ -11,7 +11,9 @@ import (
 	"encoding/pem"
 	"errors"
 	"fmt"
+	"io"
 	"os"
+	"syscall"
 
 	"github.com/GrayCodeAI/rover/internal/model"
 	"github.com/GrayCodeAI/rover/internal/store"
@@ -80,7 +82,12 @@ func Public(b []byte) (ed25519.PublicKey, error) {
 	return v, nil
 }
 func ReadKey(path string, private bool) ([]byte, error) {
-	st, e := os.Lstat(path)
+	f, e := os.OpenFile(path, os.O_RDONLY|syscall.O_NOFOLLOW, 0)
+	if e != nil {
+		return nil, e
+	}
+	defer f.Close()
+	st, e := f.Stat()
 	if e != nil {
 		return nil, e
 	}
@@ -90,7 +97,14 @@ func ReadKey(path string, private bool) ([]byte, error) {
 	if private && st.Mode().Perm()&0077 != 0 {
 		return nil, errors.New("private key permissions must exclude group and other users")
 	}
-	return os.ReadFile(path)
+	b, e := io.ReadAll(io.LimitReader(f, 16385))
+	if e != nil {
+		return nil, e
+	}
+	if int64(len(b)) > 16384 {
+		return nil, errors.New("key must be a bounded regular file")
+	}
+	return b, nil
 }
 func Sign(s *store.Store, id string, key ed25519.PrivateKey) (Envelope, error) {
 	env := Envelope{}

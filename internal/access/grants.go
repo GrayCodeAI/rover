@@ -9,11 +9,39 @@ import (
 	"errors"
 	"github.com/GrayCodeAI/rover/internal/model"
 	"github.com/GrayCodeAI/rover/internal/store"
+	"path/filepath"
 	"strings"
 	"time"
 )
 
 var ErrDenied = errors.New("unauthorized or expired grant")
+
+// allowedTools mirrors service.AllNames without importing service (which
+// imports access). Keep in sync; service_test asserts equality.
+var allowedTools = map[string]bool{
+	"rover_agent_capabilities": true,
+	"rover_inspect":            true,
+	"rover_status":             true,
+	"rover_report":             true,
+	"rover_diff":               true,
+	"rover_context_search":     true,
+	"rover_verify":             true,
+	"rover_task_run":           true,
+	"rover_task_cancel":        true,
+}
+
+func canonicalRepo(repo string) string {
+	if repo == "" {
+		return repo
+	}
+	if a, e := filepath.Abs(repo); e == nil {
+		if r, e := filepath.EvalSymlinks(a); e == nil {
+			return r
+		}
+		return filepath.Clean(a)
+	}
+	return repo
+}
 
 type Grant struct {
 	Schema    string   `json:"schema"`
@@ -28,7 +56,11 @@ type Grant struct {
 }
 
 func Audience(s *store.Store, repo string) string {
+	repo = canonicalRepo(repo)
 	return "rover-control/v1:" + model.Digest([]byte(s.Root+"\x00"+repo))
+}
+func ProjectID(repo string) string {
+	return model.Digest([]byte(canonicalRepo(repo)))
 }
 func Issue(s *store.Store, repo string, tools []string, note string, ttl time.Duration) (Grant, string, error) {
 	if len(tools) == 0 || len(tools) > 32 || ttl < time.Minute || ttl > 30*24*time.Hour || strings.TrimSpace(note) == "" || len(note) > 4096 {
@@ -36,17 +68,18 @@ func Issue(s *store.Store, repo string, tools []string, note string, ttl time.Du
 	}
 	seen := map[string]bool{}
 	for _, t := range tools {
-		if !model.ValidID(t) || seen[t] {
+		if !model.ValidID(t) || !allowedTools[t] || seen[t] {
 			return Grant{}, "", errors.New("invalid duplicate tool")
 		}
 		seen[t] = true
 	}
+	repo = canonicalRepo(repo)
 	b := make([]byte, 32)
 	if _, e := rand.Read(b); e != nil {
 		return Grant{}, "", e
 	}
 	token := "rvr_" + base64.RawURLEncoding.EncodeToString(b)
-	g := Grant{Schema: model.Schema, ID: model.Digest([]byte(token)), Audience: Audience(s, repo), Project: model.Digest([]byte(repo)), Tools: append([]string(nil), tools...), Note: note, CreatedAt: model.Now(), ExpiresAt: time.Now().UTC().Add(ttl).Format(time.RFC3339Nano)}
+	g := Grant{Schema: model.Schema, ID: model.Digest([]byte(token)), Audience: Audience(s, repo), Project: ProjectID(repo), Tools: append([]string(nil), tools...), Note: note, CreatedAt: model.Now(), ExpiresAt: time.Now().UTC().Add(ttl).Format(time.RFC3339Nano)}
 	return g, token, s.Put("grant", g.ID, g, "grant.created")
 }
 func Authenticate(s *store.Store, repo, token string) (Grant, error) {
@@ -57,8 +90,9 @@ func Authenticate(s *store.Store, repo, token string) (Grant, error) {
 	if e := s.Get("grant", model.Digest([]byte(token)), &g); e != nil {
 		return g, ErrDenied
 	}
+	repo = canonicalRepo(repo)
 	exp, e := time.Parse(time.RFC3339Nano, g.ExpiresAt)
-	if e != nil || g.Revoked || !time.Now().Before(exp) || g.Audience != Audience(s, repo) || g.Project != model.Digest([]byte(repo)) {
+	if e != nil || g.Revoked || !time.Now().Before(exp) || g.Audience != Audience(s, repo) || g.Project != ProjectID(repo) {
 		return Grant{}, ErrDenied
 	}
 	return g, nil

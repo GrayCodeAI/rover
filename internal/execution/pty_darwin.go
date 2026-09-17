@@ -53,6 +53,7 @@ type terminalFrame struct {
 type broker struct {
 	mu      sync.Mutex
 	ln      net.Listener
+	path    string
 	master  *os.File
 	ring    []byte
 	client  net.Conn
@@ -105,7 +106,7 @@ func startBroker(path string, m *os.File) (*broker, error) {
 		ln.Close()
 		return nil, e
 	}
-	b := &broker{ln: ln, master: m}
+	b := &broker{ln: ln, master: m, path: path}
 	go b.accept()
 	return b, nil
 }
@@ -235,6 +236,9 @@ func (b *broker) Close() {
 	}
 	b.mu.Unlock()
 	b.ln.Close()
+	if b.path != "" {
+		_ = os.Remove(b.path)
+	}
 	if c != nil {
 		select {
 		case <-drained:
@@ -314,7 +318,9 @@ func runPTY(parent context.Context, o Options) (r Result, returned error) {
 	rd := make(chan error, 1)
 	go func() { _, e := io.Copy(io.MultiWriter(out, b), m); rd <- e }()
 	e = cmd.Wait()
-	cleanupProcess(cmd)
+	if ctx.Err() != nil || parent.Err() != nil {
+		cleanupProcess(cmd)
+	}
 	var captureErr error
 	select {
 	case captureErr = <-rd:

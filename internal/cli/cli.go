@@ -32,6 +32,16 @@ const help = `Rover — terminal-first agent execution and evidence (alpha)
 
 Usage: rover [--state DIRECTORY] COMMAND [flags]
 
+State defaults to $ROVER_HOME or ~/.config/rover; --state overrides it.
+Keep state outside all repositories.
+
+Shortcuts (one command instead of three):
+  check --repo . --worktree --allow-local
+                                    Inspect + verify + decision + next step
+  do --file TASK.json --allow-local
+                                    Run a task in the foreground, then report
+Aliases: st=status, lg=logs, wf=workflow, rep=report
+
 Read/setup:
   version                        Version and build environment
   doctor                         Inspect available tools; executes no repository code
@@ -139,6 +149,10 @@ func (a *App) run(ctx context.Context, args []string) (int, error) {
 	}
 	command := args[0]
 	args = args[1:]
+	// Short aliases for the most-used read commands. Full names keep working.
+	if short, ok := map[string]string{"st": "status", "lg": "logs", "wf": "workflow", "rep": "report"}[command]; ok {
+		command = short
+	}
 	if command == "version" {
 		return 0, a.emit(map[string]string{"name": "Rover", "version": model.Version, "schema": model.Schema, "go": runtime.Version(), "sqlite": store.SQLiteVersion(), "os": runtime.GOOS, "arch": runtime.GOARCH})
 	}
@@ -195,6 +209,10 @@ func (a *App) run(ctx context.Context, args []string) (int, error) {
 	switch command {
 	case "inspect", "verify":
 		return a.inspectVerify(ctx, s, command, args)
+	case "check":
+		return a.check(ctx, s, args)
+	case "do":
+		return a.do(ctx, s, args)
 	case "task":
 		return a.task(ctx, s, args)
 	case "__worker":
@@ -220,6 +238,9 @@ func (a *App) run(ctx context.Context, args []string) (int, error) {
 		if e = f.Parse(args); e != nil {
 			return 2, e
 		}
+		if !model.ValidID(*id) {
+			return 2, errors.New("valid task ID required")
+		}
 		if e = tasks.Cancel(s, *id); e != nil {
 			return 2, e
 		}
@@ -230,6 +251,9 @@ func (a *App) run(ctx context.Context, args []string) (int, error) {
 		f.Bool("json", false, "")
 		if e = f.Parse(args); e != nil {
 			return 2, e
+		}
+		if !model.ValidID(*id) {
+			return 2, errors.New("valid record ID required")
 		}
 		r, e := s.Events(*id)
 		if e != nil {
@@ -384,6 +408,114 @@ func (a *App) inspectVerify(ctx context.Context, s *store.Store, command string,
 	code := DecisionExit(in.Decision)
 	return code, e
 }
+
+// check is the one-command path for "what changed and does it verify":
+// capture base + candidate, compare, run the approved checks, then print the
+// decision with the next explicit step. Evidence semantics match verify;
+// only the typing is shorter.
+func (a *App) check(ctx context.Context, s *store.Store, args []string) (int, error) {
+	f := a.fs("check")
+	repo := f.String("repo", ".", "repository")
+	baseRef := f.String("base", "HEAD", "approved baseline Git commit/ref")
+	candidateRef := f.String("candidate", "HEAD", "candidate commit/ref")
+	worktree := f.Bool("worktree", false, "capture mutable working files using two content reads")
+	untracked := f.Bool("include-untracked", false, "explicitly include nonignored untracked files with --worktree")
+	jsonOut := f.Bool("json", false, "")
+	cfg := f.String("config", "", "explicit user-approved config; otherwise read from base snapshot")
+	mode := f.String("mode", "local-advisory", "local-advisory or restricted-docker")
+	image := f.String("image", "", "pinned image digest")
+	allow := f.Bool("allow-local", false, "authorize code execution with user permissions")
+	strategy := f.String("strategy", "", "explicitly approved check-order strategy ID; never selected automatically")
+	if e := f.Parse(args); e != nil {
+		return 2, e
+	}
+	if len(f.Args()) > 0 {
+		return 2, errors.New("unexpected positional arguments")
+	}
+	if *untracked && !*worktree {
+		return 2, errors.New("--include-untracked requires --worktree")
+	}
+	if e := execution.Admit(*mode, *allow, *image); e != nil {
+		return 2, e
+	}
+	base, e := source.Capture(ctx, s, *repo, *baseRef, false)
+	if e != nil {
+		return 2, e
+	}
+	if *worktree {
+		*candidateRef = "WORKTREE"
+	}
+	candidate, e := source.Capture(ctx, s, *repo, *candidateRef, *untracked)
+	if e != nil {
+		return 2, e
+	}
+	in := source.Compare(base, candidate)
+	c, origin, e := assurance.LoadConfig(s, base, *cfg)
+	if e != nil {
+		return 2, e
+	}
+	ev, e := assurance.Verify(ctx, s, base, candidate, c, assurance.Options{Mode: *mode, Image: *image, AllowLocal: *allow, PolicySource: origin, Strategy: *strategy})
+	if e != nil {
+		return 2, e
+	}
+	next := fmt.Sprintf("next: rover review --id %s --note \"Reviewed\"  |  rover diff --id %s --output change.patch", ev.ID, ev.ID)
+	if *jsonOut {
+		if e = a.emit(map[string]any{"schema": model.Schema, "inspection": in, "investigation": ev, "next": next}); e != nil {
+			return 2, e
+		}
+	} else {
+		fmt.Fprintln(a.Out, "ROVER / CHECK")
+		fmt.Fprintln(a.Out, "Base:", base.ID)
+		fmt.Fprintln(a.Out, "Candidate:", candidate.ID)
+		fmt.Fprintln(a.Out, "Changed files:", len(in.Changes))
+		for _, ch := range in.Changes {
+			fmt.Fprintf(a.Out, "  %-9s %-20s %q\n", ch.Status, ch.Category, ch.Path)
+		}
+		a.humanReport(ev)
+		fmt.Fprintln(a.Out, next)
+	}
+	return DecisionExit(ev.Decision), nil
+}
+
+// do is the one-command path for "run this task and wait": it submits with
+// foreground supervision, so one invocation replaces task run + status/logs
+// polling. Exit 0 means the run finished; consult the decision, not the exit.
+func (a *App) do(ctx context.Context, s *store.Store, args []string) (int, error) {
+	f := a.fs("do")
+	file := f.String("file", "", "task contract JSON")
+	allow := f.Bool("allow-local", false, "grant local execution")
+	key := f.String("key", "", "idempotency key")
+	f.Bool("json", false, "")
+	if e := f.Parse(args); e != nil {
+		return 2, e
+	}
+	var t model.TaskSpec
+	if e := config.Read(*file, &t); e != nil {
+		return 2, e
+	}
+	abs, e := filepath.Abs(*file)
+	if e != nil {
+		return 2, e
+	}
+	if !filepath.IsAbs(t.Repository) {
+		t.Repository = filepath.Join(filepath.Dir(abs), t.Repository)
+	}
+	if t.ConfigPath != "" && !filepath.IsAbs(t.ConfigPath) {
+		t.ConfigPath = filepath.Join(filepath.Dir(abs), t.ConfigPath)
+	}
+	if len(*key) > 256 {
+		return 2, errors.New("idempotency key too long")
+	}
+	r, e := tasks.Submit(ctx, s, t, *key, *allow, true)
+	if e != nil {
+		return 2, e
+	}
+	if e := a.emit(r); e != nil {
+		return 2, e
+	}
+	fmt.Fprintf(a.Err, "next: rover logs --id %s  |  rover report --id %s\n", r.ID, r.InvestigationID)
+	return 0, nil
+}
 func DecisionExit(d string) int {
 	switch d {
 	case "ACCEPTED":
@@ -469,6 +601,9 @@ func (a *App) status(ctx context.Context, s *store.Store, command string, args [
 	}
 	render := func() error {
 		if *id != "" {
+			if !model.ValidID(*id) {
+				return errors.New("valid task ID required")
+			}
 			r, e := tasks.Get(s, *id)
 			if e != nil {
 				return e
@@ -581,6 +716,9 @@ func (a *App) report(s *store.Store, command string, args []string) (int, error)
 	if e := f.Parse(args); e != nil {
 		return 2, e
 	}
+	if !model.ValidID(*id) {
+		return 2, errors.New("valid investigation ID required")
+	}
 	if command == "review" {
 		r, e := assurance.Review(s, *id, *note)
 		if e != nil {
@@ -614,6 +752,9 @@ func (a *App) outcome(s *store.Store, args []string) (int, error) {
 	}
 	if strings.TrimSpace(*note) == "" {
 		return 2, errors.New("outcome note required; temporal proximity is not causal evidence")
+	}
+	if !model.ValidID(*id) {
+		return 2, errors.New("valid investigation ID required")
 	}
 	var in model.Investigation
 	if e := s.Get("investigation", *id, &in); e != nil {

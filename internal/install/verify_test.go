@@ -38,3 +38,17 @@ func TestVerifyInstall(t *testing.T) {
 		t.Fatal("tampered file accepted")
 	}
 }
+
+func TestIsWithinShortNames(t *testing.T) {
+	root := t.TempDir()
+	// Regression: single-character relative paths must not panic the slice check.
+	if !isWithin(root, filepath.Join(root, "a")) {
+		t.Fatal("single-char child rejected")
+	}
+	if isWithin(root, filepath.Join(root, "..", "escape")) {
+		t.Fatal("escape accepted")
+	}
+	if isWithin(root, root) {
+		t.Fatal("root itself accepted as within")
+	}
+}

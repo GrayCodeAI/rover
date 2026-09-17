@@ -265,7 +265,12 @@ func Submit(ctx context.Context, s *store.Store, spec Spec, key string, allow, f
 		return r, e
 	}
 	pid := cmd.Process.Pid
-	cmd.Process.Release()
+	if e := cmd.Process.Release(); e != nil {
+		r.Status = "ERROR"
+		r.Error = e.Error()
+		_ = Save(s, &r, "workflow.launch_error")
+		return r, e
+	}
 	_ = s.Mutate("workflow", id, "workflow.launched", func(b json.RawMessage) (any, error) {
 		var x Run
 		if e := json.Unmarshal(b, &x); e != nil {

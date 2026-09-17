@@ -66,8 +66,12 @@ func (c *Capture) Write(p []byte) (int, error) {
 func (c *Capture) close() error {
 	c.mu.Lock()
 	defer c.mu.Unlock()
+	if c.f == nil {
+		return c.writeErr
+	}
 	se := c.f.Sync()
 	ce := c.f.Close()
+	c.f = nil
 	if c.writeErr != nil {
 		return c.writeErr
 	}
@@ -123,6 +127,9 @@ func DockerArgs(o Options, name string) ([]string, error) {
 	}
 	if strings.ContainsAny(o.Dir, ",\r\n") {
 		return nil, errors.New("Docker mount source contains unsupported characters")
+	}
+	if o.Dir == "" || !filepath.IsAbs(o.Dir) || strings.Contains(o.Dir, "..") {
+		return nil, errors.New("Docker mount source must be an absolute path without ..")
 	}
 	if len(o.PassEnv) > 0 {
 		return nil, errors.New("host environment inheritance is disabled for restricted-docker checks")
@@ -228,9 +235,13 @@ func Run(parent context.Context, o Options) (r Result, err error) {
 	r.Process.StartedAt = model.Now()
 	r.Process.ExitCode = -1
 	e = cmd.Run()
-	// Kill descendants remaining in the original group after the leader exits.
-	// Processes deliberately escaping the group require real OS/container isolation.
-	cleanupProcess(cmd)
+	// Only sweep the process group on timeout/cancellation where descendants
+	// may linger. An unconditional kill after a clean wait risks signalling a
+	// recycled PGID. Processes deliberately escaping the group still require
+	// real OS/container isolation.
+	if ctx.Err() != nil || parent.Err() != nil {
+		cleanupProcess(cmd)
+	}
 	r.Process.FinishedAt = model.Now()
 	if cmd.ProcessState != nil {
 		r.Process.ExitCode = cmd.ProcessState.ExitCode()

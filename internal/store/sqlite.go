@@ -24,6 +24,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"syscall"
 	"time"
 	"unsafe"
 
@@ -136,7 +137,14 @@ func PrivateDir(p string) error {
 	if e := check(); e != nil {
 		return e
 	}
-	return os.Chmod(p, 0700)
+	// Use fchmod on an O_NOFOLLOW dir fd so a swapped symlink is not chmod'd.
+	if f, e := os.OpenFile(p, os.O_RDONLY|syscall.O_NOFOLLOW, 0); e != nil {
+		return e
+	} else {
+		ce := f.Chmod(0700)
+		f.Close()
+		return ce
+	}
 }
 func Open(root string) (*Store, error) {
 	r, e := canonicalStatePath(root)
@@ -177,6 +185,14 @@ func Open(root string) (*Store, error) {
 		return nil, errors.New("database must be a regular file")
 	} else if e != nil && !os.IsNotExist(e) {
 		return nil, e
+	} else if os.IsNotExist(e) {
+		// Pre-create with O_EXCL|O_NOFOLLOW so a planted symlink cannot
+		// redirect the initial database file.
+		if f, e := os.OpenFile(dbpath, os.O_CREATE|os.O_EXCL|os.O_WRONLY|syscall.O_NOFOLLOW, 0600); e != nil {
+			return nil, e
+		} else {
+			f.Close()
+		}
 	}
 	s := &Store{Root: r}
 	cp := C.CString(dbpath)
@@ -203,6 +219,10 @@ func Open(root string) (*Store, error) {
 	if e != nil {
 		s.Close()
 		return nil, e
+	}
+	if len(rows) != 1 || len(rows[0]) != 1 {
+		s.Close()
+		return nil, errors.New("database version check failed")
 	}
 	v, _ := strconv.Atoi(rows[0][0])
 	if v > 1 {
@@ -266,6 +286,9 @@ func (s *Store) query(q string, args ...string) ([][]string, error) {
 		return nil, errors.New("SQL parameter mismatch")
 	}
 	for i, a := range args {
+		if strings.ContainsRune(a, 0) {
+			return nil, errors.New("NUL byte in SQL argument")
+		}
 		v := C.CString(a)
 		rc := C.bind_rover_text(stmt, C.int(i+1), v, C.int(len(a)))
 		C.free(unsafe.Pointer(v))
@@ -437,6 +460,9 @@ func (s *Store) Events(id string) ([]json.RawMessage, error) {
 func (s *Store) Blob(b []byte) (string, error) {
 	h := model.Digest(b)
 	dir := filepath.Join(s.Root, "objects")
+	if st, e := os.Lstat(dir); e != nil || st.Mode()&os.ModeSymlink != 0 || !st.IsDir() {
+		return "", errors.New("unsafe objects directory")
+	}
 	p := filepath.Join(dir, h)
 	f, e := os.CreateTemp(dir, ".object-")
 	if e != nil {
@@ -477,7 +503,12 @@ func (s *Store) ReadBlob(h string) ([]byte, error) {
 		return nil, errors.New("invalid object digest")
 	}
 	p := filepath.Join(s.Root, "objects", h)
-	st, e := os.Lstat(p)
+	f, e := os.OpenFile(p, os.O_RDONLY|syscall.O_NOFOLLOW, 0)
+	if e != nil {
+		return nil, e
+	}
+	defer f.Close()
+	st, e := f.Stat()
 	if e != nil {
 		return nil, e
 	}
@@ -487,7 +518,7 @@ func (s *Store) ReadBlob(h string) ([]byte, error) {
 	if st.Size() > 16<<20 {
 		return nil, errors.New("object too large")
 	}
-	b, e := os.ReadFile(p)
+	b, e := io.ReadAll(io.LimitReader(f, (16<<20)+1))
 	if e != nil {
 		return nil, e
 	}
@@ -550,18 +581,18 @@ func (s *Store) Integrity() error {
 // BoundedFile is used for human-facing logs, never as a substitute for trusted
 // evidence. Root is checked separately by the caller.
 func BoundedFile(p string, max int64) ([]byte, error) {
-	st, e := os.Lstat(p)
+	f, e := os.OpenFile(p, os.O_RDONLY|syscall.O_NOFOLLOW, 0)
+	if e != nil {
+		return nil, e
+	}
+	defer f.Close()
+	st, e := f.Stat()
 	if e != nil {
 		return nil, e
 	}
 	if !st.Mode().IsRegular() {
 		return nil, errors.New("log is not regular")
 	}
-	f, e := os.Open(p)
-	if e != nil {
-		return nil, e
-	}
-	defer f.Close()
 	return io.ReadAll(io.LimitReader(f, max))
 }
 func IsWithin(root, p string) bool {
@@ -572,12 +603,20 @@ func IsWithin(root, p string) bool {
 // BackupDatabase uses SQLite's online backup API, never a raw copy of an active
 // WAL file. The destination must not exist. Context cancellation bounds retries.
 func (s *Store) BackupDatabase(ctx context.Context, destination string) (err error) {
-	f, e := os.OpenFile(destination, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0600)
+	f, e := os.OpenFile(destination, os.O_CREATE|os.O_EXCL|os.O_WRONLY|syscall.O_NOFOLLOW, 0600)
 	if e != nil {
 		return e
 	}
 	if e = f.Close(); e != nil {
 		return e
+	}
+	// Re-verify the placeholder is still a regular file just before handing
+	// the path to the SQLite C backup API (which follows paths). Same-user
+	// TOCTOU cannot be fully closed without an fd-based backup; this narrows
+	// the symlink-swap window and fails closed.
+	if st, e := os.Lstat(destination); e != nil || !st.Mode().IsRegular() {
+		_ = os.Remove(destination)
+		return errors.New("backup destination is not a regular file")
 	}
 	success := false
 	defer func() {

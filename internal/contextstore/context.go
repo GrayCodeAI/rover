@@ -33,7 +33,31 @@ type SearchResult struct {
 
 func sensitive(p string) bool {
 	b := strings.ToLower(filepath.Base(p))
-	return b == ".env" || strings.HasPrefix(b, ".env.") || strings.HasSuffix(b, ".pem") || strings.HasSuffix(b, ".key") || b == "credentials" || b == "id_rsa" || b == "id_ed25519" || b == "auth.json" || strings.HasPrefix(strings.ToLower(p), ".git/")
+	lp := strings.ToLower(p)
+	switch b {
+	case ".env", "credentials", "credentials.json", "secrets.json", "secrets.yaml", "secrets.yml",
+		"id_rsa", "id_ed25519", "auth.json", "token.txt", ".envrc", ".npmrc", ".pypirc":
+		return true
+	}
+	if strings.HasPrefix(b, ".env.") {
+		return true
+	}
+	for _, suf := range []string{".pem", ".key", ".p12", ".pfx", ".jks", ".keystore", ".bak", ".swp", ".swo"} {
+		if strings.HasSuffix(b, suf) {
+			return true
+		}
+	}
+	return strings.HasPrefix(lp, ".git/")
+}
+func cleanContextPath(p string) error {
+	if p == "" || strings.Contains(p, "\\") || filepath.IsAbs(p) {
+		return errors.New("invalid context path")
+	}
+	c := filepath.ToSlash(filepath.Clean(p))
+	if c != p || c == "." || strings.HasPrefix(c, "../") || c == ".." {
+		return errors.New("invalid context path")
+	}
+	return nil
 }
 func Search(ctx context.Context, s *store.Store, snap model.Snapshot, query string, limit int) (r SearchResult, e error) {
 	r = SearchResult{Snapshot: snap.ID, Query: query, Matches: []Match{}, Limits: "literal local search; sensitive filenames excluded best-effort, not a secret detector"}
@@ -97,6 +121,9 @@ func Build(s *store.Store, snap model.Snapshot, paths []string) (b Bundle, e err
 	seen := map[string]bool{}
 	total := 0
 	for _, p := range paths {
+		if e := cleanContextPath(p); e != nil {
+			return b, e
+		}
 		if seen[p] || sensitive(p) {
 			return b, fmt.Errorf("duplicate or restricted context path: %s", p)
 		}

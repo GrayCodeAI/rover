@@ -54,7 +54,6 @@ func Decide(c model.Config, in *model.Investigation) {
 	required := 0
 	bad := false
 	unknown := false
-	seen := map[string]bool{}
 	for _, spec := range c.Checks {
 		if !spec.Required {
 			continue
@@ -74,7 +73,6 @@ func Decide(c model.Config, in *model.Investigation) {
 			unknown = true
 			continue
 		}
-		seen[spec.ID] = true
 		if got.SpecDigest != model.Hash(spec) || got.Candidate != in.Candidate {
 			unknown = true
 			continue
