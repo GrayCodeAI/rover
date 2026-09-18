@@ -1,7 +1,8 @@
 //go:build linux
 
-// Package terminal contains the tested Linux terminal primitives. Other
-// platforms remain explicit unsupported capabilities until conformance tests run.
+// Package terminal contains terminal primitives. Linux and macOS are
+// implemented and tested; other platforms remain explicit unsupported
+// capabilities until conformance tests run.
 package terminal
 
 import (

@@ -262,7 +262,7 @@ func (a *extendedApp) learnCommand(ctx context.Context, args []string) int {
 			}
 			return a.emit(p)
 		default:
-			return a.fail(errors.New("unknown learning operation"))
+			return a.fail(errors.New("learn recommend|dataset|evaluate|promote|show|revoke"))
 		}
 	})
 }

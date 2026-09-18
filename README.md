@@ -175,8 +175,9 @@ Source capture still rejects symlinks, submodules, unresolved LFS pointers, unsa
 case-colliding paths and oversized source states. Working-tree capture uses repeated
 reads, not an atomic filesystem transaction. Prefer committed snapshots.
 
-Linux/amd64 is exercised. Native macOS and Windows execution remain unvalidated;
-PTY support in this implementation is Linux-only. The repository and package name
+Linux/amd64 is the validated envelope. darwin/arm64 is observed locally (PTY/TUI
+supported via posix_openpt); native macOS and Windows full validation remain
+pending. The repository and package name
 are proposed: no public GitHub repo, package-manager release or hosted CI execution
 is claimed. The public naming collision noted in the design remains unresolved.
 

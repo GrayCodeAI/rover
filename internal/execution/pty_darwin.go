@@ -2,35 +2,17 @@
 
 package execution
 
-/*
-#include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <string.h>
-int rover_openptm(char *slave, size_t len) {
-    int m = posix_openpt(O_RDWR | O_NOCTTY);
-    if (m < 0) return -1;
-    if (grantpt(m) != 0) { close(m); return -1; }
-    if (unlockpt(m) != 0) { close(m); return -1; }
-    char *p = ptsname(m);
-    if (!p) { close(m); return -1; }
-    strncpy(slave, p, len-1);
-    slave[len-1] = '\0';
-    return m;
-}
-*/
-import "C"
 import (
 	"bufio"
 	"context"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io"
 	"net"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"sync"
 	"syscall"
 	"time"
@@ -40,7 +22,19 @@ import (
 	"github.com/GrayCodeAI/rover/internal/store"
 )
 
+// tiocswinszDarwin sets the PTY window size on macOS.
 const tiocswinszDarwin = 0x80087467
+
+// macOS PTY ioctl constants (from sys/ttycom.h). These are not exposed in Go's
+// standard syscall package for darwin, so we define them with raw values.
+const (
+	// TIOCPTYGRANT = _IO('t', 84) — grant permissions to the slave PTY
+	tiocptygrant = 0x20007454
+	// TIOCPTYUNLK = _IO('t', 82) — unlock the slave PTY
+	tiocptyunlk = 0x20007452
+	// TIOCPTYGNAME = _IOC(IOC_OUT, 't', 83, 128) — get slave PTY path name
+	tiocptygname = 0x40807453
+)
 
 type terminalFrame struct {
 	Type  string `json:"type"`
@@ -71,20 +65,38 @@ func ptyIoctl(fd, req uintptr, p unsafe.Pointer) error {
 }
 
 func openPTY() (*os.File, *os.File, error) {
-	var buf [128]C.char
-	mfd := C.rover_openptm(&buf[0], C.size_t(len(buf)))
-	if mfd < 0 {
-		return nil, nil, errors.New("posix_openpt/grantpt/unlockpt/ptsname failed")
+	m, e := os.OpenFile("/dev/ptmx", os.O_RDWR|syscall.O_NOCTTY, 0600)
+	if e != nil {
+		return nil, nil, e
 	}
-	slave := C.GoString(&buf[0])
-	m := os.NewFile(uintptr(mfd), "/dev/ptmx")
-	sl, e := os.OpenFile(slave, os.O_RDWR|syscall.O_NOCTTY, 0600)
+	// grantpt — grant permissions to the slave PTY
+	if e := ptyIoctl(m.Fd(), uintptr(tiocptygrant), nil); e != nil {
+		m.Close()
+		return nil, nil, e
+	}
+	// unlockpt — unlock the slave PTY
+	if e := ptyIoctl(m.Fd(), uintptr(tiocptyunlk), nil); e != nil {
+		m.Close()
+		return nil, nil, e
+	}
+	// ptsname — get the slave PTY path name
+	var buf [128]byte
+	if e := ptyIoctl(m.Fd(), uintptr(tiocptygname), unsafe.Pointer(&buf[0])); e != nil {
+		m.Close()
+		return nil, nil, e
+	}
+	slavePath := strings.TrimRight(string(buf[:]), "\x00")
+	if slavePath == "" {
+		m.Close()
+		return nil, nil, errors.New("empty PTY slave path")
+	}
+	sl, e := os.OpenFile(slavePath, os.O_RDWR|syscall.O_NOCTTY, 0600)
 	if e != nil {
 		m.Close()
 		return nil, nil, e
 	}
 	w := [4]uint16{24, 80}
-	_ = ptyIoctl(m.Fd(), tiocswinszDarwin, unsafe.Pointer(&w))
+	_ = ptyIoctl(m.Fd(), uintptr(tiocswinszDarwin), unsafe.Pointer(&w))
 	return m, sl, nil
 }
 
@@ -346,6 +358,3 @@ func runPTY(parent context.Context, o Options) (r Result, returned error) {
 	r.Process.Truncated = out.truncated
 	return r, nil
 }
-
-// Ensure fmt is used (for future error wrapping)
-var _ = fmt.Sprintf

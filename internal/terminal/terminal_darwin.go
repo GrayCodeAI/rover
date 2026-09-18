@@ -2,57 +2,51 @@
 
 package terminal
 
-/*
-#include <termios.h>
-#include <unistd.h>
-*/
-import "C"
 import (
 	"context"
-	"errors"
 	"os"
 	"syscall"
 	"time"
 	"unsafe"
 )
 
-const (
-	tiocgwinsz = 0x40087468
-	tiocswinsz = 0x80087467
-)
+func ioctl(fd, req uintptr, p unsafe.Pointer) error {
+	_, _, e := syscall.Syscall(syscall.SYS_IOCTL, fd, req, uintptr(p))
+	if e != 0 {
+		return e
+	}
+	return nil
+}
 
 func IsTTY(f *os.File) bool {
-	return C.isatty(C.int(f.Fd())) == 1
+	var t syscall.Termios
+	return ioctl(f.Fd(), syscall.TIOCGETA, unsafe.Pointer(&t)) == nil
 }
 
 func Raw(f *os.File) (func() error, error) {
-	var old C.struct_termios
-	if C.tcgetattr(C.int(f.Fd()), &old) != 0 {
-		return nil, errors.New("tcgetattr failed")
+	var old syscall.Termios
+	if e := ioctl(f.Fd(), syscall.TIOCGETA, unsafe.Pointer(&old)); e != nil {
+		return nil, e
 	}
-	raw := old
-	C.cfmakeraw(&raw)
-	// Match Linux Raw: VMIN 0 VTIME 1 (poll with 100ms timeout) so Read can
-	// be interrupted via context without blocking forever.
-	raw.c_cc[16] = 0 // VMIN
-	raw.c_cc[17] = 1 // VTIME
-	if C.tcsetattr(C.int(f.Fd()), C.TCSANOW, &raw) != 0 {
-		return nil, errors.New("tcsetattr failed")
+	n := old
+	n.Iflag &^= syscall.IGNBRK | syscall.BRKINT | syscall.PARMRK | syscall.ISTRIP | syscall.INLCR | syscall.IGNCR | syscall.ICRNL | syscall.IXON
+	n.Oflag &^= syscall.OPOST
+	n.Lflag &^= syscall.ECHO | syscall.ECHONL | syscall.ICANON | syscall.ISIG | syscall.IEXTEN
+	n.Cflag &^= syscall.CSIZE | syscall.PARENB
+	n.Cflag |= syscall.CS8
+	n.Cc[syscall.VMIN] = 0
+	n.Cc[syscall.VTIME] = 1
+	if e := ioctl(f.Fd(), syscall.TIOCSETA, unsafe.Pointer(&n)); e != nil {
+		return nil, e
 	}
-	return func() error {
-		if C.tcsetattr(C.int(f.Fd()), C.TCSANOW, &old) != 0 {
-			return errors.New("tcsetattr restore failed")
-		}
-		return nil
-	}, nil
+	return func() error { return ioctl(f.Fd(), syscall.TIOCSETA, unsafe.Pointer(&old)) }, nil
 }
 
 type Dimensions struct{ Rows, Cols uint16 }
 
 func Size(f *os.File) Dimensions {
 	var w [4]uint16
-	_, _, e := syscall.Syscall(syscall.SYS_IOCTL, f.Fd(), uintptr(tiocgwinsz), uintptr(unsafe.Pointer(&w)))
-	if e != 0 || w[0] == 0 || w[1] == 0 {
+	if ioctl(f.Fd(), syscall.TIOCGWINSZ, unsafe.Pointer(&w)) != nil || w[0] == 0 || w[1] == 0 {
 		return Dimensions{24, 80}
 	}
 	return Dimensions{w[0], w[1]}
@@ -79,6 +73,3 @@ func Read(ctx context.Context, f *os.File, p []byte) (int, error) {
 }
 
 func Available() bool { return true }
-
-// ensure tiocswinsz is referenced (used by execution/pty_darwin.go via same constant)
-var _ = tiocswinsz
