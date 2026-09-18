@@ -43,18 +43,22 @@ func (a *extendedApp) remoteCommand(ctx context.Context, args []string) int {
 	}
 	return a.withStore(func(s *store.Store) int {
 		n := node{Schema: model.Schema, ID: *name, Endpoint: *endpoint, TokenFile: *token, CAFile: *ca, CreatedAt: model.Now()}
-		if args[0] == "node-list" {
+		switch args[0] {
+		case "node-list":
 			rows, e := s.ListAll("node", 10000)
 			if e != nil {
 				return a.fail(e)
 			}
 			return a.emit(rows)
-		}
-		if args[0] == "node-delete" {
+		case "node-delete":
 			if e := s.Delete("node", *name, "node.removed"); e != nil {
 				return a.fail(e)
 			}
 			return a.emit(map[string]string{"removed": *name, "scope": "local connection reference only; does not delete a server or revoke its token"})
+		case "node-add", "tools", "call":
+			// requires a token file
+		default:
+			return a.fail(errors.New("unknown remote operation; node-add|node-list|node-delete|tools|call"))
 		}
 		if args[0] != "node-add" && *name != "" {
 			if *endpoint != "" || *token != "" || *ca != "" {

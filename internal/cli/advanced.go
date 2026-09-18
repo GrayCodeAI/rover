@@ -2,7 +2,6 @@ package cli
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"flag"
 	"fmt"
@@ -70,6 +69,15 @@ func (f subjectFlags) resolve(ctx context.Context, s *store.Store) (model.Snapsh
 	return base, cand, cfg, o, e
 }
 func (a *extendedApp) advanced(ctx context.Context, args []string) int {
+	// --json is detected globally; strip it so it is not mistaken for a
+	// subcommand name in multi-word command handlers (learn, remote, context).
+	filtered := make([]string, 0, len(args))
+	for _, x := range args {
+		if x != "--json" {
+			filtered = append(filtered, x)
+		}
+	}
+	args = filtered
 	switch args[0] {
 	case "agent":
 		return a.agentCommand(args[1:])
@@ -448,6 +456,3 @@ func (a *extendedApp) limitsCommand(args []string) int {
 		return a.emit(map[string]any{"max_agents": n, "leases": leases, "semantics": "coordination, not OS isolation; lower limit does not kill admitted work"})
 	})
 }
-
-// Keep the import used for typed record decoding as command families expand.
-var _ = json.RawMessage{}

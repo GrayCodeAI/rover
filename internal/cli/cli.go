@@ -61,7 +61,7 @@ Agent workflows:
   logs --id TASK [--follow] [--stderr]
   cancel --id TASK
   ui [--watch]                   Plain-text dashboard
-  tui                            Keyboard dashboard (Linux terminal)
+  tui                            Keyboard dashboard (Linux/macOS terminal)
   attach --id TASK               Interactive PTY attachment; Ctrl-] detaches
   workflow run --file FILE --allow-local [--foreground] [--key KEY]
   workflow status|cancel --id ID

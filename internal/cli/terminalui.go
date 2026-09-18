@@ -32,7 +32,7 @@ func (a *extendedApp) tui(parent context.Context, s *store.Store) int {
 // terminal emulator or a separate authority for acceptance.
 func (a *extendedApp) tuiScreen(parent context.Context, s *store.Store) (int, string) {
 	if !terminal.IsTTY(os.Stdin) || !terminal.IsTTY(os.Stdout) {
-		fmt.Fprintln(a.Err, "Interactive TUI requires a Linux terminal; use status --json or ui --watch for pipes.")
+		fmt.Fprintln(a.Err, "Interactive TUI requires a Linux or macOS terminal; use status --json or ui --watch for pipes.")
 		return 2, ""
 	}
 	ctx, cancel := context.WithCancel(parent)

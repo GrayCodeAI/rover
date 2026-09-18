@@ -1,3 +1,5 @@
+//go:build cgo
+
 // Package store provides controller-owned SQLite records and content-addressed
 // blobs. This small cgo binding uses the system SQLite library, not a custom
 // database engine. All values are parameter-bound; SQL is fixed application code.

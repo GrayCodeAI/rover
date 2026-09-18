@@ -195,6 +195,40 @@ The acceptance counts below reflect Increments C+D+E+F+G.
   on a protected CI, not a security certification. A18/A19 maps updated to say
   exactly that.
 
+**Increment I — CI infrastructure: cross-compilation, govulncheck, SBOM, release workflow:**
+
+- `Makefile`: added `cross-build` (linux/amd64 CGO + darwin/amd64 and darwin/arm64
+  CGO_ENABLED=0), `sbom` (`go list -m -json all` + build info), and `vulncheck`
+  (`govulncheck` scan).
+- `internal/terminal/terminal_darwin.go`: rewritten from cgo (`termios.h`/`C.*`)
+  to pure `syscall` — `TIOCGETA`/`TIOCSETA`/`TIOCGWINSZ` — enabling cross-compilation
+  with `CGO_ENABLED=0`.
+- `internal/execution/pty_darwin.go`: rewritten from cgo (`posix_openpt`/`grantpt`/`unlockpt`/`ptsname`)
+  to pure `syscall` — `/dev/ptmx` + `TIOCPTYGRANT`+`TIOCPTYUNLK`+`TIOCPTYGNAME`
+  ioctls — enabling cgo-free cross-compilation. Verified: `actual_pty_task` and
+  `keyboard_tui` still pass (16/16 `demo-extended`).
+- `internal/store/sqlite_stub.go` (new, `//go:build !cgo`): pure-Go stub that
+  implements `Store` and all public methods returning `errNoCGO`, while
+  providing fully functional `PrivateDir`, `SyncDir`, `AtomicFile`,
+  `BoundedFile`, `IsWithin`, `DefaultRoot`. `sqlite.go` now carries an explicit
+  `//go:build cgo` constraint.
+- `.github/workflows/ci.yml`: added `cross-build` and `govulncheck` steps after
+  existing checks; Windows intentionally omitted (codebase uses `syscall.O_NOFOLLOW`
+  which does not exist on Windows).
+- `.github/workflows/release.yml` (new): opt-in `workflow_dispatch`-only workflow
+  that builds host + cross-compiled binaries, generates SBOM, runs govulncheck,
+  computes checksums, and creates a GitHub release. Does **not** auto-run, auto-merge,
+  or inject signing credentials. Per AGENTS.md, no publication/release occurs
+  automatically — every step requires human review.
+
+Observed after Increment I (same darwin host): `make check` green, `make race` green,
+`make demo` 12/12, `make demo-extended` 16/16, `make fuzz` green, `make sdk-test` 3/3,
+`make cross-build` produces 3 verified binaries (linux-amd64, darwin-amd64, darwin-arm64),
+`make sbom` + `make vulncheck` complete (govulncheck reports standard-library advisories
+in Go 1.26.5 fixed by 1.26.6; no third-party vulnerabilities — zero external Go deps).
+
+- Docs: `docs/API.md` (model type reference), `docs/USAGE.md` (workflow usage guide).
+
 ## Acceptance counts (from `docs/acceptance/implementation-map.json`, 40 scenarios)
 
 - Tested in local scope (`tested_local` 38, `tested_linux` 1,

@@ -8,6 +8,8 @@ human text unless `--json`. Errors do not silently become acceptance.
 ## Installation and diagnostics
 
 `make build`, `make install`, `help`, `version`, `doctor --json`.
+`make cross-build` cross-compiles for linux/amd64, darwin/amd64, and darwin/arm64.
+Darwin binaries are pure-Go (cgo-free); Linux uses CGO with system SQLite.
 No published package manager, signing service, or automatic updater is implied.
 `init --repo REPO` previews. `--apply` writes a new `.rover/config.json` only when
 absent. Review/commit this config before using it as the approved baseline.
@@ -43,7 +45,7 @@ attach --id TASK
 limits [--max-agents N]
 ```
 
-Interactive commands require an actual Linux terminal. `attach` is for interactive PTY tasks;
+Interactive commands require an actual Linux or macOS terminal. `attach` is for interactive PTY tasks;
 Ctrl-] detaches. A client detach is not task cancellation. `tui` supports j/k or
 arrows, views for logs/evidence/diff, attach, refresh, q, and confirmed local
 review/cancellation. A text dashboard remains available without a raw terminal.
