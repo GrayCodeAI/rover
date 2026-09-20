@@ -1,4 +1,4 @@
-# Rover implementation status — 0.2.0-alpha.1
+# Rover implementation status — 0.0.1
 
 This is an expanded local OSS implementation, not completion of every capability in
 the original ten-layer vision. Working code and independently tested boundaries are
