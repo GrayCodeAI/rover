@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.1
+
+- Establish the current public release identity and fail-closed version checks.
+
 ## 0.2.0-alpha.1
 
 - Extend the existing alpha rather than replacing its history.

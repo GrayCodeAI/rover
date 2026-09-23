@@ -219,6 +219,9 @@ func TestVersionCommand(t *testing.T) {
 	if v["go"] == nil {
 		t.Error("go field missing")
 	}
+	if v["commit"] == nil || v["commit"] == "" {
+		t.Error("commit field missing")
+	}
 	if v["sqlite"] == nil {
 		t.Error("sqlite field missing")
 	}

@@ -43,6 +43,16 @@ func TestParsers(t *testing.T) {
 		})
 	}
 }
+func TestXMLDepthBound(t *testing.T) {
+	deep := []byte(strings.Repeat("<testsuite>", maxXMLDepth+1) + strings.Repeat("</testsuite>", maxXMLDepth+1))
+	got := junit(deep, 1, 0)
+	if got.Outcome != "ERROR" || !strings.Contains(got.Meaning, "depth") {
+		t.Fatalf("deep JUnit = %+v", got)
+	}
+	if _, ok := testEvidence("junit", deep, "missing"); ok {
+		t.Fatal("deep regression XML accepted")
+	}
+}
 func TestIncompleteExecutionNeverPasses(t *testing.T) {
 	for _, tc := range []struct {
 		name string
@@ -113,10 +123,12 @@ func TestPolicyCompleteness(t *testing.T) {
 func FuzzResultParser(f *testing.F) {
 	f.Add([]byte(goodGo))
 	f.Add([]byte(`{bad`))
+	f.Add([]byte(`<testsuite><testcase name="one"/></testsuite>`))
 	f.Fuzz(func(t *testing.T, b []byte) {
 		if len(b) > 65536 {
 			return
 		}
 		_ = Interpret(model.CheckSpec{Parser: "go-test-json", MinTests: 1}, model.ProcessResult{ExitCode: 0}, b, nil)
+		_ = Interpret(model.CheckSpec{Parser: "junit", MinTests: 1}, model.ProcessResult{ExitCode: 0}, nil, b)
 	})
 }

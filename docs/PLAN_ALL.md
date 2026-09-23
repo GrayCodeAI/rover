@@ -74,15 +74,14 @@ test, and exact limitation that remains until the external dependency is supplie
 
 ## Verification (3× as requested)
 
-After all code: run in this environment (darwin/arm64, go1.26.5, no external Go modules):
-- `GOFLAGS=-buildvcs=false make build` (plain `make build` fails under `~/Desktop`
-  TCC: `error obtaining VCS status`), or `go build -buildvcs=false -trimpath -o bin/rover ./cmd/rover`
+After all code: run in this environment (darwin/arm64, go1.26.6, no external Go modules):
+- `make build` (or `GOFLAGS=-buildvcs=false make build` when checkout VCS metadata is unavailable)
 - `make check` (fmt-check + vet + test)
 - `make race` (`go test -race`)
 - `GOFLAGS=-buildvcs=false make demo` (12 scenarios)
 - `GOFLAGS=-buildvcs=false make demo-extended` (16 scenarios)
 - `make sdk-test` (`python3 -m unittest discover -s sdk/python`)
-- `make fuzz` (3s × 2: `FuzzDecode`, `FuzzSafeName`, `FuzzResultParser`, `FuzzTranscript`)
+- `make fuzz` (3s × 2: `FuzzDecode`, `FuzzSafeName`, `FuzzResultParser`, `FuzzTranscript`, `FuzzEnvelope`)
 - schema validation 10/10
 Each run reports exact pass/fail; no invented CI/provider results.
 

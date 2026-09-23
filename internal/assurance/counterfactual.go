@@ -151,6 +151,9 @@ func testEvidence(parser string, b []byte, id string) (testObservation, bool) {
 			return testObservation{}, false
 		}
 	} else {
+		if validateXMLDocument(b) != nil {
+			return testObservation{}, false
+		}
 		var root regressionSuite
 		if e := xml.Unmarshal(b, &root); e != nil {
 			return testObservation{}, false

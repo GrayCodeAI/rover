@@ -18,10 +18,16 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5.5.0
         with:
-          go-version: 'stable'
+          go-version: '1.26.6'
           cache: false
       - name: Build dependencies
         run: sudo apt-get update && sudo apt-get install -y build-essential libsqlite3-dev python3
+      - name: Validate Go toolchain
+        run: make toolchain-check
+      - name: Validate version surfaces
+        run: make version-check
+      - name: Validate source manifest
+        run: make manifest-check
       - name: Format, vet, tests
         run: make check
       - name: Race detector

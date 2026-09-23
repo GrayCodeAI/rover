@@ -17,7 +17,7 @@ not interchangeable. See the validation report for exact observed tests.
 | L9 evidence | SQLite/event/artifact records, exact identities, diff/local review, exports, online backup/restore, explicit-key Ed25519 signatures | Protected CI check publisher, real external PR/merge/deploy writes, in-toto/SLSA attestations, full retention/erasure and global quota system |
 | L10 improvement | Historical check-order proposals, explicit labels/datasets, disjoint heldout evaluation, proposal/dataset digests, local promotion/revocation, explicit strategy application | Live empirical optimization validation, RL training, autonomous self-play/RSI, independent evaluator deployment |
 
-## Unreleased platform increments on top of `0.2.0-alpha.1` (pending Linux re-verification and review)
+## Unreleased platform increments on top of `0.0.1` (pending Linux re-verification and review)
 
 These source changes exist in the working tree. They are **not** part of any
 validated release until they are re-run on owned Linux/amd64 with a supported
@@ -78,7 +78,7 @@ fuzz smokes (`FuzzDecode`, `FuzzSafeName`, `FuzzResultParser`, `FuzzTranscript`,
   and `publish --id --to DIR` writes local advisory copies (not protected CI).
 - `docs/acceptance/implementation-map.json`: `A02`, `A31`, `A29`, `A39` → `tested_local`;
   `A26`, `A28` → `partial` with honest limits; version bumped to
-  `0.2.0-alpha.1+local-gaps`.
+  `0.0.1+local-gaps`.
 
 Observed after Increment C (same darwin host): `make check` (24 packages,
 92 top-level test funcs, 5 fuzz funcs), `make race`, `make fuzz`, `make sdk-test`
@@ -255,7 +255,7 @@ in Go 1.26.5 fixed by 1.26.6; no third-party vulnerabilities — zero external G
   distributed worker fleet was validated**.
 - Learning evaluation uses explicit synthetic fixtures and timing assumptions; no
   real-world speedup or quality improvement is claimed.
-- Current validated build is Go 1.23.2 + system SQLite/cgo on Linux/amd64.
+- Current local release checks use Go 1.26.6 + system SQLite/cgo; Linux/amd64 functional validation for this checkout remains pending.
   Supported-current-Go, native macOS and Windows validation remain pending; the
   unreleased increment above has darwin-only observations that do not replace
   Linux validation or the pending review.

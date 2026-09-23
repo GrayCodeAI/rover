@@ -154,7 +154,7 @@ func (a *App) run(ctx context.Context, args []string) (int, error) {
 		command = short
 	}
 	if command == "version" {
-		return 0, a.emit(map[string]string{"name": "Rover", "version": model.Version, "schema": model.Schema, "go": runtime.Version(), "sqlite": store.SQLiteVersion(), "os": runtime.GOOS, "arch": runtime.GOARCH})
+		return 0, a.emit(map[string]string{"name": "Rover", "version": model.Version, "commit": model.Commit, "schema": model.Schema, "go": runtime.Version(), "sqlite": store.SQLiteVersion(), "os": runtime.GOOS, "arch": runtime.GOARCH})
 	}
 	if command == "doctor" {
 		verify := contains(args, "--verify")

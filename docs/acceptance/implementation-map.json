@@ -378,5 +378,5 @@
       "tree": "clean copy without .git metadata (rover sources + committed .rover configs)"
     }
   ],
-  "version": "0.2.0-alpha.1+local-gaps"
+  "version": "0.0.1+local-gaps"
 }
