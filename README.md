@@ -1,6 +1,6 @@
 # Rover
 
-[![CI](https://github.com/GrayCodeAI/rover/actions/workflows/ci.yml/badge.svg)](https://github.com/GrayCodeAI/rover/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Version](https://img.shields.io/badge/version-0.0.1-blue.svg)](https://github.com/GrayCodeAI/rover/releases/tag/v0.0.1) [![Go](https://img.shields.io/badge/Go-1.23+-00ADD8?logo=go)](go.mod)
+[![CI](https://github.com/GrayCodeAI/rover/actions/workflows/ci.yml/badge.svg)](https://github.com/GrayCodeAI/rover/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Version](https://img.shields.io/badge/version-0.0.1-blue.svg)](https://github.com/GrayCodeAI/rover/releases/tag/v0.0.1) [![Go](https://img.shields.io/badge/Go-1.26.6%2B-00ADD8?logo=go)](go.mod)
 
 **Terminal-first agent workspaces, persistent sessions, parallel workflows,
 verification, review, and evidence.**
@@ -11,6 +11,8 @@ verification, review, and evidence.**
 
 ```sh
 make build
+make version-check
+make manifest-check
 make check
 make demo
 make demo-extended
@@ -23,11 +25,11 @@ candidate integration, verification, counterfactual tests, finite mutations,
 context, reversible agent instructions, MCP, remote CLI control, revocation,
 backup/restore, and signed evidence. No automatic GitHub push, merge, or deployment.
 
-Build prerequisites: **Linux, Git, Go, a C compiler and system SQLite development
+Build prerequisites: **Linux, Git, Go 1.26.6 or newer, a C compiler and system SQLite development
 headers/library**. Python 3 runs the demonstrations and optional SDK. There are no
 external Go modules. This release still uses cgo/system SQLite, not a dependency-free
-static binary. The available toolchain actually tested was Go 1.23.2; this is not a
-recommendation to deploy an outdated Go version. Validate with a supported toolchain.
+static binary. The current release gate requires the patched Go 1.26.6 line; validate
+with a supported toolchain.
 
 ## Two supported workflow shapes
 

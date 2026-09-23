@@ -173,15 +173,61 @@ type junitSuite struct {
 	Suites   []junitSuite `xml:"testsuite"`
 }
 
+const (
+	maxXMLBytes  = 8 << 20
+	maxXMLDepth  = 128
+	maxXMLTokens = 1 << 20
+)
+
+func validateXMLDocument(b []byte) error {
+	if len(b) == 0 {
+		return fmt.Errorf("empty XML document")
+	}
+	if len(b) > maxXMLBytes {
+		return fmt.Errorf("XML document exceeds response budget")
+	}
+	if bytes.Contains(b, []byte("<!DOCTYPE")) || bytes.Contains(b, []byte("<!ENTITY")) {
+		return fmt.Errorf("XML document type declarations are not accepted")
+	}
+	d := xml.NewDecoder(bytes.NewReader(b))
+	depth := 0
+	tokens := 0
+	for {
+		tokens++
+		if tokens > maxXMLTokens {
+			return fmt.Errorf("XML token budget exceeded")
+		}
+		t, err := d.Token()
+		if err == io.EOF {
+			if depth != 0 {
+				return fmt.Errorf("XML element depth underflow")
+			}
+			return nil
+		}
+		if err != nil {
+			return err
+		}
+		switch t.(type) {
+		case xml.StartElement:
+			depth++
+			if depth > maxXMLDepth {
+				return fmt.Errorf("XML element depth exceeds %d", maxXMLDepth)
+			}
+		case xml.EndElement:
+			depth--
+			if depth < 0 {
+				return fmt.Errorf("XML element depth underflow")
+			}
+		}
+	}
+}
+
 func junit(b []byte, min, exit int) Parsed {
 	if len(b) == 0 {
 		return Parsed{Outcome: "INCONCLUSIVE", Meaning: "JUnit report is missing or empty"}
 	}
-	if len(b) > 8<<20 {
-		return Parsed{Outcome: "ERROR", Meaning: "JUnit report exceeds response budget"}
-	}
-	if bytes.Contains(b, []byte("<!DOCTYPE")) || bytes.Contains(b, []byte("<!ENTITY")) {
-		return Parsed{Outcome: "ERROR", Meaning: "JUnit document type declarations are not accepted"}
+	if err := validateXMLDocument(b); err != nil {
+		return Parsed{Outcome: "ERROR", Meaning: "malformed JUnit XML: " + err.Error()}
 	}
 	var root junitSuite
 	d := xml.NewDecoder(bytes.NewReader(b))

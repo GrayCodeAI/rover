@@ -3,7 +3,7 @@
 The ten-layer master plan remains the destination. The alpha's source is a usable
 implementation across these responsibilities, not a claim of full product completion.
 
-## Delivered in 0.2.0-alpha.1
+## Delivered in 0.0.1
 
 Local CLI/TUI and PTY sessions; native CLI profiles with fixture tests; worktree tasks,
 bounded repair; dependency scheduling and verified source integration; context/notes;
