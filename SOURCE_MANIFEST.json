@@ -459,8 +459,8 @@
     },
     {
       "path": "docs/CI.md",
-      "sha256": "b232cb39b6a29d1d6f032851c9a53ec430f9393bd3afe1d966f0d39b33184f8c",
-      "size": 5386
+      "sha256": "6deec3fb4bdf2f1402b0f971e25cd602e1892a4d2688e6284659366e572a8b51",
+      "size": 5594
     },
     {
       "path": "docs/CLI.md",

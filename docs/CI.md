@@ -39,8 +39,13 @@ The Rust workspace under `crates/` is a preview gated by
 
 All Rust steps take `CARGO='cargo +1.88.0'`; the audit script honours the same
 `CARGO` value. The Rust SBOM is not attached to releases because releases ship
-only the Go binaries. Cold-cache duration on the hosted runner has not been measured
-yet; record it here after the first run on `main`.
+only the Go binaries.
+
+Measured duration: the first cold-cache run
+([run 36279833786](https://github.com/GrayCodeAI/rover/actions/runs/36279833786),
+2026-09-26) took 1 min 22 s for the whole `rust` job: clippy build 27.6 s,
+test build 31.4 s, 319 tests on Linux. The `go` job took 2 min 40 s in the same
+run. Both are far below their timeouts.
 
 ### Cross-compilation matrix
 
