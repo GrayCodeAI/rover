@@ -5,107 +5,38 @@
 **Terminal-first agent workspaces, persistent sessions, parallel workflows,
 verification, review, and evidence.**
 
-`0.0.1` is the initial public OSS release — terminal-first and agent-neutral. See [STATUS.md](STATUS.md) for explicit boundaries.
+`0.0.1` is the initial public OSS release: a pre-1.0 alpha, terminal-first and
+agent-neutral. Rover runs coding agents or your own commands in separate Git
+worktrees (not a sandbox), verifies the result with the checks you approve, and
+keeps replayable evidence of what happened, optionally signed with your own
+Ed25519 key. The product is the Go `rover` binary. See [STATUS.md](STATUS.md) for
+explicit boundaries.
 
-The Rust migration is in progress. The current published CLI and TUI remain Go;
-the Rust workspace now contains core model and repository identity primitives,
-versioned SQLite migrations, transactional record/event/idempotency APIs,
-project-scoped grant services, and a Unix state-root and blob/file layer. It is
-not yet a product replacement. Store-level agent/resource reservations,
-local budget accounting, read-only legacy-state inventory, and an opt-in Go
-state importer are also ported. The importer preserves the source tree, requires
-explicit operator assertions, excludes runtime task/check trees, and sanitizes
-grants and execution process state. Repeat imports verify copied rows, events,
-request keys, receipt counts, and object digests. See the
-[migration and rollback guide](docs/design/GO_RUST_STATE_MIGRATION.md).
-The `rover-source` crate captures committed Git blobs and working-tree bytes
-with explicit consistency labels; persistence currently uses the Unix
-state-root adapter. The `rover-execution` crate has a tested Unix runner for
-argv-only commands, scrubbed environments, bounded live output logs, timeouts,
-and process-group cancellation. A Rust `rover tui` executable now provides an
-initial Unix path that starts or reattaches to a project-scoped login shell,
-streams its terminal output through the bounded screen model, and saves layout
-state. Session owner crash recovery, broader CLI behavior, and native runtime
-validation on Linux and Windows remain open. A separate `rover-tui` library
-renders validated workspace layouts and handles basic
-tab/pane keys, and can display filtered text supplied by Rover's terminal
-screen model. On Unix it can attach through a caller-supplied session client,
-stream output through a bounded queue, send child input/resize events, and
-detach with Ctrl-]. Workspace shortcuts use Ctrl-B as a prefix while attached.
-Press `?` for keyboard help in the standalone workspace, or Ctrl-B then `?`
-while attached; the overlay keeps keys such as `q` from reaching the shell.
-Ctrl-B then `t` opens a read-only snapshot of this project's stored tasks;
-use the arrow keys to browse, Enter to inspect recorded task/process metadata,
-`r` refreshes the project task snapshot while preserving the selected task when
-possible. `c` requests task cancellation after a `y` confirmation; it does not
-undo prior external actions. `o` or `e` opens the selected task's stdout or
-stderr after checking its bytes against the recorded SHA-256. Output is
-control-character sanitized and clipped to a 64 KiB display window; use the
-arrow keys or Page Up/Page Down to scroll, and Esc to return to task details.
-When a task links an investigation, `i` opens its stored decision, checks,
-unknowns, and findings. This view labels the material as recorded assessment
-evidence; it does not independently verify or rerun those checks. The loader
-rejects evidence whose repository or candidate does not match the selected
-task.
-In task detail, `d` displays the bounded list of added, changed, and deleted
-paths between the task's verified base and candidate snapshots. The full
-applicable patch remains available through `rover diff`.
-In the task list, `/` opens a case-insensitive search over task ID, status,
-objective, candidate, and error text; Enter applies it and Esc discards the
-draft. `s` cycles deterministic Updated, Status, and Objective ordering. Rover
-saves the query and ordering per canonical repository in its Rust state store.
-Esc or `t` closes the list.
-Ctrl-B then `p` opens a searchable command palette with task, tab, help, and
-file-browser actions supported by the current TUI provider.
-When this project pane has an explicitly bound Codex or Claude session,
-Ctrl-B then `a` shows the exact saved identity. Press `r` to review its native
-interactive resume command, then `y` to send it to the attached project shell;
-`d` removes Rover's binding after confirmation without stopping a running
-agent. Resume uses the provider's configured permissions and sandbox; Rover
-does not mediate them.
-For scripts, `rover agent session bind --repo PATH --pane active --adapter codex-exec
---id EXACT_ID` records a user-selected identity for a pane in the saved project
-workspace (`--pane ID` selects another saved pane). `rover agent session list --repo PATH` lists bindings;
-`rover agent session status --repo PATH --pane ID` inspects one; and
-`rover agent session clear --repo PATH --pane ID` removes Rover's binding only.
-List and status distinguish a saved identity from live agent status, which
-remains unknown until Rover has process or lifecycle evidence. Use
-`--adapter claude-print` for a Claude session.
-Ctrl-B then `n` opens repository-scoped local notes for reusable prompt/context
-snippets. Press `n` to create, Enter to edit, or `d` to delete after confirmation;
-the first line labels each snippet. In the editor, Left/Right, Home/End,
-Backspace, and Delete move or change text; Ctrl-S saves and Esc asks before
-discarding edits. Rover stores at most 32 notes, 32 KiB each and 128 KiB total.
-Notes remain local and are not submitted to an agent automatically.
-Ctrl-B then `d` opens local task briefing drafts. `n` creates a draft, Enter edits,
-and `d` deletes after confirmation. Drafts hold a title, path globs, dependencies,
-quality-gate text, and multiline prompt; Ctrl-S saves and Esc confirms before
-discarding edits. Up to 32 drafts are stored per repository (120-byte title,
-8 KiB paths, 4 KiB dependencies, 1 KiB gate, and 16 KiB prompt). Drafts are not
-tasks, path globs and gate text are not interpreted, and nothing is sent to a worker.
-Ctrl-B then `k` opens repository-scoped saved shell commands. Use `n` to create,
-Enter to edit, `d` to delete after confirmation, and `r` to review a command
-before sending it once to the attached shell. Commands are single lines, limited
-to 256 bytes, and run with Rover's OS-user authority; they are not sandboxed.
-Ctrl-B then `f` opens the repository file tree; arrows move, Enter
-opens directories or a file preview, Backspace goes to the parent, `h` toggles
-hidden entries, and `r` refreshes. Git changes receive status labels and colors.
-Ctrl-B then `.` opens quick open, which searches hidden repository files too.
-Previews refuse symlinks and special files, sanitize terminal controls, and show
-at most 256 KiB. Press `e` on a text preview to edit files up to 8 MiB; Ctrl-S
-saves with an atomic replacement and stale-content check, Ctrl-D shows the
-unsaved unified diff with three context lines. Ctrl-E opens a private working
-copy in the executable named by `VISUAL` or `EDITOR` (default `vi`), and Esc
-prompts before discarding edits.
-The editor setting is one executable path, invoked without a shell; its changes
-return to the TUI buffer and still require Ctrl-S to save. `.git` metadata is
-excluded from both browsers.
-This initial executable path is not a product replacement; Go remains
-authoritative until the Rust parity gates pass.
-Track the staged port in [the Rust parity
-plan](docs/design/RUST_PARITY_PLAN.md).
+## Install from source
 
-## Run the complete demonstrations
+There is no package-manager listing and the `v0.0.1` release carries no
+binaries, so build from a clone:
+
+```sh
+git clone https://github.com/GrayCodeAI/rover.git
+cd rover
+make build            # writes ./bin/rover
+make install          # optional: copies to ~/.local/bin/rover; refuses to overwrite
+```
+
+Build prerequisites: Git, Go 1.26.6 or newer, a C compiler, and SQLite
+development headers/library (Debian/Ubuntu: `build-essential libsqlite3-dev`;
+macOS: the Xcode Command Line Tools). Python 3 runs the deterministic
+demonstrations. There are no external Go modules. The store uses cgo and system
+SQLite, so this is not a dependency-free static binary.
+
+| Platform | Status |
+|---|---|
+| Linux/amd64 | Validated: hosted CI (`source-validation`, ubuntu-24.04) runs `make check`, `race`, `fuzz`, `demo`, `demo-extended`, `cross-build` and `vulncheck` on every push and pull request. |
+| macOS (darwin/arm64) | Observed locally, including PTY/TUI, when built from source with cgo. Binaries from `make cross-build` use `CGO_ENABLED=0` and contain a **non-functional stub store**, so they cannot run real workflows. Build on the Mac instead. |
+| Windows | Not supported (the Go code uses `syscall.O_NOFOLLOW`). |
+
+## Quickstart: run the demonstrations
 
 ```sh
 make build
@@ -122,12 +53,6 @@ They exercise detached tasks, Linux PTYs, repair attempts, parallel dependencies
 candidate integration, verification, counterfactual tests, finite mutations,
 context, reversible agent instructions, MCP, remote CLI control, revocation,
 backup/restore, and signed evidence. No automatic GitHub push, merge, or deployment.
-
-Build prerequisites: **Linux, Git, Go 1.26.6 or newer, a C compiler and system SQLite development
-headers/library**. Python 3 runs the deterministic demonstrations. There are no
-external Go modules. This release still uses cgo/system SQLite, not a dependency-free
-static binary. The current release gate requires the patched Go 1.26.6 line; validate
-with a supported toolchain.
 
 ## Two supported workflow shapes
 
@@ -268,27 +193,40 @@ autonomous self-modifying product, or enterprise-separated evaluator.
 modify same-user host resources. Scoped HTTP grants restrict API operations, not
 arbitrary code once local execution is authorized. Keep untrusted code away from
 credential-bearing hosts. The restricted Docker adapter has argument/admission tests
-but has not been executed against a Docker daemon here. No protected CI publisher,
+and one functional smoke against a local daemon (same machine, not a security
+certification). No protected CI publisher,
 team SSO, remote worker fencing or hostile-code security certification is claimed.
 
 Source capture still rejects symlinks, submodules, unresolved LFS pointers, unsafe or
 case-colliding paths and oversized source states. Working-tree capture uses repeated
 reads, not an atomic filesystem transaction. Prefer committed snapshots.
 
-Linux/amd64 is the validated envelope. darwin/arm64 is observed locally (PTY/TUI
-supported via posix_openpt); native macOS and Windows full validation remain
-pending. The repository and package name
-are proposed: no public GitHub repo, package-manager release or hosted CI execution
-is claimed. The public naming collision noted in the design remains unresolved.
+The repository is public at <https://github.com/GrayCodeAI/rover>. `v0.0.1` is
+a source-only release tag; there are no binary assets and no package-manager
+listing. Hosted CI runs `source-validation` on GitHub Actions for every push and
+pull request. Report problems in GitHub issues ([SUPPORT.md](SUPPORT.md)) and
+vulnerabilities privately ([SECURITY.md](SECURITY.md)). The public naming
+collision noted in the design remains unresolved.
+
+## Rust port (preview, not the product)
+
+A Rust port lives in `crates/`. It is unreleased and is not a replacement for the
+Go `rover`. Go stays authoritative until the parity gates pass. Its executable is
+named `rover-rs` so it cannot shadow `rover` (`cargo +1.88.0 build -p rover-cli`,
+Unix only). The TUI keys, commands, and limits are in
+[docs/RUST_PREVIEW.md](docs/RUST_PREVIEW.md), progress is in
+[STATUS.md](STATUS.md#rust-port-preview-unreleased), and the staged plan is in
+[the Rust parity plan](docs/design/RUST_PARITY_PLAN.md).
 
 ## Documentation
 
 - [Implementation status](STATUS.md)
-- [Rust parity plan](docs/design/RUST_PARITY_PLAN.md) · [Rust third-party notices](licenses/THIRD_PARTY_NOTICES.md)
 - [Command reference](docs/CLI.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Security and limitations](docs/SECURITY_MODEL.md)
-- [Current validation](docs/validation/v0.2.0/REPORT.md)
+- [CI and release reference](docs/CI.md)
+- [Validation for 0.0.1](docs/validation/v0.0.1/REPORT.md) · [Historical validation (0.2.0-alpha.1, before the renumbering to 0.0.1)](docs/validation/v0.2.0/REPORT.md)
+- [Rust port preview](docs/RUST_PREVIEW.md) · [Rust parity plan](docs/design/RUST_PARITY_PLAN.md) · [Design decisions](docs/design/README.md) · [Rust third-party notices](licenses/THIRD_PARTY_NOTICES.md)
 - [Original ten-layer plan and acceptance inventory](docs/acceptance/)
 
 MIT. No telemetry, model training, automatic upload, push, merge, or deployment
