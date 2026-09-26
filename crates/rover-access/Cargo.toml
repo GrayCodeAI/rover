@@ -1,0 +1,21 @@
+[package]
+name = "rover-access"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+description = "Project-scoped local grant authorization for Rover"
+
+[dependencies]
+rover-core = { path = "../rover-core" }
+rover-store = { path = "../rover-store" }
+getrandom = "=0.4.3"
+serde = { version = "=1.0.229", default-features = false, features = ["derive", "std"] }
+serde_json = { version = "=1.0.151", default-features = false, features = ["std"] }
+time = { version = "=0.3.55", default-features = false, features = ["formatting", "parsing", "std"] }
+
+[dev-dependencies]
+rusqlite = { version = "=0.40.2", default-features = false, features = ["bundled"] }
+
+[lints]
+workspace = true

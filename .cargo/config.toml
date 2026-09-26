@@ -1,0 +1,2 @@
+[build]
+target-dir = "target/rust-1.88.0"
