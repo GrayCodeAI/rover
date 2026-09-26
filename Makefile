@@ -26,6 +26,7 @@ manifest:
 	$(PYTHON) scripts/generate_source_manifest.py
 
 manifest-check:
+	$(PYTHON) -m unittest discover -s scripts -p 'test_generate_source_manifest.py'
 	$(PYTHON) scripts/generate_source_manifest.py --check
 
 test:
