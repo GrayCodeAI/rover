@@ -54,18 +54,20 @@ rust-clippy:
 rust-test:
 	$(CARGO) test --workspace --locked --offline
 
+# The audit script runs `cargo metadata`/`cargo tree`; pass CARGO through so a
+# `make rust-check CARGO='cargo +1.88.0'` audit uses the same toolchain.
 rust-deps-check:
 	$(PYTHON) -m unittest discover -s scripts -p 'test_*.py'
-	$(PYTHON) scripts/rust_dependency_audit.py --check
+	CARGO='$(CARGO)' $(PYTHON) scripts/rust_dependency_audit.py --check
 
 rust-check: rust-fmt-check rust-clippy rust-test rust-deps-check
 
 rust-sbom:
 	mkdir -p bin
-	$(PYTHON) scripts/rust_dependency_audit.py --sbom bin/rover-rust-sbom.cdx.json
+	CARGO='$(CARGO)' $(PYTHON) scripts/rust_dependency_audit.py --sbom bin/rover-rust-sbom.cdx.json
 
 rust-notices:
-	$(PYTHON) scripts/rust_dependency_audit.py --refresh-notices
+	CARGO='$(CARGO)' $(PYTHON) scripts/rust_dependency_audit.py --refresh-notices
 
 demo: build
 	$(PYTHON) scripts/demo.py --binary bin/rover

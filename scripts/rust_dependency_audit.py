@@ -6,8 +6,10 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import pathlib
 import re
+import shlex
 import subprocess
 import sys
 import tomllib
@@ -78,6 +80,22 @@ TREE_LINE = re.compile(r"^(\d+)([A-Za-z0-9_.+-]+) v([^\s]+)(?:\s+.*)?$")
 
 class AuditError(Exception):
     """A lockfile, license, or notice integrity failure."""
+
+
+def cargo_command(environ: dict[str, str] | None = None) -> list[str]:
+    """Return the Cargo invocation, honouring the same CARGO override as the Makefile.
+
+    `make rust-check CARGO='cargo +1.88.0'` must audit with the pinned toolchain
+    too, not with whatever `cargo` resolves to on PATH.
+    """
+    value = (os.environ if environ is None else environ).get("CARGO", "cargo")
+    try:
+        command = shlex.split(value)
+    except ValueError as error:
+        raise AuditError(f"CARGO is not a valid command line: {error}") from error
+    if not command:
+        raise AuditError("CARGO is set but empty")
+    return command
 
 
 def recognized_license_files(source_dir: pathlib.Path) -> dict[str, str]:
@@ -201,7 +219,7 @@ def read_notice_rows(text: str) -> dict[tuple[str, str], tuple[str, list[tuple[s
 
 def load_cargo_data(root: pathlib.Path = ROOT) -> tuple[dict, dict]:
     command = [
-        "cargo",
+        *cargo_command(),
         "metadata",
         "--format-version",
         "1",
@@ -402,7 +420,7 @@ def cargo_tree_targets(
     edges_by_target = {}
     for target in SUPPORTED_TARGETS:
         command = [
-            "cargo",
+            *cargo_command(),
             "tree",
             "--locked",
             "--offline",

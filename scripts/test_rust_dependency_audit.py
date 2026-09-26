@@ -6,6 +6,7 @@ import unittest
 from rust_dependency_audit import (
     AuditError,
     canonical_license_expression,
+    cargo_command,
     check_notices,
     generate_sbom,
     license_source,
@@ -59,6 +60,22 @@ class DependencyAuditTests(unittest.TestCase):
 
     def tearDown(self):
         self.temp.cleanup()
+
+    def test_cargo_command_defaults_to_cargo(self):
+        self.assertEqual(cargo_command({}), ["cargo"])
+
+    def test_cargo_command_honours_the_makefile_override(self):
+        self.assertEqual(cargo_command({"CARGO": "cargo +1.88.0"}), ["cargo", "+1.88.0"])
+        self.assertEqual(
+            cargo_command({"CARGO": "'/opt/rust tools/cargo' +1.88.0"}),
+            ["/opt/rust tools/cargo", "+1.88.0"],
+        )
+
+    def test_cargo_command_rejects_empty_or_malformed_override(self):
+        with self.assertRaises(AuditError):
+            cargo_command({"CARGO": "  "})
+        with self.assertRaises(AuditError):
+            cargo_command({"CARGO": "'unterminated"})
 
     def test_purl_encodes_package_identity(self):
         self.assertEqual(package_purl("sample+crate", "1.2.3"), "pkg:cargo/sample%2Bcrate@1.2.3")
