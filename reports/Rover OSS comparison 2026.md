@@ -352,7 +352,7 @@ make fuzz-all               # proposed: all current and added fuzz targets
 make schema-check           # proposed: every schema/example pair
 make demo                   # current: 12 owned-fixture scenarios
 make demo-extended          # current: 16 owned-fixture scenarios
-make sdk-test               # current: Python, TypeScript, Go SDKs
+make sdk-test               # historical: removed with the SDKs
 make cross-build            # current: must become explicit and functional per target
 make sbom                   # current: must emit standard SPDX or CycloneDX
 make vulncheck              # current: must use a pinned scanner and patched toolchain

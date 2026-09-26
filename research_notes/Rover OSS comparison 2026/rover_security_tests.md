@@ -1,5 +1,11 @@
 # Rover security and verification audit
 
+> **Historical snapshot; stale references.** This audit describes the tree as it was when
+> written (committed 2026-09-24). The Python, TypeScript, and Go SDK source trees were removed afterwards by
+> explicit product direction (see `CHANGELOG.md`). Every `sdk/...` link, `rover_client`
+> reference, and `make sdk-test` result below therefore describes code and a make target
+> that no longer exist. Other line citations refer to the tree at audit time.
+
 Audit scope: read-only review of the current tree at the time of inspection, including all Go packages and tests, the Python/TypeScript/Go SDKs and tests, JSON schemas, CI/release workflows, scripts, security/architecture/status/validation documents, and the retained validation artifacts. Local citations use repository-relative links and literal `file:line` references. The findings distinguish observed behavior from code-review hypotheses; no exploit, certification, live-provider, hosted-CI, or independent-host claim is made.
 
 ## Security boundaries and concrete findings
