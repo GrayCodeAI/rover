@@ -75,8 +75,22 @@ before publishing.
 7. Generate SBOM (`make sbom`)
 8. Run govulncheck (`make vulncheck`)
 9. Run all checks (`make check`, `make race`)
-10. Compute SHA-256 checksums
-11. Create GitHub release with artifacts
+10. Compute SHA-256 checksums (`bin/checksums.txt`)
+11. Attest build provenance for every checksummed asset with
+    `actions/attest-build-provenance` (keyless Sigstore signing through the
+    run's OIDC token; needs `id-token: write` and `attestations: write`)
+12. Create GitHub release with artifacts
+
+### Verifying a release download
+
+```sh
+sha256sum -c checksums.txt --ignore-missing
+gh attestation verify rover-linux-amd64 --repo GrayCodeAI/rover
+```
+
+The attestation proves which workflow run, commit and repository built the
+file. It does not prove the code is correct or secure. The existing `v0.0.1`
+release is a source-only tag with no binary assets, so it has no attestations.
 
 **No automatic publication, merge, release, deployment, or credential upload
 occurs.** The release workflow requires explicit `workflow_dispatch` trigger.

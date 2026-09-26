@@ -114,6 +114,26 @@ func TestVersionSurfaces(t *testing.T) {
 	}
 }
 
+func TestReleaseWorkflowAttestsProvenance(t *testing.T) {
+	release := string(repositoryFile(t, ".github/workflows/release.yml"))
+	for _, required := range []string{
+		"id-token: write",
+		"attestations: write",
+		"uses: actions/attest-build-provenance@",
+		"subject-checksums: bin/checksums.txt",
+	} {
+		if !strings.Contains(release, required) {
+			t.Fatalf("release workflow must attest provenance of its checksummed assets; missing %q", required)
+		}
+	}
+	checksums := strings.Index(release, "> checksums.txt")
+	attest := strings.Index(release, "actions/attest-build-provenance@")
+	publish := strings.Index(release, "softprops/action-gh-release@")
+	if checksums < 0 || publish < 0 || !(checksums < attest && attest < publish) {
+		t.Fatal("release workflow must attest after computing checksums and before publishing")
+	}
+}
+
 func TestSDKSourceTreeRemoved(t *testing.T) {
 	_, file, _, ok := runtime.Caller(0)
 	if !ok {
