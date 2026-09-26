@@ -266,8 +266,10 @@ impl PtySession {
 }
 
 #[cfg(target_os = "linux")]
-fn linux_foreground_process_group_details(pgid: i32) -> Option<Vec<ForegroundProcessDetails>> {
-    if pgid <= 0 {
+fn linux_foreground_process_group_details(
+    foreground_group: i32,
+) -> Option<Vec<ForegroundProcessDetails>> {
+    if foreground_group <= 0 {
         return None;
     }
     let entries = std::fs::read_dir("/proc").ok()?;
@@ -292,7 +294,7 @@ fn linux_foreground_process_group_details(pgid: i32) -> Option<Vec<ForegroundPro
         let Some((group, start_time)) = linux_process_group_identity(pid) else {
             continue;
         };
-        if group != pgid {
+        if group != foreground_group {
             continue;
         }
         let identity = crate::supervisor::process_identity(pid)?;
@@ -301,13 +303,11 @@ fn linux_foreground_process_group_details(pgid: i32) -> Option<Vec<ForegroundPro
         }
         let executable = std::fs::read_link(format!("/proc/{pid}/exe")).ok()?;
         if crate::supervisor::process_identity(pid).as_deref() != Some(identity.as_str())
-            || linux_process_group_identity(pid).map(|sample| sample.0) != Some(pgid)
+            || linux_process_group_identity(pid).map(|sample| sample.0) != Some(foreground_group)
         {
             return None;
         }
-        let Some(name) = executable.file_name().and_then(|name| name.to_str()) else {
-            return None;
-        };
+        let name = executable.file_name().and_then(|name| name.to_str())?;
         let name = valid_executable_name(name)?;
         if processes.len() == MAX_FOREGROUND_GROUP_MEMBERS {
             return None;
@@ -327,7 +327,7 @@ fn linux_foreground_process_group_details(pgid: i32) -> Option<Vec<ForegroundPro
             }
         });
         if crate::supervisor::process_identity(pid).as_deref() != Some(identity.as_str())
-            || linux_process_group_identity(pid).map(|sample| sample.0) != Some(pgid)
+            || linux_process_group_identity(pid).map(|sample| sample.0) != Some(foreground_group)
         {
             return None;
         }
@@ -376,7 +376,7 @@ fn linux_process_group_identity(pid: i32) -> Option<(i32, String)> {
     let fields = fields.split_ascii_whitespace().collect::<Vec<_>>();
     // The first field after the command is state (field 3); pgrp is field 5
     // and starttime is field 22 in procfs' stat format.
-    Some((fields.get(2)?.parse().ok()?, fields.get(19)?.to_string()))
+    Some((fields.get(2)?.parse().ok()?, String::from(*fields.get(19)?)))
 }
 
 #[cfg(target_os = "macos")]
