@@ -4,6 +4,20 @@
 
 - Remove the Python, TypeScript, and Go SDK source trees and their CI/Make
   targets per product direction. Historical validation records remain dated.
+- `ProcessGroupIdentity` gains a `conflicting` field listing every equally
+  ranked candidate when the group is ambiguous (additive; empty otherwise). The
+  TUI now emits one `foreground_process` evidence entry per conflicting
+  candidate instead of a single generic message, so an operator can see which
+  agents disagreed rather than only that they did. Identity selection is
+  unchanged: an ambiguous group still resolves to unknown.
+- `rover-execution`: `parse_nul_terminated_argv` and the `MAX_PROCESS_ARG_*`
+  bounds are now `cfg(target_os = "linux")`. They only ever served the Linux
+  `/proc` reader — the macOS backend deliberately reports unknown argv rather
+  than parse a lossy `ps` command line — so the wider gate left them dead on
+  macOS.
+- `rover-execution`: reject a negative pid parsed out of `ps` output instead of
+  casting it to `u32`, and drop the unused `&self` from
+  `foreground_process_group_details_for`.
 
 ## 0.0.1
 

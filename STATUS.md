@@ -4,9 +4,112 @@ This is an expanded local OSS implementation, not completion of every capability
 the original ten-layer vision. Working code and independently tested boundaries are
 not interchangeable. See the validation report for exact observed tests.
 
+The Rust port is also in progress. Its workspace provides validated core and
+repository identity primitives, versioned SQLite migrations, transactional
+record/event/idempotency APIs, project-scoped grant services, and a Unix
+state-root/blob/file layer, plus store-level agent and named-resource
+reservations, atomic local budget accounting, read-only legacy-state inventory,
+and an opt-in Go state importer. The importer retains the source tree, excludes
+runtime task/check trees, revokes grants, and sanitizes process state; independent
+repeat-import verification checks records, events, request keys, receipt counts,
+and content-addressed object digests. See
+`docs/design/GO_RUST_STATE_MIGRATION.md` for source-retention and rollback
+instructions. `rover-source` now captures committed Git blobs and working-tree
+bytes with explicit consistency labels; persistence currently uses the Unix
+state-root adapter. The new `rover-execution` crate has a tested Unix
+argv-only runner with scrubbed environment, per-stream bounds, live private log
+capture, timeout, and process-group cancellation. Its supervisor module now
+has transactional task claim, private detached worker launch, a managed
+heartbeat loop, cancellation, and conservative stale-process reconciliation;
+confirmed `LOST` transitions release that task's leases, while normal task
+finalization and client reconnect remain unimplemented.
+The new PTY wrapper covers local create/read/write/resize/close on native Unix
+and Windows ConPTY backends; native runtime validation currently covers macOS
+only. `rover-tui` has a Ratatui workspace renderer, basic tab/pane input, and a
+Unix API for attaching a caller-supplied session client. The bridge sends input
+and resize events, reads output on a bounded queue, and renders only text from
+Rover's terminal emulator. It preserves Ctrl-] detach and Ctrl-B-prefixed
+workspace controls. The new `rover-cli` binary provides an initial Unix-only
+`rover tui` launch path: it admits a dedicated Rust state root, starts or
+reattaches to a project-scoped login shell owned by a detached local process,
+persists the workspace layout during attached use, and can display a bounded,
+read-only snapshot of project task records from Rover's SQLite store. Ctrl-B
+then `t` opens the task board; Enter opens recorded task and process metadata.
+Press `r` on the task list or detail to refresh records while preserving the
+selected task where possible. Press `c` to request cancellation after an explicit
+`y` confirmation; the store rejects terminal tasks and the UI warns that prior
+external actions are not undone. Press `o` or `e` in task detail to read the
+selected task's stdout or stderr from the blob store; the TUI independently
+verifies the full output against the recorded SHA-256, sanitizes controls, and
+shows at most a 64 KiB excerpt. Press `i` to inspect the task's linked stored
+investigation decision, checks, unknowns, and findings; the view treats these
+as recorded evidence and enforces repository and candidate binding. Press `d`
+in task detail to inspect a bounded path inventory from verified base and
+candidate snapshots; use `rover diff` for the complete applicable patch.
+In the task list, `/` starts a case-insensitive search over ID, status,
+objective, candidate, and error; Enter applies it and Esc discards it. `s`
+cycles Updated, Status, and Objective sorting. Query and order preferences are
+stored per repository in Rover's Rust state database.
+Ctrl-B then `p` opens a searchable command palette for provider-supported task,
+tab, help, and file-browser actions.
+If the active pane has a saved Codex or Claude session binding, Ctrl-B then `a`
+shows its exact identity. `r` opens a command review and a second `y` confirmation
+sends the interactive resume command to the attached shell; `d` removes the
+binding after confirmation. Rover leaves permission and sandbox behavior to the
+provider.
+The CLI supports explicit exact-ID binding to an existing saved workspace pane,
+project-scoped list/status, and binding clear with `rover agent session`.
+The attached TUI samples the owned PTY's foreground process group and displays
+recognized identity while keeping state unknown until manifests or lifecycle
+evidence are available. CLI inventory and lifecycle transport remain separate
+work; see ADR-0025 and ADR-0026.
+The agents crate now contains an independently implemented, bounded Herdr
+manifest evaluator and all 22 hash-verified bundled detection TOML files. Its
+gate operators, 15 region selectors, rule ordering, OSC fields, visibility
+flags, and fallback behavior are covered by Rust tests. The attached TUI feeds
+the live viewport, OSC title, and bounded OSC 9;4 progress payloads to the
+evaluator for audited direct executable mappings. Lifecycle-authority
+integration and wrapper/process-group expansion remain open in
+P-062/P-166/P-167; transcript-viewer skip rules preserve the latest same-agent
+state in the attached TUI. See ADR-0027.
+Ctrl-B then `n` opens a repository-scoped notes list for reusable prompt/context
+snippets. `n` creates, Enter edits, and `d` deletes after confirmation; the first
+line labels each item. Editing supports cursor movement, bounded UTF-8 text,
+explicit Ctrl-S persistence, and an Esc discard prompt. Up to 32 notes (32 KiB
+each, 128 KiB total) are stored locally and are not submitted to an agent.
+Ctrl-B then `d` opens repository-scoped task briefing drafts with create, edit,
+and confirmed delete. Drafts store title, path globs, dependencies, quality-gate
+text, and multiline prompt. They save explicitly and are never dispatched or
+interpreted; schema v1 records load with defaults and new saves use schema v2.
+Limits are 32 drafts, 120 title bytes, 8 KiB paths, 4 KiB dependencies, 1 KiB
+gate, and 16 KiB prompt.
+Ctrl-B then `k` opens repository-scoped saved shell commands. Create/edit/delete
+are explicit; `r` displays the full bounded single-line command and the same-user,
+unsandboxed execution warning before `y` sends it once to the attached shell.
+Commands are capped at 256 bytes and 32 entries.
+Ctrl-B then `f` opens a file tree with Git status labels and colors;
+arrows navigate, Enter opens a directory or preview, Backspace goes up, `h`
+shows hidden files, and `r` refreshes. Ctrl-B then `.` opens hidden-file quick
+open. `.git`, symlinks, and special files are not traversed or previewed; text
+previews are sanitized and capped at 256 KiB. Text files up to 8 MiB can be
+edited with `e`; Ctrl-S saves atomically after a stale-content check, Ctrl-D
+shows a bounded unified diff with three context lines, Ctrl-E opens
+`$VISUAL`/`$EDITOR` on a private
+working copy, and Esc confirms before discarding dirty edits. External editor
+changes return to the buffer and still require Ctrl-S to save.
+Session recovery after owner crash/restart and other task actions,
+full keyboard/layout interaction, platform parity, and the broader product
+CLI remain open; this is an early Rust slice, not a Go runtime replacement.
+Non-Unix process execution beyond the PTY wrapper remains unimplemented. Rover
+does not yet replace the Go runtime.
+Go remains authoritative until the parity tasks and removal gates in
+`docs/design/RUST_PARITY_PLAN.md` pass. Python, TypeScript, and Go SDK source
+was removed per the user's explicit product-scope decision; dated validation
+records below retain the results from when those clients existed.
+
 | Layer | Implemented | Remaining / not validated |
 |---|---|---|
-| L1 interface | CLI/JSON, Linux/macOS keyboard TUI and PTY attach, setup preview, Python client, reversible agent instructions | Desktop/mobile, signed public installer, full platform parity, broad accessibility validation |
+| L1 interface | CLI/JSON, Linux/macOS keyboard TUI and PTY attach, setup preview, reversible agent instructions | Desktop/mobile, signed public installer, full platform parity, broad accessibility validation; no SDK interfaces by product decision |
 | L2 interoperability | Generic headless/PTY (Linux + macOS) adapters; Codex exec and Claude print argument/event adapters; MCP stdio/JSON HTTP; remote CLI client | Live provider certification, App Server/ACP, full MCP transport feature set, plugin marketplace |
 | L3 runtime | Detached supervisors, terminal broker (Linux + macOS), reconnect, resize/input, cancellation, bounded output, resource admission, repair attempts | Cross-host worker recovery/fencing, native conversation restore, host-loss continuation |
 | L4 environments | Worktrees, retained exact committed snapshots, disposable checks, explicit overlays, conservative dependency composition, patch export | Atomic mutable-tree capture, symlinks/submodules/LFS, managed development services/ports/databases, live Docker validation |
@@ -18,6 +121,10 @@ not interchangeable. See the validation report for exact observed tests.
 | L10 improvement | Historical check-order proposals, explicit labels/datasets, disjoint heldout evaluation, proposal/dataset digests, local promotion/revocation, explicit strategy application | Live empirical optimization validation, RL training, autonomous self-play/RSI, independent evaluator deployment |
 
 ## Unreleased platform increments on top of `0.0.1` (pending Linux re-verification and review)
+
+The older increment records in this section are historical. SDK test results
+refer to the removed Python, TypeScript, and Go clients and are not current
+product or CI claims.
 
 These source changes exist in the working tree. They are **not** part of any
 validated release until they are re-run on owned Linux/amd64 with a supported
