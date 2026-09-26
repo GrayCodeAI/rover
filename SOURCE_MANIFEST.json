@@ -354,8 +354,8 @@
     },
     {
       "path": "crates/rover-execution/src/pty.rs",
-      "sha256": "5e232ae5b8d9ea88d4d79277e254e9ff46d9fbcca98c63b4f7d302b03f642817",
-      "size": 28648
+      "sha256": "7a929120ef0d3e628a0f4862df8dad20d10ec60fa5e9ea99742ba9b56a3f6fac",
+      "size": 28671
     },
     {
       "path": "crates/rover-execution/src/sessions.rs",
