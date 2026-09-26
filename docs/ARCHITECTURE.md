@@ -5,7 +5,7 @@ They are not ten independent services. Public commands and protocol tools call t
 same task, snapshot, assurance and storage implementations.
 
 ```text
-CLI / keyboard TUI / Python CLI client / MCP clients
+CLI / keyboard TUI / remote CLI / MCP clients
                         |
              local operator or scoped grant
                         |
