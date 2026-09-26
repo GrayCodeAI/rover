@@ -37,7 +37,8 @@ Contributor gates are `make rust-check CARGO='cargo +1.88.0'` and
 The Rust preview keeps its own state, separate from the Go product:
 `--state PATH`, else `$ROVER_RUST_HOME`, else `$XDG_STATE_HOME/rover-rust`,
 else `~/.local/state/rover-rust`. The Go product uses `--state`, `$ROVER_HOME`
-or `~/.config/rover`. An opt-in importer copies Go state into a Rust state root:
+or `~/.config/rover`. An opt-in importer (a store API; there is no CLI command
+for it yet) copies Go state into a separate Rust state root:
 it keeps the source tree, requires explicit operator assertions, excludes runtime
 task/check trees, and sanitizes grants and execution process state. Repeat
 imports verify copied rows, events, request keys, receipt counts, and object
