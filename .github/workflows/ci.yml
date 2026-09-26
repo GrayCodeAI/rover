@@ -22,6 +22,14 @@ jobs:
           cache: false
       - name: Build dependencies
         run: sudo apt-get update && sudo apt-get install -y build-essential libsqlite3-dev python3
+      - name: Install pinned Rust MSRV toolchain
+        run: rustup toolchain install 1.88.0 --profile minimal --component clippy --component rustfmt
+      - name: Fetch locked Rust dependencies
+        run: cargo +1.88.0 fetch --locked
+      - name: Format, lint, test, and audit Rust workspace
+        run: make rust-check CARGO='cargo +1.88.0'
+      - name: Generate Rust CycloneDX SBOM
+        run: make rust-sbom
       - name: Validate Go toolchain
         run: make toolchain-check
       - name: Validate version surfaces

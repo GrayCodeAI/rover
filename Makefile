@@ -1,5 +1,6 @@
 GO ?= go
 PYTHON ?= python3
+CARGO ?= cargo
 export GOTOOLCHAIN ?= go1.26.6+auto
 export CGO_ENABLED := 1
 
@@ -7,7 +8,7 @@ VERSION_VALUE := $(strip $(shell tr -d '\r\n' < VERSION))
 COMMIT_VALUE := $(strip $(shell git rev-parse --verify HEAD 2>/dev/null || printf unknown))
 LDFLAGS := -X github.com/GrayCodeAI/rover/internal/model.Version=$(VERSION_VALUE) -X github.com/GrayCodeAI/rover/internal/model.Commit=$(COMMIT_VALUE)
 
-.PHONY: build test race vet fmt fmt-check check demo fuzz install clean cross-build sbom vulncheck toolchain-check version version-check manifest manifest-check
+.PHONY: build test race vet fmt fmt-check check demo fuzz install clean cross-build sbom vulncheck toolchain-check version version-check manifest manifest-check rust-fmt-check rust-clippy rust-test rust-deps-check rust-check rust-sbom rust-notices
 build:
 	mkdir -p bin
 	$(GO) build -trimpath -ldflags '$(LDFLAGS)' -o bin/rover ./cmd/rover
@@ -43,6 +44,28 @@ fmt-check:
 	@test -z "$$(gofmt -l cmd internal)" || (gofmt -l cmd internal; exit 1)
 
 check: fmt-check vet test
+
+rust-fmt-check:
+	$(CARGO) fmt --all -- --check
+
+rust-clippy:
+	$(CARGO) clippy --workspace --all-targets --locked --offline -- -D warnings
+
+rust-test:
+	$(CARGO) test --workspace --locked --offline
+
+rust-deps-check:
+	$(PYTHON) -m unittest discover -s scripts -p 'test_*.py'
+	$(PYTHON) scripts/rust_dependency_audit.py --check
+
+rust-check: rust-fmt-check rust-clippy rust-test rust-deps-check
+
+rust-sbom:
+	mkdir -p bin
+	$(PYTHON) scripts/rust_dependency_audit.py --sbom bin/rover-rust-sbom.cdx.json
+
+rust-notices:
+	$(PYTHON) scripts/rust_dependency_audit.py --refresh-notices
 
 demo: build
 	$(PYTHON) scripts/demo.py --binary bin/rover
