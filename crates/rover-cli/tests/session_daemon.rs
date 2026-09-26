@@ -40,7 +40,7 @@ fn cli_session_daemon_accepts_named_client_and_exits_with_shell() {
         .expect("make controlled shell executable");
     let key = SessionKey::new("integration_project", "shell").expect("valid session key");
 
-    let mut daemon = Command::new(env!("CARGO_BIN_EXE_rover"))
+    let mut daemon = Command::new(env!("CARGO_BIN_EXE_rover-rs"))
         .args([
             "__session_daemon",
             "--sessions",

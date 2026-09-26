@@ -43,9 +43,22 @@ use rover_tui::{
     MAX_WORKSPACE_NOTES_COUNT, MAX_WORKSPACE_NOTES_TOTAL_BYTES,
 };
 
+/// Name of the Rust preview executable. It deliberately differs from the Go
+/// `rover` product binary so the two cannot shadow each other on `PATH`.
+const BINARY_NAME: &str = "rover-rs";
+
+const USAGE: &str = "usage: rover-rs tui [--state PATH] [--repo PATH] | rover-rs agents [--json] | rover-rs agent list | rover-rs agent capabilities <adapter> | rover-rs agent session <list|status|bind|clear> ... (run `rover-rs agent session` for its options) | rover-rs --version";
+
+fn version_banner() -> String {
+    format!(
+        "{BINARY_NAME} {} (Rust port preview; unreleased and not the Rover product binary, which is the Go `rover`)",
+        env!("CARGO_PKG_VERSION")
+    )
+}
+
 fn main() {
     if let Err(error) = run() {
-        eprintln!("rover: {error}");
+        eprintln!("{BINARY_NAME}: {error}");
         std::process::exit(1);
     }
 }
@@ -57,13 +70,17 @@ fn run() -> io::Result<()> {
         .and_then(|arg| arg.into_string().ok())
         .as_deref()
     {
+        Some("--version" | "version") => {
+            println!("{}", version_banner());
+            Ok(())
+        }
         Some("tui") => run_tui(args.collect()),
         Some("agents") => run_agent_command("agents", args.collect()),
         Some("agent") => run_agent_command("agent", args.collect()),
         #[cfg(unix)]
         Some("__session_daemon") => run_daemon(args.collect()),
         _ => {
-            eprintln!("usage: rover tui [--state PATH] [--repo PATH] | rover agents [--json] | rover agent list | rover agent capabilities <adapter> | rover agent session list --repo PATH [--state PATH] | rover agent session status --repo PATH --pane ID [--state PATH]");
+            eprintln!("{USAGE}");
             Err(io::Error::new(
                 io::ErrorKind::InvalidInput,
                 "unknown command",
@@ -1688,7 +1705,7 @@ fn required_string(values: &BTreeMap<String, std::ffi::OsString>, key: &str) -> 
 fn run_tui(_args: Vec<std::ffi::OsString>) -> io::Result<()> {
     Err(io::Error::new(
         io::ErrorKind::Unsupported,
-        "rover tui session hosting currently requires Unix",
+        "rover-rs tui session hosting currently requires Unix",
     ))
 }
 
