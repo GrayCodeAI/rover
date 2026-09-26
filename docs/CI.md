@@ -10,14 +10,13 @@ Triggers on `push`, `pull_request`, and `workflow_dispatch`. Runs on
 | Step | Make target | What it checks |
 |------|-------------|----------------|
 | Go toolchain | `make toolchain-check` | Go 1.26.6 or newer |
-| Version contract | `make version-check` | `VERSION`, runtime, SDK, capability, documentation, and release metadata agree |
+| Version contract | `make version-check` | `VERSION`, runtime, capability, documentation, and release metadata agree; removed SDK tree stays absent |
 | Source manifest | `make manifest-check` | Every tracked source file matches its generated size and SHA-256 entry |
 | Format, vet, tests | `make check` | `gofmt -l`, `go vet`, `go test ./...` (25 packages) |
 | Race detector | `make race` | `go test -race ./...` — data race detection |
 | Fuzz campaigns | `make fuzz` | `FuzzDecode`, `FuzzSafeName`, `FuzzResultParser`, `FuzzTranscript`, `FuzzEnvelope` (3s each) |
 | Demo smoke | `make demo` | 12 end-to-end CLI scenarios (no model/network) |
 | Extended scenarios | `make demo-extended` | 16 scenarios: PTY, TUI, workflow, MCP, remote, backup |
-| SDK tests | `make sdk-test` + inline | Python 3/3, TypeScript 3/3, Go 2/2 SDK tests |
 | Cross-compile | `make cross-build` | linux/amd64 (cgo), darwin/amd64 + darwin/arm64 (cgo-free) |
 | Vulnerability scan | `make vulncheck` | Pinned `govulncheck` v1.8.0 — scans for known CVEs |
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Remove the Python, TypeScript, and Go SDK source trees and their CI/Make
+  targets per product direction. Historical validation records remain dated.
+
 ## 0.0.1
 
 - Establish the current public release identity and fail-closed version checks.

@@ -2,6 +2,8 @@
 
 > This report records the pre-change audit baseline. A first release-truth slice was implemented after the audit; the original findings remain as the baseline for measuring that work.
 
+> **Stale references.** The Python, TypeScript, and Go SDK source trees were removed after this audit by explicit product direction (see `CHANGELOG.md` and `docs/design/RUST_COMPATIBILITY_BASELINE.md`). Every `sdk/...` line citation below therefore refers to code that no longer exists. The analysis is left as written because it is a dated baseline; do not read those paths as current.
+
 ## Implementation checkpoint after the audit
 
 - `VERSION` now drives Makefile linker metadata, and the CLI reports the injected commit.

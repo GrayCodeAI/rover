@@ -12,7 +12,6 @@ import (
 )
 
 var versionPattern = regexp.MustCompile(`^[0-9]+\.[0-9]+\.[0-9]+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$`)
-var pyprojectVersion = regexp.MustCompile(`(?m)^\s*version\s*=\s*"([^"]+)"\s*$`)
 var releaseHeading = regexp.MustCompile(`(?m)^## ([0-9][^\n]*)$`)
 var toolchainPattern = regexp.MustCompile(`^go([0-9]+)\.([0-9]+)\.([0-9]+)`)
 
@@ -64,22 +63,6 @@ func TestVersionSurfaces(t *testing.T) {
 		t.Fatalf("manifest version = %q, want %q", manifest.Version, expected)
 	}
 
-	var packageData struct {
-		Version string `json:"version"`
-	}
-	if err := json.Unmarshal(repositoryFile(t, "sdk/typescript/package.json"), &packageData); err != nil {
-		t.Fatalf("TypeScript package JSON: %v", err)
-	}
-	if packageData.Version != expected {
-		t.Fatalf("TypeScript package version = %q, want %q", packageData.Version, expected)
-	}
-
-	pyproject := string(repositoryFile(t, "sdk/python/pyproject.toml"))
-	matches := pyprojectVersion.FindAllStringSubmatch(pyproject, -1)
-	if len(matches) != 1 || matches[0][1] != expected {
-		t.Fatalf("Python package version does not match %q", expected)
-	}
-
 	readme := string(repositoryFile(t, "README.md"))
 	if !strings.Contains(readme, "version-"+expected+"-blue") {
 		t.Fatalf("README version badge does not match %q", expected)
@@ -128,6 +111,17 @@ func TestVersionSurfaces(t *testing.T) {
 		if !strings.Contains(text, "go-version: '"+minimumGoVersion+"'") {
 			t.Fatalf("%s must pin Go %s", workflow, minimumGoVersion)
 		}
+	}
+}
+
+func TestSDKSourceTreeRemoved(t *testing.T) {
+	_, file, _, ok := runtime.Caller(0)
+	if !ok {
+		t.Fatal("runtime.Caller failed")
+	}
+	path := filepath.Clean(filepath.Join(filepath.Dir(file), "..", "..", "sdk"))
+	if _, err := os.Stat(path); !os.IsNotExist(err) {
+		t.Fatalf("SDK source tree must be removed; stat %s returned %v", path, err)
 	}
 }
 
