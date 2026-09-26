@@ -35,10 +35,11 @@ The Rust workspace under `crates/` is a preview gated by
 | Lint | `make rust-clippy` (via `rust-check`) | `clippy --workspace --all-targets --locked --offline -- -D warnings` with the workspace's `clippy::pedantic` and `unsafe_code = "forbid"` lints |
 | Tests | `make rust-test` (via `rust-check`) | `cargo test --workspace --locked --offline` |
 | Dependency audit | `make rust-deps-check` (via `rust-check`) | `scripts/test_*.py` unit tests, then `scripts/rust_dependency_audit.py --check`: every locked crate's SPDX expression and byte-exact bundled notice (SHA-256) in `licenses/` |
-| Rust SBOM | `make rust-sbom` | CycloneDX 1.7 inventory of packages active on the supported targets |
+| Rust SBOM | `make rust-sbom` | CycloneDX 1.7 inventory of packages active on the supported targets, uploaded as the `rover-rust-sbom` run artifact (30-day retention) |
 
 All Rust steps take `CARGO='cargo +1.88.0'`; the audit script honours the same
-`CARGO` value. Cold-cache duration on the hosted runner has not been measured
+`CARGO` value. The Rust SBOM is not attached to releases because releases ship
+only the Go binaries. Cold-cache duration on the hosted runner has not been measured
 yet; record it here after the first run on `main`.
 
 ### Cross-compilation matrix

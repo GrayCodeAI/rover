@@ -71,5 +71,12 @@ jobs:
         run: make rust-check CARGO='cargo +1.88.0'
       - name: Generate Rust CycloneDX SBOM
         run: make rust-sbom CARGO='cargo +1.88.0'
+      - name: Keep the Rust SBOM as a run artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: rover-rust-sbom
+          path: bin/rover-rust-sbom.cdx.json
+          if-no-files-found: error
+          retention-days: 30
 # This validates Rover's own source on GitHub-hosted runners. It is not an
 # independently trusted Rover acceptance publisher for arbitrary candidate PRs.
