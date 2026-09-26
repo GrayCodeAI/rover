@@ -2,23 +2,44 @@
 
 ## Source validation — `.github/workflows/ci.yml`
 
-Triggers on `push`, `pull_request`, and `workflow_dispatch`. Runs on
-`ubuntu-24.04` with Go 1.26.6 and system SQLite/C toolchain installed.
+Triggers on `push`, `pull_request`, and `workflow_dispatch`. Two independent
+jobs run on GitHub-hosted `ubuntu-24.04` runners, so a failure in one never
+hides the other's results.
 
-### Steps
+### `go` job — the Rover product (Go 1.26.6, system SQLite/C toolchain, 20 min limit)
 
 | Step | Make target | What it checks |
 |------|-------------|----------------|
 | Go toolchain | `make toolchain-check` | Go 1.26.6 or newer |
 | Version contract | `make version-check` | `VERSION`, runtime, capability, documentation, and release metadata agree; removed SDK tree stays absent |
 | Source manifest | `make manifest-check` | Every tracked source file matches its generated size and SHA-256 entry |
-| Format, vet, tests | `make check` | `gofmt -l`, `go vet`, `go test ./...` (25 packages) |
+| Format, vet, tests | `make check` | `gofmt -l`, `go vet`, `go test ./...` (24 packages, 21 with tests) |
 | Race detector | `make race` | `go test -race ./...` — data race detection |
 | Fuzz campaigns | `make fuzz` | `FuzzDecode`, `FuzzSafeName`, `FuzzResultParser`, `FuzzTranscript`, `FuzzEnvelope` (3s each) |
 | Demo smoke | `make demo` | 12 end-to-end CLI scenarios (no model/network) |
 | Extended scenarios | `make demo-extended` | 16 scenarios: PTY, TUI, workflow, MCP, remote, backup |
 | Cross-compile | `make cross-build` | linux/amd64 (cgo), darwin/amd64 + darwin/arm64 (cgo-free) |
 | Vulnerability scan | `make vulncheck` | Pinned `govulncheck` v1.8.0 — scans for known CVEs |
+
+### `rust` job — unreleased Rust port preview (Rust 1.88.0 MSRV, 30 min limit)
+
+The Rust workspace under `crates/` is a preview gated by
+`docs/design/RUST_PARITY_PLAN.md`; it is not part of any release.
+
+| Step | Command | What it checks |
+|------|---------|----------------|
+| Toolchain | `rustup toolchain install 1.88.0 --profile minimal --component clippy --component rustfmt` | Pinned MSRV from `rust-toolchain.toml` |
+| Build cache | `Swatinem/rust-cache` (SHA-pinned) | Restores `~/.cargo` and `target/rust-1.88.0`, keyed on `Cargo.lock`, `rust-toolchain.toml` and `.cargo/config.toml`; only `main` saves |
+| Locked fetch | `cargo +1.88.0 fetch --locked` | `Cargo.lock` is complete; later steps run `--offline` |
+| Format | `make rust-fmt-check` (via `rust-check`) | `cargo fmt --all -- --check` |
+| Lint | `make rust-clippy` (via `rust-check`) | `clippy --workspace --all-targets --locked --offline -- -D warnings` with the workspace's `clippy::pedantic` and `unsafe_code = "forbid"` lints |
+| Tests | `make rust-test` (via `rust-check`) | `cargo test --workspace --locked --offline` |
+| Dependency audit | `make rust-deps-check` (via `rust-check`) | `scripts/test_*.py` unit tests, then `scripts/rust_dependency_audit.py --check`: every locked crate's SPDX expression and byte-exact bundled notice (SHA-256) in `licenses/` |
+| Rust SBOM | `make rust-sbom` | CycloneDX 1.7 inventory of packages active on the supported targets |
+
+All Rust steps take `CARGO='cargo +1.88.0'`; the audit script honours the same
+`CARGO` value. Cold-cache duration on the hosted runner has not been measured
+yet; record it here after the first run on `main`.
 
 ### Cross-compilation matrix
 
