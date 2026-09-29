@@ -57,6 +57,32 @@ def manifest_bytes(root):
     return (json.dumps(manifest, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
 
 
+def manifest_differences(expected, actual, limit=20):
+    """Describe how the committed manifest bytes differ from the regenerated ones."""
+    try:
+        want = json.loads(expected)
+        have = json.loads(actual)
+        want_files = {row["path"]: row for row in want["files"]}
+        have_files = {row["path"]: row for row in have["files"]}
+    except (ValueError, KeyError, TypeError):
+        return ["SOURCE_MANIFEST.json is not a valid manifest"]
+    lines = []
+    if want.get("version") != have.get("version"):
+        lines.append(f"version: {have.get('version')!r} -> {want.get('version')!r}")
+    for path in sorted(want_files.keys() - have_files.keys()):
+        lines.append(f"missing: {path}")
+    for path in sorted(have_files.keys() - want_files.keys()):
+        lines.append(f"no longer tracked: {path}")
+    for path in sorted(want_files.keys() & have_files.keys()):
+        if want_files[path] != have_files[path]:
+            lines.append(f"changed: {path}")
+    if not lines and expected != actual:
+        lines.append("formatting differs")
+    if len(lines) > limit:
+        lines = lines[:limit] + [f"... and {len(lines) - limit} more"]
+    return lines
+
+
 def write_manifest(root, data):
     fd, temporary = tempfile.mkstemp(prefix=".SOURCE_MANIFEST.", dir=root)
     try:
@@ -80,8 +106,14 @@ def main():
         expected = manifest_bytes(root)
         target = root / "SOURCE_MANIFEST.json"
         if args.check:
-            if not target.is_file() or target.read_bytes() != expected:
+            if not target.is_file():
+                print("SOURCE_MANIFEST.json is missing; run make manifest", file=sys.stderr)
+                return 1
+            actual = target.read_bytes()
+            if actual != expected:
                 print("SOURCE_MANIFEST.json is stale; run make manifest", file=sys.stderr)
+                for line in manifest_differences(expected, actual):
+                    print(f"  {line}", file=sys.stderr)
                 return 1
             return 0
         write_manifest(root, expected)

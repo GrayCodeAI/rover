@@ -1,0 +1,5 @@
+# Byte-exact files. scripts/rust_dependency_audit.py and
+# scripts/test_herdr_manifest_audit.py verify these by SHA-256, so Git must
+# never convert their line endings (some upstream notices use CRLF).
+/licenses/** -text
+/crates/rover-agents/src/herdr_manifests/** -text

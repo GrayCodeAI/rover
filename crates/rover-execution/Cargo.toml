@@ -1,0 +1,26 @@
+[package]
+name = "rover-execution"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+alacritty_terminal = { version = "=0.26.0", default-features = false }
+base64 = { version = "=0.22.1", default-features = false, features = ["std"] }
+portable-pty = { version = "=0.9.0", default-features = false }
+rover-core = { path = "../rover-core" }
+rover-store = { path = "../rover-store" }
+serde = { version = "=1.0.229", default-features = false, features = ["std", "derive"] }
+serde_json = { version = "=1.0.151", default-features = false, features = ["std"] }
+time = { version = "=0.3.55", default-features = false, features = ["formatting", "parsing", "std"] }
+
+[target.'cfg(unix)'.dependencies]
+rustix = { version = "=1.1.4", default-features = false, features = ["fs", "process", "std"] }
+
+
+[dev-dependencies]
+rusqlite = { version = "=0.40.2", default-features = false, features = ["bundled"] }
+
+[lints]
+workspace = true

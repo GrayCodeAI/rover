@@ -2,6 +2,8 @@
 
 > This report records the pre-change audit baseline. A first release-truth slice was implemented after the audit; the original findings remain as the baseline for measuring that work.
 
+> **Stale references.** The Python, TypeScript, and Go SDK source trees were removed after this audit by explicit product direction (see `CHANGELOG.md` and `docs/design/RUST_COMPATIBILITY_BASELINE.md`). Every `sdk/...` line citation below therefore refers to code that no longer exists. The analysis is left as written because it is a dated baseline; do not read those paths as current.
+
 ## Implementation checkpoint after the audit
 
 - `VERSION` now drives Makefile linker metadata, and the CLI reports the injected commit.
@@ -350,7 +352,7 @@ make fuzz-all               # proposed: all current and added fuzz targets
 make schema-check           # proposed: every schema/example pair
 make demo                   # current: 12 owned-fixture scenarios
 make demo-extended          # current: 16 owned-fixture scenarios
-make sdk-test               # current: Python, TypeScript, Go SDKs
+make sdk-test               # historical: removed with the SDKs
 make cross-build            # current: must become explicit and functional per target
 make sbom                   # current: must emit standard SPDX or CycloneDX
 make vulncheck              # current: must use a pinned scanner and patched toolchain

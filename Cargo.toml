@@ -1,0 +1,25 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/rover-core",
+    "crates/rover-tasks",
+    "crates/rover-store",
+    "crates/rover-access",
+    "crates/rover-agents",
+    "crates/rover-source",
+    "crates/rover-execution",
+    "crates/rover-tui",
+    "crates/rover-cli",
+]
+
+[workspace.package]
+edition = "2021"
+license = "MIT"
+rust-version = "1.88"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+all = "warn"
+pedantic = "warn"

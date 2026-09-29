@@ -28,6 +28,33 @@ on a host holding unrelated credentials or run hostile repositories there.
 - PTY sockets are same-user and private. Full interactive terminals inherently expose
   untrusted terminal output; use trusted code. Noninteractive views sanitize control
   characters; use `diff --output` or JSON for exact raw patch data.
+- The Rust TUI repository browser validates directory names against an already-open
+  repository handle; traversal and preview refuse
+  symlinks, and the viewer opens regular files with no-follow descriptor-relative
+  operations, reads at most 256 KiB, and sanitizes terminal controls. `.git` metadata
+  is excluded. Pressing `e` opens a bounded UTF-8 inline editor; control-character
+  files are refused, displayed text is sanitized, and Ctrl-S saves through a rooted
+  atomic replacement that preserves existing permission bits. The saver compares
+  the current bytes with the editor's starting digest and refuses stale content.
+  Ctrl-D shows a sanitized three-line-context diff preview; the LCS work is capped
+  at one million cells and the display at 512 changed lines per side. This is a
+  review view, not a patch export.
+  Ctrl-E launches the configured `VISUAL`/`EDITOR` executable (without a shell) on a
+  0600 copy in a 0700 temporary directory. Returned bytes are read through the
+  opened directory handle and return to the TUI buffer; saving to the repository
+  still requires Ctrl-S and uses the same digest check.
+  This check is optimistic and cannot prevent an external writer racing between the
+  final read and rename. The configured editor is trusted code running with Rover's
+  OS-user authority. Git status labels are local metadata, not a security or
+  integrity assessment. File operations run with the same OS-user authority as Rover
+  and do not sandbox code.
+- Repository-scoped saved shell commands are bounded printable single lines. The
+  TUI shows the command and warns that execution is unsandboxed before `y` sends
+  the line once to the attached PTY. This is ordinary shell input under Rover's
+  OS-user authority; confirmation does not sandbox, inspect, or restrict effects.
+- Task briefing drafts are local data only. The TUI does not submit them to a
+  worker, interpret path globs, or run gate text; each record is repository-bound
+  and capped by count and UTF-8 byte size.
 
 ## Evidence limitations
 

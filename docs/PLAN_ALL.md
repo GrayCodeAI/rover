@@ -1,5 +1,9 @@
 # Detailed plan to implement all remaining gaps — honest, end-to-end, verifiable
 
+> Historical plan, superseded by `docs/design/RUST_PARITY_PLAN.md`. SDK results
+> below describe clients that existed when this plan was written; the SDK source
+> has since been removed by user direction.
+
 This plan covers every one of the 40 acceptance IDs and the 9 ROADMAP gates.
 It does not invent live provider, Docker daemon, remote-host, SSO, or hosted-CI
 results. For each gap it states: domain owner, reviewed contract, regression
@@ -13,7 +17,7 @@ test, and exact limitation that remains until the external dependency is supplie
 - Increment C: local gaps — `doctor --verify` (A02), `publish --id/--to` (A28/A31),
   local fencing docs (A29), formal-scope labelling (A26), absence-by-design (A39)
 - `make check` green (24 pkgs, 90 top funcs, 5 fuzz), `make race` green,
-  `make fuzz`/`make sdk-test` green; demo 12/12 and demo_extended 16/16 via
+  `make fuzz`/then-current SDK tests green; demo 12/12 and demo_extended 16/16 via
   `GOFLAGS=-buildvcs=false make demo` (the TCC-blocked `.git` under `~/Desktop`
   breaks VCS stamping on the plain `make build` path)
 - `STATUS.md` updated per increment with honest Linux-reverification gate
@@ -42,7 +46,7 @@ test, and exact limitation that remains until the external dependency is supplie
 
 1. Toolchain/OS: darwin PTY done; **Linux/amd64 re-run DONE** (`go1.23.12
    linux/amd64` in `golang:1.23-bookworm` on OrbStack VM: check/race/demo
-   12/demo-extended 16/sdk 3/fuzz all green — see `verification_log` in the
+   12/demo-extended 16/legacy SDK 3/fuzz all green — see `verification_log` in the
    implementation map); Windows stub remains a stub
 2. Restricted executor + CI publisher: Docker flags done; **functional smoke ran
    a real pinned container on the local daemon from Linux** (same machine, not
@@ -80,7 +84,7 @@ After all code: run in this environment (darwin/arm64, go1.26.6, no external Go 
 - `make race` (`go test -race`)
 - `GOFLAGS=-buildvcs=false make demo` (12 scenarios)
 - `GOFLAGS=-buildvcs=false make demo-extended` (16 scenarios)
-- `make sdk-test` (`python3 -m unittest discover -s sdk/python`)
+- Legacy SDK tests (historical only; SDK source has been removed)
 - `make fuzz` (3s × 2: `FuzzDecode`, `FuzzSafeName`, `FuzzResultParser`, `FuzzTranscript`, `FuzzEnvelope`)
 - schema validation 10/10
 Each run reports exact pass/fail; no invented CI/provider results.

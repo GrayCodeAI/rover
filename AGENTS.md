@@ -5,8 +5,10 @@ agent-neutral full-platform scope. Do not describe the design reference as shipp
 
 Before changing code, identify the relevant test and domain owner. Add regression tests
 for acceptance/security changes. Run make check, make race, and make demo in an appropriate
-owned environment. Report exact commands and limitations. Do not invent passing CI runs,
-live provider tests, code-coverage metrics, or security certification.
+owned environment; for Rust changes also run make rust-check CARGO='cargo +1.88.0'. Run
+make manifest after changing tracked files. Report exact commands and limitations. Do not
+invent passing CI runs, live provider tests, code-coverage metrics, or security certification.
+The Go binary is the product; the Rust preview (crates/, binary rover-rs) is unreleased.
 
 Do not weaken tests or required policy to make checks green. Keep schema changes explicit.
 Never copy model assertions into evidence as observed facts. No automatic publication,

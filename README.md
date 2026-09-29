@@ -5,9 +5,38 @@
 **Terminal-first agent workspaces, persistent sessions, parallel workflows,
 verification, review, and evidence.**
 
-`0.0.1` is the initial public OSS release — terminal-first, agent-neutral, monorepo (Go + Python + TypeScript + Go SDKs). See [STATUS.md](STATUS.md) for explicit boundaries.
+`0.0.1` is the initial public OSS release: a pre-1.0 alpha, terminal-first and
+agent-neutral. Rover runs coding agents or your own commands in separate Git
+worktrees (not a sandbox), verifies the result with the checks you approve, and
+keeps replayable evidence of what happened, optionally signed with your own
+Ed25519 key. The product is the Go `rover` binary. See [STATUS.md](STATUS.md) for
+explicit boundaries.
 
-## Run the complete demonstrations
+## Install from source
+
+There is no package-manager listing and the `v0.0.1` release carries no
+binaries, so build from a clone:
+
+```sh
+git clone https://github.com/GrayCodeAI/rover.git
+cd rover
+make build            # writes ./bin/rover
+make install          # optional: copies to ~/.local/bin/rover; refuses to overwrite
+```
+
+Build prerequisites: Git, Go 1.26.6 or newer, a C compiler, and SQLite
+development headers/library (Debian/Ubuntu: `build-essential libsqlite3-dev`;
+macOS: the Xcode Command Line Tools). Python 3 runs the deterministic
+demonstrations. There are no external Go modules. The store uses cgo and system
+SQLite, so this is not a dependency-free static binary.
+
+| Platform | Status |
+|---|---|
+| Linux/amd64 | Validated: hosted CI (`source-validation`, ubuntu-24.04) runs `make check`, `race`, `fuzz`, `demo`, `demo-extended`, `cross-build` and `vulncheck` on every push and pull request. |
+| macOS (darwin/arm64) | Observed locally, including PTY/TUI, when built from source with cgo. Binaries from `make cross-build` use `CGO_ENABLED=0` and contain a **non-functional stub store**, so they cannot run real workflows. Build on the Mac instead. |
+| Windows | Not supported (the Go code uses `syscall.O_NOFOLLOW`). |
+
+## Quickstart: run the demonstrations
 
 ```sh
 make build
@@ -24,12 +53,6 @@ They exercise detached tasks, Linux PTYs, repair attempts, parallel dependencies
 candidate integration, verification, counterfactual tests, finite mutations,
 context, reversible agent instructions, MCP, remote CLI control, revocation,
 backup/restore, and signed evidence. No automatic GitHub push, merge, or deployment.
-
-Build prerequisites: **Linux, Git, Go 1.26.6 or newer, a C compiler and system SQLite development
-headers/library**. Python 3 runs the demonstrations and optional SDK. There are no
-external Go modules. This release still uses cgo/system SQLite, not a dependency-free
-static binary. The current release gate requires the patched Go 1.26.6 line; validate
-with a supported toolchain.
 
 ## Two supported workflow shapes
 
@@ -170,18 +193,30 @@ autonomous self-modifying product, or enterprise-separated evaluator.
 modify same-user host resources. Scoped HTTP grants restrict API operations, not
 arbitrary code once local execution is authorized. Keep untrusted code away from
 credential-bearing hosts. The restricted Docker adapter has argument/admission tests
-but has not been executed against a Docker daemon here. No protected CI publisher,
+and one functional smoke against a local daemon (same machine, not a security
+certification). No protected CI publisher,
 team SSO, remote worker fencing or hostile-code security certification is claimed.
 
 Source capture still rejects symlinks, submodules, unresolved LFS pointers, unsafe or
 case-colliding paths and oversized source states. Working-tree capture uses repeated
 reads, not an atomic filesystem transaction. Prefer committed snapshots.
 
-Linux/amd64 is the validated envelope. darwin/arm64 is observed locally (PTY/TUI
-supported via posix_openpt); native macOS and Windows full validation remain
-pending. The repository and package name
-are proposed: no public GitHub repo, package-manager release or hosted CI execution
-is claimed. The public naming collision noted in the design remains unresolved.
+The repository is public at <https://github.com/GrayCodeAI/rover>. `v0.0.1` is
+a source-only release tag; there are no binary assets and no package-manager
+listing. Hosted CI runs `source-validation` on GitHub Actions for every push and
+pull request. Report problems in GitHub issues ([SUPPORT.md](SUPPORT.md)) and
+vulnerabilities privately ([SECURITY.md](SECURITY.md)). The public naming
+collision noted in the design remains unresolved.
+
+## Rust port (preview, not the product)
+
+A Rust port lives in `crates/`. It is unreleased and is not a replacement for the
+Go `rover`. Go stays authoritative until the parity gates pass. Its executable is
+named `rover-rs` so it cannot shadow `rover` (`cargo +1.88.0 build -p rover-cli`,
+Unix only). The TUI keys, commands, and limits are in
+[docs/RUST_PREVIEW.md](docs/RUST_PREVIEW.md), progress is in
+[STATUS.md](STATUS.md#rust-port-preview-unreleased), and the staged plan is in
+[the Rust parity plan](docs/design/RUST_PARITY_PLAN.md).
 
 ## Documentation
 
@@ -189,8 +224,9 @@ is claimed. The public naming collision noted in the design remains unresolved.
 - [Command reference](docs/CLI.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Security and limitations](docs/SECURITY_MODEL.md)
-- [Current validation](docs/validation/v0.2.0/REPORT.md)
-- [Python CLI client](sdk/python/README.md) · [TypeScript CLI client](sdk/typescript/README.md) · [Go CLI client](sdk/go/README.md)
+- [CI and release reference](docs/CI.md)
+- [Validation for 0.0.1](docs/validation/v0.0.1/REPORT.md) · [Historical validation (0.2.0-alpha.1, before the renumbering to 0.0.1)](docs/validation/v0.2.0/REPORT.md)
+- [Rust port preview](docs/RUST_PREVIEW.md) · [Rust parity plan](docs/design/RUST_PARITY_PLAN.md) · [Design decisions](docs/design/README.md) · [Rust third-party notices](licenses/THIRD_PARTY_NOTICES.md)
 - [Original ten-layer plan and acceptance inventory](docs/acceptance/)
 
 MIT. No telemetry, model training, automatic upload, push, merge, or deployment

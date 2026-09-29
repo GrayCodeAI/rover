@@ -1,8 +1,10 @@
 # Governance (bootstrap)
 
-Rover is a user-directed, tool-assisted OSS bootstrap. The intended project owner must
-establish maintainer permissions and review procedures in the eventual hosting repository.
-No public maintainer roster, legal entity, steering committee, or foundation is asserted.
+Rover is a user-directed, tool-assisted open-source project hosted at
+<https://github.com/GrayCodeAI/rover>. The maintainers are the owners of the
+GrayCodeAI GitHub organization, who set repository permissions and review
+procedures there. No separate public maintainer roster, legal entity, steering
+committee, or foundation is asserted.
 
 Initial rule: changes to evidence meaning, required-check interpretation, trust modes,
 credential authority, release keys, or learning promotion rules require explicit human

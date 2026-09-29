@@ -2,11 +2,18 @@
 
 This is an expanded local OSS implementation, not completion of every capability in
 the original ten-layer vision. Working code and independently tested boundaries are
-not interchangeable. See the validation report for exact observed tests.
+not interchangeable. See [docs/validation/v0.0.1/REPORT.md](docs/validation/v0.0.1/REPORT.md)
+for the hosted CI record of the release.
+
+The product is the Go `rover` binary. An unreleased Rust port is described
+[below](#rust-port-preview-unreleased); it does not replace the Go runtime.
+Python, TypeScript, and Go SDK source was removed per the user's explicit
+product-scope decision; dated validation records below keep the results from when
+those clients existed.
 
 | Layer | Implemented | Remaining / not validated |
 |---|---|---|
-| L1 interface | CLI/JSON, Linux/macOS keyboard TUI and PTY attach, setup preview, Python client, reversible agent instructions | Desktop/mobile, signed public installer, full platform parity, broad accessibility validation |
+| L1 interface | CLI/JSON, Linux/macOS keyboard TUI and PTY attach, setup preview, reversible agent instructions | Desktop/mobile, signed public installer, full platform parity, broad accessibility validation; no SDK interfaces by product decision |
 | L2 interoperability | Generic headless/PTY (Linux + macOS) adapters; Codex exec and Claude print argument/event adapters; MCP stdio/JSON HTTP; remote CLI client | Live provider certification, App Server/ACP, full MCP transport feature set, plugin marketplace |
 | L3 runtime | Detached supervisors, terminal broker (Linux + macOS), reconnect, resize/input, cancellation, bounded output, resource admission, repair attempts | Cross-host worker recovery/fencing, native conversation restore, host-loss continuation |
 | L4 environments | Worktrees, retained exact committed snapshots, disposable checks, explicit overlays, conservative dependency composition, patch export | Atomic mutable-tree capture, symlinks/submodules/LFS, managed development services/ports/databases, live Docker validation |
@@ -17,11 +24,86 @@ not interchangeable. See the validation report for exact observed tests.
 | L9 evidence | SQLite/event/artifact records, exact identities, diff/local review, exports, online backup/restore, explicit-key Ed25519 signatures | Protected CI check publisher, real external PR/merge/deploy writes, in-toto/SLSA attestations, full retention/erasure and global quota system |
 | L10 improvement | Historical check-order proposals, explicit labels/datasets, disjoint heldout evaluation, proposal/dataset digests, local promotion/revocation, explicit strategy application | Live empirical optimization validation, RL training, autonomous self-play/RSI, independent evaluator deployment |
 
-## Unreleased platform increments on top of `0.0.1` (pending Linux re-verification and review)
+## Rust port preview (unreleased)
 
-These source changes exist in the working tree. They are **not** part of any
-validated release until they are re-run on owned Linux/amd64 with a supported
-toolchain and reviewed:
+The Rust workspace in `crates/` is an unreleased port. It does not replace the Go
+runtime, and Go remains authoritative until the parity tasks and removal gates in
+`docs/design/RUST_PARITY_PLAN.md` pass. Its executable is `rover-rs`; usage, TUI
+keys, and limits are in [docs/RUST_PREVIEW.md](docs/RUST_PREVIEW.md). CI gates it
+with `make rust-check` (fmt, clippy with pedantic lints as errors, workspace
+tests, dependency license audit) and `make rust-sbom` on Rust 1.88.0.
+
+Implemented and tested so far:
+
+- Core and repository identity primitives, versioned SQLite migrations,
+  transactional record/event/idempotency APIs, project-scoped grant services, a
+  Unix state-root/blob/file layer, store-level agent and named-resource
+  reservations, and atomic local budget accounting.
+- Read-only legacy-state inventory and an opt-in Go state importer. The importer
+  keeps the source tree, excludes runtime task/check trees, revokes grants, and
+  sanitizes process state. Independent repeat-import verification checks records,
+  events, request keys, receipt counts, and content-addressed object digests. See
+  `docs/design/GO_RUST_STATE_MIGRATION.md` for source retention and rollback.
+- `rover-source` captures committed Git blobs and working-tree bytes with explicit
+  consistency labels; persistence uses the Unix state-root adapter.
+- `rover-execution` has a tested Unix argv-only runner with a scrubbed
+  environment, per-stream bounds, live private log capture, timeout, and
+  process-group cancellation. Its supervisor has transactional task claim, private
+  detached worker launch, a managed heartbeat loop, cancellation, and conservative
+  stale-process reconciliation. Confirmed `LOST` transitions release that task's
+  leases. Normal task finalization and client reconnect remain unimplemented.
+- The PTY wrapper covers local create/read/write/resize/close on native Unix.
+  It is built on `portable-pty` 0.9.0. That dependency also contains a Windows
+  ConPTY backend, but **Rover does not build, test, or support Windows**: no CI
+  job compiles a Windows target, and a full-workspace Windows compile has never
+  been completed (ADR-0011). Native runtime validation covers macOS only.
+- `rover-tui` has a Ratatui workspace renderer, basic tab/pane input, and a Unix
+  API for attaching a caller-supplied session client. The bridge sends input and
+  resize events, reads output on a bounded queue, and renders only text from
+  Rover's terminal emulator. It keeps Ctrl-] detach and Ctrl-B-prefixed
+  workspace controls.
+- `rover-rs tui` is a Unix-only launch path. It admits a dedicated Rust state
+  root, starts or reattaches to a project-scoped login shell owned by a detached
+  local process, and persists the workspace layout during attached use. Attached
+  views cover: a read-only task board (refresh, confirmed cancellation request,
+  SHA-256-verified bounded stdout/stderr, linked investigation evidence bound to
+  the repository and candidate, a bounded base-to-candidate path inventory, and
+  saved search and sort); a command palette; agent session binding review, resume
+  and clear; notes; task briefing drafts (schema v1 records load with defaults;
+  saves use schema v2); saved shell commands; and a file tree with Git status,
+  quick open, bounded previews, and an inline editor with stale-content-checked
+  atomic save, diff preview, and external-editor handoff.
+- `rover-rs agent session` supports explicit exact-ID binding to an existing saved
+  workspace pane, project-scoped list/status, and binding clear. The attached TUI
+  samples the owned PTY's foreground process group and shows the recognized
+  identity, but keeps state unknown until manifests or lifecycle evidence are
+  available. CLI inventory and lifecycle transport remain separate work (ADR-0025,
+  ADR-0026).
+- `rover-agents` contains an independently implemented, bounded Herdr manifest
+  evaluator and all 22 hash-verified bundled detection TOML files. Rust tests
+  cover its gate operators, 15 region selectors, rule ordering, OSC fields,
+  visibility flags, and fallback behavior. The attached TUI feeds the live
+  viewport, OSC title, and bounded OSC 9;4 progress payloads to the evaluator for
+  audited direct executable mappings. Transcript-viewer skip rules preserve the
+  latest same-agent state. Lifecycle-authority integration and
+  wrapper/process-group expansion remain open in P-062/P-166/P-167 (ADR-0027).
+
+Still open: session recovery after owner crash/restart, other task actions, full
+keyboard/layout interaction, the broader product CLI, non-Unix process execution,
+native Linux runtime validation of the interactive TUI, and any Windows support.
+
+## Implementation increment log (historical)
+
+These increments were recorded while the code carried the former
+`0.2.0-alpha.1` label. Increments A–H are part of the `v0.0.1` tag (`158d9d5`);
+Increment I (cgo-free darwin terminal/PTY, `cross-build`, the stub store and the
+release workflow) landed on `main` afterwards and is unreleased. Hosted CI on
+GitHub-hosted ubuntu-24.04 has since run the Linux gates green for both: the tag
+run and the `main` run at `2cd2337` are recorded in
+[docs/validation/v0.0.1/REPORT.md](docs/validation/v0.0.1/REPORT.md). Independent
+human review is still outstanding. Every `make sdk-test` / "SDK 3/3" result below
+refers to the removed Python, TypeScript, and Go clients; that make target no
+longer exists, so those lines are history, not current product or CI claims.
 
 **Increment A — darwin temp-path canonicalization:**
 
@@ -250,15 +332,19 @@ in Go 1.26.5 fixed by 1.26.6; no third-party vulnerabilities — zero external G
   container** (same machine, not an independent host) — no security
   certification is claimed, and the restricted executor refuses fallback when
   the daemon is absent.
-- CI configuration is included; **no hosted GitHub workflow or public release was run**.
+- Hosted CI (`source-validation` on GitHub-hosted ubuntu-24.04) runs on every
+  push and pull request; the `v0.0.1` tag run is recorded in
+  `docs/validation/v0.0.1/REPORT.md`. The public `v0.0.1` GitHub release is a
+  source-only tag with no binary assets.
 - Remote control was exercised against a local server; **no separate remote host or
   distributed worker fleet was validated**.
 - Learning evaluation uses explicit synthetic fixtures and timing assumptions; no
   real-world speedup or quality improvement is claimed.
-- Current local release checks use Go 1.26.6 + system SQLite/cgo; Linux/amd64 functional validation for this checkout remains pending.
-  Supported-current-Go, native macOS and Windows validation remain pending; the
-  unreleased increment above has darwin-only observations that do not replace
-  Linux validation or the pending review.
+- Release checks use Go 1.26.6 + system SQLite/cgo. Linux/amd64 functional
+  validation (check, race, fuzz, demo, demo-extended) runs in hosted CI. Full
+  native macOS validation and any Windows support remain pending; darwin results
+  above are local observations, and cross-built darwin binaries carry a
+  non-functional stub store.
 
 ## Preserved constraints
 

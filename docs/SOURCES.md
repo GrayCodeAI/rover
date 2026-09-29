@@ -1,7 +1,9 @@
 # Implementation references and provenance
 
-This upgrade builds on the delivered Rover 0.1.0-alpha.1 repository. The ten-layer
-master plan remains a design target, not a claim of implemented/validated coverage.
+These references were consulted while Rover grew from the earlier local
+0.1.0-alpha.1 delivery through the 0.2.0-alpha.1 upgrade, which was renumbered as
+the public 0.0.1 release. The ten-layer master plan remains a design target, not a
+claim of implemented/validated coverage.
 
 Primary interface references consulted during implementation:
 

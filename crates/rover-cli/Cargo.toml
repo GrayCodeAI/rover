@@ -1,0 +1,28 @@
+[package]
+name = "rover-cli"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+# The preview binary must not shadow the Go `rover` product binary on PATH.
+# It takes the `rover` name only when the RUST_PARITY_PLAN removal gates pass.
+[[bin]]
+name = "rover-rs"
+path = "src/main.rs"
+
+[dependencies]
+rover-agents = { path = "../rover-agents" }
+rover-core = { path = "../rover-core" }
+rover-execution = { path = "../rover-execution" }
+rover-store = { path = "../rover-store" }
+rover-source = { path = "../rover-source" }
+rover-tui = { path = "../rover-tui" }
+rover-tasks = { path = "../rover-tasks" }
+serde_json = { version = "=1.0.151", default-features = false, features = ["std"] }
+
+[dev-dependencies]
+rusqlite = { version = "=0.40.2", default-features = false, features = ["bundled"] }
+
+[lints]
+workspace = true

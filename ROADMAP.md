@@ -10,6 +10,14 @@ bounded repair; dependency scheduling and verified source integration; context/n
 scoped MCP and remote CLI; structured verification/counterfactual/mutation; evidence,
 backup/signatures; offline check-order experiments with explicit promotion.
 
+## Rust port (in progress, unreleased)
+
+Rover is being ported to Rust with CLI/TUI as the only product surfaces. The
+preview binary is `rover-rs` ([docs/RUST_PREVIEW.md](docs/RUST_PREVIEW.md)). Go
+remains the product until every parity task and removal gate in
+[the Rust parity plan](docs/design/RUST_PARITY_PLAN.md) passes. Decisions are
+recorded in the ADRs indexed by [docs/design/README.md](docs/design/README.md).
+
 ## Required before a production claim
 
 1. Supported-current toolchain and target-OS matrix, live provider compatibility.
